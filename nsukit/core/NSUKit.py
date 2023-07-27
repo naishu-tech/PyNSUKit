@@ -1,10 +1,11 @@
+import nsukit
 from .interface import CommandTCP, DataTCP
 from ..tools.icd_parser import ICDParams
 
 
 class NSUKit:
 
-    def __init__(self, CommandInterface=None, DataInterface=None, filepath='icd.json'):
+    def __init__(self, CommandInterface=None, DataInterface=None, filepath=None):
         """
         >>>     nsukit = NSUKit(CommandTCP, DataTCP)
         >>>     nsukit.start_command('127.0.0.1')
@@ -17,6 +18,9 @@ class NSUKit:
         :param DataInterface: 数据类
         :param filepath: icd文件路径
         """
+        if filepath is None:
+            filepath = nsukit.__file__
+            filepath = filepath.replace('__init__.py', 'icd.json')
         if CommandInterface is None or DataInterface is None:
             raise RuntimeError('请传入interface类')
         self.CommandInterface = CommandInterface()

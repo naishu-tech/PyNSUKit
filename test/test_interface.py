@@ -1,6 +1,6 @@
 import time
 
-from nsukit.core import NSUKit
+from nsukit.core.NSUKit import NSUKit
 from nsukit.core.interface import CommandTCP, CommandPCIE, CommandSerial, DataTCP
 
 
@@ -9,9 +9,9 @@ def test_cmd_tcp1():
     # TCP写指令测试
     nsukit = NSUKit(CommandTCP, DataTCP)
     nsukit.start_command('127.0.0.1')
-    print(nsukit.read('dds0中心频率'))
-    print(nsukit.read(0x01))
-    print(nsukit.bulk_read(['dds0中心频率', 0x01, 'dds0中心频率']))
+    print(nsukit.write('dds0中心频率'))
+    print(nsukit.write(0x01))
+    print(nsukit.bulk_write({0x02: 0x02, "dds0中心频率": 0x04, 0x03: 0x03}))
     time.sleep(2)
 
 
