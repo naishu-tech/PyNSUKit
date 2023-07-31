@@ -1,7 +1,7 @@
 import time
 
 from nsukit.core.NSUKit import NSUKit
-from nsukit.core.interface import CommandTCP, CommandPCIE, CommandSerial, DataTCP
+from nsukit.core.interface import CommandTCP, CommandPCIE, CommandSerial, DataTCP, DataPCIE
 
 
 # 网络指令
@@ -70,6 +70,6 @@ def test_cmd_PCIE2():
 
 
 def test_data_TCP():
-    nsukit = NSUKit(CommandTCP, DataTCP)
-    nsukit.start_stream('127.0.0.1')
+    nsukit = NSUKit(CommandTCP, DataPCIE)
+    nsukit.start_stream(0)
     print(nsukit.read_stream(48))

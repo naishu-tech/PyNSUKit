@@ -74,3 +74,16 @@ class Xdma(object):
 
     def stream_read(self, board, chnl, fd, length, offset=0, stop_event=None, flag=1):
         return True
+
+    def fpga_send(self, board, chnl, prt, dma_num, length, offset=0):
+        return True
+
+    def fpga_recv(self, board, chnl, prt, dma_num, length, offset=0):
+        return True
+
+    def wait_dma(self, fd):
+        return True
+
+    def break_dma(self, fd):
+        return True
+

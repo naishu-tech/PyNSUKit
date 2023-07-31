@@ -1,3 +1,4 @@
+from dataclasses import dataclass, field
 import socket
 import struct
 import threading
@@ -6,7 +7,8 @@ import numpy as np
 import serial
 from typing import Union
 from threading import Lock, Event
-from .xdma import xdma_sim as xdma
+# from .xdma import xdma_sim as xdma
+from .xdma import xdma as xdma
 from ..tools.logging import logging
 
 
@@ -205,8 +207,19 @@ class CommandPCIE(Interface):
         self.sent_ptr = 0
         self.recv_ptr = 0
         self.recv_event = Event()
+        self.open_flag = False
 
-    def accept(self, board=0, sent_base=0, recv_base=0):
+    def open_board(self):
+        if not self.open_flag:
+            self.xdma.open_board(self.board)
+            self.open_flag = True
+
+    def close_board(self):
+        if self.open_flag:
+            self.xdma.close_board(self.board)
+            self.open_flag = False
+
+    def accept(self, board: int = 0, sent_base=0, recv_base=0):
         """
 
         :param board: board number
@@ -217,6 +230,7 @@ class CommandPCIE(Interface):
         self.board = board
         self.sent_base = sent_base
         self.recv_base = recv_base
+        self.open_board()
 
     def close(self):
         self.lock.release()
@@ -230,7 +244,8 @@ class CommandPCIE(Interface):
         self.timeout = s
 
     def write(self, addr: int, value: int):
-        self.xdma.alite_write(addr, value, self.board)
+        if self.open_flag:
+            self.xdma.alite_write(addr, value, self.board)
 
     def read(self, addr: int):
         return self.xdma.alite_read(addr, self.board)[1]
@@ -341,12 +356,21 @@ class CommandPCIE(Interface):
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.lock.release()
+        if self.open_flag:
+            self.close_board()
 
 
 class DataTCP(Interface):
     _local_port = 6001
     _timeout = None
     DISCONNECT = 0
+
+    @dataclass
+    class Memory:
+        memory: np.ndarray
+        memory_size: int
+        memory_id: int
+        in_use: bool
 
     def __init__(self):
         """
@@ -358,15 +382,21 @@ class DataTCP(Interface):
         self._tcp_server = None
         self._recv_server = None
         self._recv_addr = None
+        self.memory_list = []
+        self.memory_index = 0
+        self.open_flag = False
 
-    def accept(self, target_id=None):
-        self._tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self._tcp_server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self._tcp_server.bind(('0.0.0.0', self._local_port))
-        self._tcp_server.listen(1)
-        self.set_timeout(self._timeout)
-        self._recv_server, self._recv_addr = self._tcp_server.accept()
-        logging.info(msg='已建立连接')
+    def accept(self, port: int = None):
+        if not self.open_flag:
+            self._local_port = self._local_port if port is None else port
+            self._tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self._tcp_server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            self._tcp_server.bind(('0.0.0.0', self._local_port))
+            self._tcp_server.listen(1)
+            self.set_timeout(self._timeout)
+            self.open_board()
+            logging.info(msg='已建立连接')
+            self.open_flag = True
 
     def recv_bytes(self, size=1024):
         fd = self._recv_server.recv(size, socket.MSG_WAITALL)
@@ -375,19 +405,110 @@ class DataTCP(Interface):
         fd = np.frombuffer(fd, dtype='u4')
         return fd
 
-    def send_bytes(self, data):
-        pass
-
-    def close(self):
-        try:
-            self._recv_server.shutdown(socket.SHUT_RDWR)
-            self._recv_server.close()
-        except Exception as e:
-            logging.error(msg=e)
-
     def set_timeout(self, value=2):
         self._tcp_server.settimeout(value)
 
+    def open_board(self):
+        if not self.open_flag:
+            self._recv_server, self._recv_addr = self._tcp_server.accept()
+
+    def close_board(self):
+        if self.open_flag:
+            try:
+                self._recv_server.shutdown(socket.SHUT_RDWR)
+                self._recv_server.close()
+            except Exception as e:
+                logging.error(msg=e)
+
+    def alloc_buffer(self, length, buf: int = None):
+        memory_obj = self.Memory
+        memory_obj.memory = np.zeros(shape=length, dtype='u4')
+        memory_obj.memory_size = length
+        memory_obj.memory_id = self.memory_index
+        self.memory_index += 1
+        memory_obj.in_use = False
+        self.memory_list.append(memory_obj)
+        return memory_obj.memory_id
+
+    def free_buffer(self):
+        self.memory_list.clear()
+
+    def get_buffer(self, memory_id: int):
+        return self.memory_list[memory_id].memory
+
+    def send_open(self):
+        pass
+
+    def recv_open(self, memory_id: int):
+        self.memory_list[memory_id].in_use = True
+        fd = self._recv_server.recv(self.memory_list[memory_id].memory_size, socket.MSG_WAITALL)
+        if len(fd) < self.memory_list[memory_id].memory_size:
+            return self.DISCONNECT
+        self.memory_list[memory_id].memory = np.frombuffer(fd, dtype='u4')
+        self.memory_list[memory_id].in_use = False
+        return self.memory_list[memory_id].memory_size
+
+    def wait_dma(self):
+        pass
+
+    def break_dma(self):
+        pass
+
+    def stream_read(self):
+        pass
+
 
 class DataPCIE(Interface):
-    pass
+
+    def __init__(self):
+        self.xdma = xdma.Xdma()
+        self.board = None
+        self.open_flag = False
+
+    def accept(self, board: int = 0):
+        if not self.open_flag:
+            self.board = board
+            self.open_board()
+            self.open_flag = True
+
+    def open_board(self):
+        if not self.open_flag and self.board:
+            self.xdma.open_board(self.board)
+            self.open_flag = True
+
+    def close_board(self):
+        if self.open_flag:
+            self.xdma.close_board(self.board)
+            self.open_flag = False
+
+    def alloc_buffer(self, length, buf: int = None):
+        if self.open_flag:
+            return self.xdma.alloc_buffer(self.board, length, buf)
+
+    def free_buffer(self, fd):
+        return self.xdma.free_buffer(fd)
+
+    def get_buffer(self, fd, length):
+        return self.xdma.get_buffer(fd, length)
+
+    def send_open(self, chnl, prt, dma_num, length, offset=0):
+        if self.open_flag:
+            return self.xdma.fpga_send(self.board, chnl, prt, dma_num, length, offset=offset)
+
+    def recv_open(self, chnl, prt, dma_num, length, offset=0):
+        if self.open_flag:
+            return self.xdma.fpga_recv(self.board, chnl, prt, dma_num, length, offset=offset)
+
+    def wait_dma(self, fd):
+        return self.xdma.wait_dma(fd)
+
+    def break_dma(self, fd):
+        return self.xdma.break_dma(fd=fd)
+
+    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+        if self.open_flag:
+            return self.xdma.stream_read(self.board, chnl, fd, length, offset, stop_event, flag)
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.open_flag:
+            self.close_board()

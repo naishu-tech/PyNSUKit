@@ -9,6 +9,7 @@
 from . import xdma_base
 from ...tools.logging import logging
 import time
+from threading import Lock
 TIMEOUT = 1000
 TIMEOUT_FLAG = TIMEOUT / 1000 - 1e-3
 FAIL = 0xffffffffffffffff
@@ -24,6 +25,8 @@ class Xdma(object):
         0: [xdma_base.fpga_send, lambda x: x],
         1: [xdma_base.fpga_recv, xdma_base.fpga_recv_multiple]
     }
+    opened_board = {}
+    lock = Lock()
 
     def __init__(self):
         self.board_set = set()
@@ -40,7 +43,13 @@ class Xdma(object):
     """
     def open_board(self, board, poll_interval_ms=0):
         try:
-            result = xdma_base.fpga_open(board, poll_interval_ms)
+            with self.lock:
+                if board in self.opened_board:
+                    self.opened_board[board] += 1
+                    result = True
+                else:
+                    self.opened_board[board] = 1
+                    result = xdma_base.fpga_open(board, poll_interval_ms)
             if not result:
                 logging.warning(msg=xdma_base.fpga_err_msg())
             return result
@@ -59,8 +68,13 @@ class Xdma(object):
 
     def close_board(self, board):
         try:
-            getattr(self, "free_pscn_buffer", str)(board)
-            xdma_base.fpga_close(board)
+            # getattr(self, "free_pscn_buffer", str)(board)
+            with self.lock:
+                if board not in self.opened_board:
+                    return True
+                self.opened_board[board] -= 1
+                if self.opened_board[board] == 0:
+                    xdma_base.fpga_close(board)
             return True
         except Exception as e:
             logging.error(msg=e)
@@ -186,7 +200,7 @@ class Xdma(object):
             logging.error(msg=e)
             return False
 
-    def __check_buffer(self, recv, board,chnl, fd, dma_num, length, stop_event, flag):
+    def __check_buffer(self, recv, board, chnl, fd, dma_num, length, stop_event, flag):
         try:
             if recv == FAIL:
                 logging.error(msg=xdma_base.fpga_err_msg())
@@ -220,3 +234,15 @@ class Xdma(object):
     @staticmethod
     def _stop_event():
         return False
+
+    def fpga_send(self, board, chnl, prt, dma_num, length, offset=0):
+        return xdma_base.fpga_send(board, chnl, prt, dma_num, length, offset=offset, timeout=0)
+
+    def fpga_recv(self, board, chnl, prt, dma_num, length, offset=0):
+        return xdma_base.fpga_recv(board, chnl, prt, dma_num, length, offset=offset, timeout=0)
+
+    def wait_dma(self, fd):
+        return xdma_base.fpga_wait_dma(fd, timeout=TIMEOUT)
+
+    def break_dma(self, fd):
+        return xdma_base.fpga_break_dma(fd=fd)
