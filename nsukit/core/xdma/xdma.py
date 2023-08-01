@@ -241,8 +241,11 @@ class Xdma(object):
     def fpga_recv(self, board, chnl, prt, dma_num, length, offset=0):
         return xdma_base.fpga_recv(board, chnl, prt, dma_num, length, offset=offset, timeout=0)
 
-    def wait_dma(self, fd):
-        return xdma_base.fpga_wait_dma(fd, timeout=TIMEOUT)
+    def wait_dma(self, fd, timeout=0):
+        if timeout:
+            return xdma_base.fpga_wait_dma(fd, timeout=TIMEOUT)
+        else:
+            return xdma_base.fpga_wait_dma(fd, timeout=timeout)
 
     def break_dma(self, fd):
         return xdma_base.fpga_break_dma(fd=fd)

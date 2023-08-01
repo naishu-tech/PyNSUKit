@@ -382,7 +382,7 @@ class DataTCP(Interface):
         self._tcp_server = None
         self._recv_server = None
         self._recv_addr = None
-        self.memory_list = []
+        self.memory_dict = {}
         self.memory_index = 0
         self.open_flag = False
 
@@ -421,32 +421,25 @@ class DataTCP(Interface):
                 logging.error(msg=e)
 
     def alloc_buffer(self, length, buf: int = None):
-        memory_obj = self.Memory
-        memory_obj.memory = np.zeros(shape=length, dtype='u4')
-        memory_obj.memory_size = length
-        memory_obj.memory_id = self.memory_index
+        memory_obj = self.Memory(memory=np.zeros(shape=length, dtype='u4'), memory_size=length, memory_id=self.memory_index, in_use=False)
+        self.memory_dict[self.memory_index] = memory_obj
         self.memory_index += 1
-        memory_obj.in_use = False
-        self.memory_list.append(memory_obj)
         return memory_obj.memory_id
 
-    def free_buffer(self):
-        self.memory_list.clear()
+    def free_buffer(self, fd):
+        return self.memory_dict.pop(fd)
 
     def get_buffer(self, memory_id: int):
-        return self.memory_list[memory_id].memory
+        return self.memory_dict[memory_id].memory
 
     def send_open(self):
-        pass
+        raise RuntimeError("暂不支持")
 
     def recv_open(self, memory_id: int):
-        self.memory_list[memory_id].in_use = True
-        fd = self._recv_server.recv(self.memory_list[memory_id].memory_size, socket.MSG_WAITALL)
-        if len(fd) < self.memory_list[memory_id].memory_size:
-            return self.DISCONNECT
-        self.memory_list[memory_id].memory = np.frombuffer(fd, dtype='u4')
-        self.memory_list[memory_id].in_use = False
-        return self.memory_list[memory_id].memory_size
+        pass
+
+    def _recv(self):
+        pass
 
     def wait_dma(self):
         pass
@@ -499,8 +492,8 @@ class DataPCIE(Interface):
         if self.open_flag:
             return self.xdma.fpga_recv(self.board, chnl, prt, dma_num, length, offset=offset)
 
-    def wait_dma(self, fd):
-        return self.xdma.wait_dma(fd)
+    def wait_dma(self, fd, timeout: int = 0):
+        return self.xdma.wait_dma(fd, timeout)
 
     def break_dma(self, fd):
         return self.xdma.break_dma(fd=fd)
@@ -508,6 +501,9 @@ class DataPCIE(Interface):
     def stream_read(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
         if self.open_flag:
             return self.xdma.stream_read(self.board, chnl, fd, length, offset, stop_event, flag)
+
+    def stream_send(self):
+        raise RuntimeError("暂不支持")
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.open_flag:
