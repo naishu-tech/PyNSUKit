@@ -1,14 +1,15 @@
 import json
-import os
 import struct
-import pandas as pd
 from typing import TYPE_CHECKING
 
-from .logging import logging
+import pandas as pd
+
+import nsukit
+from .base import BaseRegMw
+from ..tools.logging import logging
 
 if TYPE_CHECKING:
-    from nsukit.core import NSUKit
-
+    from .. import NSUKit
 
 file_context_flag = '__file__'
 file_length_flag = '__filelength__'
@@ -60,44 +61,52 @@ feedback_value_fmt = {
 }
 
 
-class ICDParams:
+class ICDRegMw(BaseRegMw):
     fmt_mode = "="  # pack/unpack 大小端模式
 
     def __init__(self, kit: "NSUKit", file_name='icd.json'):
-        self.kit = kit
-        self._connected = False
+        super(ICDRegMw, self).__init__(kit)
         self._file_name = file_name
         self.icd_data = {}
         self.param = {}
         self.command_send = {}
         self.command_recv = {}
         self.sequence = {}
-        self.data_solve = None
-        self.load_icd()
 
-    def load_icd(self, reload=False):
-        file_path = self._file_name.split('.')[0] + '_run.json' \
-            if os.path.isfile(self._file_name.split('.')[0] + '_run.json') and not reload \
-            else self._file_name
+    def config(self, *, icd_path=None, **kwargs):
+        """!
+        指定icd配置文件的路径
+        @param icd_path:
+        @param kwargs:
+        @return:
+        """
+        if icd_path is None:
+            icd_path = nsukit.__file__
+            icd_path = icd_path.replace('__init__.py', 'icd.json')
+        self._file_name = icd_path
+        self.load()
 
+    def load(self):
+        file_path = self._file_name
         with open(file_path, 'r', encoding='utf-8') as fp:
             try:
                 self.icd_data = json.load(fp)
             except json.decoder.JSONDecodeError as e:
-                logging.error(msg=f'{e},icd.json文件不可用')
+                logging.error(msg=f'{e}, {self._file_name} unavailable')
                 return False
         try:
             self.param = self.icd_data['param']
             self.command_send = self.icd_data['command_send']
             self.command_recv = self.icd_data['command_recv']
             self.sequence = self.icd_data['sequence']
-            logging.info(msg='参数载入成功')
+            logging.info(msg='ICD Parameters loaded successfully')
         except Exception as e:
-            logging.error(msg=f'{e},{file_path}不可用')
+            logging.error(msg=f'{e},{file_path} unavailable')
             return False
         return True
 
-    def save_icd(self, path=''):
+    def save(self, path=''):
+        # TODO: ICD的保存怎么在nsukit中引出
         path = path + '\\' if path else path
         with open(path + self._file_name.split('.')[0] + '_run.json', 'w', encoding='utf-8') as fp:
             # 按utf-8的格式格式化并写入文件
@@ -204,17 +213,16 @@ class ICDParams:
             logging.error(msg=f'{e},文件读取失败')
         return b'', 0
 
-    def find_icd_command(self, parm_name: str) -> list:
-        """
+    def find_command(self, parm_name: str) -> list:
+        """!
         根据参数名称,查找所有包含此参数的指令名
-        Args:
-            parm_name: 参数名
 
-        Returns:包含此参数的的指令集合 list
+        @param parm_name: 参数名
+        @return 包含此参数的的指令集合 list
 
         """
         send_len = []
         for command in self.command_send:
             if parm_name in self.command_send[command]:
-                send_len.append(self.kit.CommandInterface.send_bytes(self.fmt_command(command)))
+                send_len.append(self.kit.itf_cmd.send_bytes(self.fmt_command(command)))
         return send_len

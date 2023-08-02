@@ -5,7 +5,7 @@
 # Date: Jan. 3, 2019
 ############################
 import platform
-from ...tools.logging import logging
+from nsukit.tools.logging import logging
 import numpy as np
 import random
 

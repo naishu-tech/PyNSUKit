@@ -7,7 +7,7 @@
 ############################
 
 from . import xdma_base
-from ...tools.logging import logging
+from nsukit.tools.logging import logging
 import time
 from threading import Lock
 TIMEOUT = 1000
