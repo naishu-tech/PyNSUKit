@@ -8,7 +8,11 @@ if TYPE_CHECKING:
     from .middleware.base import UMiddlewareMeta, BaseRegMw, BaseChnlMw
 
 
-class NSUKit:
+class KitMeta(type):
+    ...
+
+
+class NSUKit(metaclass=KitMeta):
     CmdMiddleware: "UMiddlewareMeta" = ICDRegMw
     ChnlMiddleware: "UMiddlewareMeta" = VirtualChnlMw
 

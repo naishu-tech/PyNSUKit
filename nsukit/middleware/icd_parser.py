@@ -87,22 +87,37 @@ class ICDRegMw(BaseRegMw):
         self.load()
 
     def load(self):
+        """!
+        从文件中加载数据，并相应地设置实例变量。
+        此方法从指定的文件中读取数据，通常文件采用JSON格式存储，并将读取的数据设置为相关实例变量。
+        文件中包含了与接口控制文档 (ICD) 相关的信息。
+
+        @return: 若数据成功加载，则返回True；否则返回False。
+        @rtype: bool
+        """
         file_path = self._file_name
+        # 使用utf-8编码打开文件并以读取模式
         with open(file_path, 'r', encoding='utf-8') as fp:
             try:
+                # 尝试将JSON数据从文件加载到 'icd_data' 实例变量中
                 self.icd_data = json.load(fp)
             except json.decoder.JSONDecodeError as e:
-                logging.error(msg=f'{e}, {self._file_name} unavailable')
+                # 如果出现JSON解码错误，记录错误消息并返回False表示加载失败
+                logging.error(msg=f'{e}, {self._file_name} 不可用')
                 return False
         try:
+            # 从 'icd_data' 字典中提取特定数据并将其设置为实例变量
             self.param = self.icd_data['param']
             self.command_send = self.icd_data['command_send']
             self.command_recv = self.icd_data['command_recv']
             self.sequence = self.icd_data['sequence']
+            # 记录成功消息，表示ICD参数加载成功
             logging.info(msg='ICD Parameters loaded successfully')
         except Exception as e:
-            logging.error(msg=f'{e},{file_path} unavailable')
+            # 如果提取数据或设置实例变量时出现异常，记录错误并返回False
+            logging.error(msg=f'{e}, {file_path} unavailable')
             return False
+        # 返回True，表示数据加载成功
         return True
 
     def save(self, path=''):

@@ -54,8 +54,8 @@ class BaseChnlMw(UMiddleware):
     def get_buffer(self, fd, length):
         ...
 
-    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, flag=1) -> bool:
         ...
 
-    def stream_send(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+    def stream_send(self, chnl, fd, length, offset=0, stop_event=None, flag=1) -> bool:
         ...
