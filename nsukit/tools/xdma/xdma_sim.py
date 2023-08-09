@@ -68,11 +68,11 @@ class Xdma(object):
         logging.debug(msg=f"接收到板卡{board}复位")
         return True
 
-    def stream_write(self, board, chnl, fd, length, offset=0, stop_event=None, flag=1):
+    def stream_write(self, board, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
         # printInfo("板卡%x, 接收到数据流下行指令，通道号：%d，数据量：%d" % (board, chnl, length))
         return True
 
-    def stream_read(self, board, chnl, fd, length, offset=0, stop_event=None, flag=1):
+    def stream_read(self, board, chnl, fd, length, offset=0, stop_event=None, time_out=5,  flag=1):
         return True
 
     def fpga_send(self, board, chnl, prt, dma_num, length, offset=0):

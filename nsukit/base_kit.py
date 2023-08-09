@@ -57,7 +57,7 @@ class NSUKit:
         else:
             return self.itf_cmd.write(addr, value)
 
-    def read(self, addr, default=None) -> int:
+    def read(self, addr) -> int:
         if isinstance(addr, str):
             return self.mw_cmd.get_param(addr)
         else:
@@ -80,25 +80,26 @@ class NSUKit:
 
     def start_stream(self, target=None, **kwargs):
         self.itf_chnl.accept(target, **kwargs)
+        self.itf_chnl.open_board()
         self.mw_chnl.config(**kwargs)
 
     def stop_stream(self):
         self.itf_chnl.close()
 
     def alloc_buffer(self, length, buf: int = None):
-        return self.mw_chnl.alloc_buffer(length, buf)
+        return self.itf_chnl.alloc_buffer(length, buf)
 
     def free_buffer(self, fd):
-        return self.mw_chnl.free_buffer(fd)
+        return self.itf_chnl.free_buffer(fd)
 
     def get_buffer(self, fd, length):
-        return self.mw_chnl.get_buffer(fd, length)
+        return self.itf_chnl.get_buffer(fd, length)
 
     def stream_read(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
-        return self.mw_chnl.stream_read(chnl, fd, length, offset, stop_event, flag)
+        return self.itf_chnl.stream_read(chnl, fd, length, offset, stop_event, flag)
 
     def stream_send(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
-        return self.mw_chnl.stream_send(chnl, fd, length, offset, stop_event, flag)
+        return self.itf_chnl.stream_send(chnl, fd, length, offset, stop_event, flag)
 
     def send_open(self, chnl, prt, dma_num, length, offset=0):
         return self.itf_chnl.send_open(chnl, prt, dma_num, length, offset)

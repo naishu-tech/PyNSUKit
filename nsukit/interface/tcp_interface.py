@@ -1,6 +1,9 @@
+import re
 import socket
+import struct
 import threading
 import ctypes
+import time
 from threading import Lock, Event
 from dataclasses import dataclass, field
 from typing import Union, Dict
@@ -11,41 +14,42 @@ from .base import BaseCmdUItf, BaseChnlUItf
 from ..tools.logging import logging
 
 
+def head_check(send_cmd, recv_cmd):
+    send_head = struct.unpack('=IIII', send_cmd[0:16])
+    recv_head = struct.unpack('=IIII', recv_cmd)
+    if recv_head[0] != 0xCFCFCFCF:
+        raise RuntimeError("返回包头错误")
+    if recv_head[1] != send_head[1]:
+        raise RuntimeError("返回ID错误")
+    if recv_head[2] != send_head[2]:
+        raise RuntimeError("返回序号错误")
+    return recv_cmd[3]
+
+
 class TCPCmdUItf(BaseCmdUItf):
-    _local_port = 5000
-    _remote_port = 5001
-    _target_id = "127.0.0.1"
-    _serial_num = 1
     _timeout = 5
 
     def __init__(self):
         self._tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._tcp_server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.set_timeout(self._timeout)
-        self._recv_addr = (self._target_id, self._remote_port)
         self.busy_lock = Lock()
 
-    def accept(self, target_id=None, *args):
+    def accept(self, target: str, port: int, **kwargs):
         """
 
-        @param target_id: IP地址
-        @param args:
+        @param target: IP地址
+        @param port:
         @return:
         """
-        _target_id = self._target_id if target_id is None else target_id
         with self.busy_lock:
             self.close()
             self._tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self._tcp_server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             self.set_timeout(self._timeout)
-            self._recv_addr = (self._target_id, self._remote_port)
-            if args:
-                self._tcp_server.connect((_target_id, *args))
-            else:
-                self._tcp_server.connect((_target_id, self._remote_port))
-        self._recv_addr = (_target_id, self._remote_port)
+            self._tcp_server.connect((target, port))
 
-    def recv_bytes(self, size: int = 1024) -> bytes:
+    def recv_bytes(self, size: int) -> bytes:
         """
 
         @param size: 返回长度
@@ -66,11 +70,21 @@ class TCPCmdUItf(BaseCmdUItf):
 
     def write(self, addr: int, value: int) -> int:
         cmd = self._fmt_reg_write(addr, value)
-        return self.send_bytes(cmd)
+        if len(cmd) != self.send_bytes(cmd):
+            raise RuntimeError(f"Fail in send")
+        recv = self.recv_bytes(16)
+        result_len = head_check(cmd, recv)
+        result = self.recv_bytes(result_len - 20)
+        return int.from_bytes(result, "little")
 
     def read(self, addr: int) -> int:
         cmd = self._fmt_reg_read(addr)
-        return self.send_bytes(cmd)
+        if len(cmd) != self.send_bytes(cmd):
+            raise RuntimeError(f"Fail in send")
+        recv = self.recv_bytes(16)
+        result_len = head_check(cmd, recv)
+        result = self.recv_bytes(result_len - 20)
+        return int.from_bytes(result, "little")
 
     def close(self):
         try:
@@ -87,17 +101,20 @@ class TCPCmdUItf(BaseCmdUItf):
         """
         self._tcp_server.settimeout(s)
 
-    def get_number(self):
-        return self._serial_num
 
-    def update_number(self):
-        self._serial_num += 1
+def get_port(ip):
+    ip_match = r'^(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[1-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)$'
+    if len(ip) >= 12 and re.match(ip_match, ip):
+        _port = ip.split('.')[3][-2:]
+        _port = _port[0] + '00' + _port[1]
+        return _port
+    else:
+        return 6001
 
 
 class TCPChnlUItf(BaseChnlUItf):
-    _local_port = 6001
+    _local_port = 0
     _timeout = 10
-    DISCONNECT = 0
 
     @dataclass
     class Memory:
@@ -135,33 +152,31 @@ class TCPChnlUItf(BaseChnlUItf):
         self.open_flag = False
         self._recv_thread: threading.Thread = None
 
-    def accept(self, port: int = None):
+    def accept(self, target: str, port: int = 0, **kwargs):
         if not self.open_flag:
-            self._local_port = self._local_port if port is None else port
+            self._local_port = get_port(ip=target) if port == 0 else port
             self._tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self._tcp_server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            self._tcp_server.bind(('0.0.0.0', self._local_port))
-            self._tcp_server.listen(1)
             self.set_timeout(self._timeout)
-            self.open_board()
             logging.info(msg='TCP connection established')
-            self.open_flag = True
-
 
     def set_timeout(self, value=2):
         self._tcp_server.settimeout(value)
 
     def open_board(self):
-        if not self.open_flag:
-            self._recv_server, self._recv_addr = self._tcp_server.accept()
-            self._recv_server.settimeout(self._timeout)
+        self.open_flag = True
+        self._tcp_server.bind(('0.0.0.0', self._local_port))
+        self._tcp_server.listen(10)
 
     def close_board(self):
         if self.open_flag:
             try:
+                self._tcp_server.close()
                 self._recv_server.shutdown(socket.SHUT_RDWR)
                 self._recv_server.close()
+                self.open_flag = False
             except Exception as e:
+                self.open_flag = False
                 logging.error(msg=e)
 
     def alloc_buffer(self, length: int, buf: Union[int, np.ndarray, None] = None) -> int:
@@ -195,13 +210,20 @@ class TCPChnlUItf(BaseChnlUItf):
     def get_buffer(self, fd, length):
         return self.memory_dict[fd].memory[:length]
 
-    def send_open(self, chnl, prt, dma_num, length, offset=0):
+    def send_open(self, chnl, prt, length, offset=0):
         raise RuntimeError("Not supported yet")
 
-    def recv_open(self, chnl, prt, dma_num, length, offset=0):
+    def recv_open(self, chnl, prt, length, offset=0):
         try:
+            if not self.open_flag:
+                raise RuntimeError("You must use open_board first")
+            if self._recv_server is not None and self._recv_thread.is_alive():
+                raise RuntimeError("Too many recv_thread")
+            self._recv_server, self._recv_addr = self._tcp_server.accept()
+            logging.info(msg="Client connection")
+            self._recv_server.settimeout(self._timeout)
             event = self.stop_event
-            self._recv_thread = threading.Thread(target=self._recv, args=(chnl, prt, dma_num, length, offset, event),
+            self._recv_thread = threading.Thread(target=self._recv, args=(prt, length, offset, event),
                                                  daemon=True, name='TCP_recv')
             self._recv_thread.start()
         except Exception as e:
@@ -209,7 +231,7 @@ class TCPChnlUItf(BaseChnlUItf):
             return False
         return True
 
-    def _recv(self, chnl, prt, dma_num, length, offset, event):
+    def _recv(self, prt, length, offset, event):
         if prt not in self.memory_dict:
             raise RuntimeError(f"没有此内存块")
         memory_object = self.memory_dict[prt]
@@ -222,48 +244,69 @@ class TCPChnlUItf(BaseChnlUItf):
             raise RuntimeError(f"偏移量过大")
         write_len = 0
         while True:
-            if (length - write_len) * 4 > 1024:
-                recv_len = 1024
-            else:
-                recv_len = (length - write_len) * 4
-            if event.is_set():
-                return memory_object.using_size
             try:
-                fd = self._recv_server.recv(recv_len)
+                if event.is_set():
+                    memory_object.using_event.clear()
+                    return memory_object.using_size
+
+                fd = self._recv_server.recv(length * 4)
+                fd_len = len(fd)
+                if fd_len == 0:
+                    memory_object.using_event.clear()
+                    logging.info("Recv complete")
+                    break
+
+                # logging.debug(msg=f"Recv data is: {fd.hex()}")
+
+                memory_object.memory[write_len + offset:write_len + offset + fd_len // 4] = np.frombuffer(fd,
+                                                                                                          dtype='u4')
+                write_len += (fd_len // 4)
+
+                memory_object.using_size = memory_object.using_size + (write_len + offset + fd_len // 4) - (
+                            write_len + offset)
+
+                if length == 0:
+                    memory_object.using_event.clear()
+                    return memory_object.using_size
+
+                length -= fd_len // 4
             except Exception as e:
                 logging.error(msg=e)
-                self.open_board()
-                continue
-            fd_len = len(fd)
-            memory_object.memory[write_len + offset:write_len + offset + fd_len // 4] = np.frombuffer(fd, dtype='u4')
-            # logging.debug(msg=f"{fd.hex()}")
-            write_len += (fd_len // 4)
-            memory_object.using_size = memory_object.using_size + (write_len + offset + fd_len // 4) - (
-                        write_len + offset)
-            if write_len == length:
-                return memory_object.using_size
+                memory_object.using_event.clear()
+                break
 
     def wait_dma(self, fd, timeout: int = 0):
+        if not self.open_flag:
+            raise RuntimeError("You must use open_board first")
+        if not self._recv_thread.is_alive():
+            raise RuntimeError("recv_thread not alive")
+        if fd not in self.memory_dict:
+            raise RuntimeError(f"没有此内存块")
         memory = self.memory_dict[fd]
         try:
             memory.using_event.wait(timeout)
-        except TimeoutError as e:
-            ...
-        return memory.using_size
+            return memory.using_size
+        except RuntimeError as e:
+            logging.error(msg=e)
 
     def break_dma(self, fd):
+        if not self.open_flag:
+            raise RuntimeError("You must use open_board first")
         self.stop_event.set()
         while self._recv_thread.is_alive():
+            time.sleep(0.2)
             continue
         self.stop_event.clear()
         return self.memory_dict[fd].using_size
 
-    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
-        if not self.recv_open(chnl=chnl, prt=fd, dma_num=0, length=length, offset=offset):
+    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
+        if not self.recv_open(chnl=chnl, prt=fd, length=length, offset=offset):
             return False
         while True:
             try:
-                if self.wait_dma(fd, 5) == length:
+                if stop_event.is_set():
+                    break
+                if self.wait_dma(fd, time_out) == length:
                     break
                 else:
                     continue
@@ -271,5 +314,9 @@ class TCPChnlUItf(BaseChnlUItf):
                 logging.error(msg=e)
                 break
 
-    def stream_send(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+    def stream_send(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
         raise RuntimeError("Not supported yet")
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.open_flag:
+            self.close_board()

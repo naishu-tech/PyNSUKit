@@ -23,7 +23,7 @@ class Xdma(object):
     isWindows = xdma_base.isWindows
     function_map = {
         0: [xdma_base.fpga_send, lambda x: x],
-        1: [xdma_base.fpga_recv, xdma_base.fpga_recv_multiple]
+        1: [xdma_base.fpga_recv]
     }
     opened_board = {}
     lock = Lock()
@@ -171,43 +171,33 @@ class Xdma(object):
     数据流写入
         返回值：True/False
     """
-    def stream_read(self, board, chnl, fd, length, offset=0, stop_event=None, flag=1):
-        if hasattr(fd, "__array_interface__"):
-            prt, _ = fd.__array_interface__["data"]
-            dma_num = fd.size
-            index = 1
-            length *= dma_num
-        else:
-            dma_num = 1
-            index = 0
-            prt = fd
-        function = self.function_map[1][index]
-        return self.stream_public(board, chnl, prt, dma_num, fd, length, function, offset, stop_event, flag)
+    def stream_read(self, board, chnl, fd, length, offset=0, stop_event=None, time_out=5,  flag=1):
+        prt = fd
+        function = xdma_base.fpga_recv
+        return self.stream_public(board, chnl, prt, fd, length, function, offset, stop_event, time_out, flag)
 
     """
     数据流读出
         返回值：True/False
     """
 
-    def stream_write(self, board, chnl, fd, length, offset=0, stop_event=None, flag=1):
-        return self.stream_public(board, chnl, fd, 1, fd, length, xdma_base.fpga_send, offset, stop_event, flag)
+    def stream_write(self, board, chnl, fd, length, offset=0, stop_event=None, time_out=5,  flag=1):
+        return self.stream_public(board, chnl, fd, fd, length, xdma_base.fpga_send, offset, stop_event, time_out, flag)
 
-    def stream_public(self, board, chnl, prt, dma_num, fd, length, function, offset, stop_event, flag):
+    def stream_public(self, board, chnl, prt, fd, length, function, offset, stop_event, time_out, flag):
         try:
-            recv = function(board, chnl, prt, dma_num, length, offset=offset, timeout=0)
-            return self.__check_buffer(recv, board, chnl, fd, dma_num, length, stop_event, flag)
+            recv = function(board, chnl, prt, length, offset=offset, timeout=time_out)
+            return self.__check_buffer(recv, board, chnl, fd, length, stop_event, time_out, flag)
         except Exception as e:
             logging.error(msg=e)
             return False
 
-    def __check_buffer(self, recv, board, chnl, fd, dma_num, length, stop_event, flag):
+    def __check_buffer(self, recv, board, chnl, fd, length, stop_event, time_out, flag):
         try:
             if recv == FAIL:
                 logging.error(msg=xdma_base.fpga_err_msg())
                 return False
             else:
-                fd = fd if dma_num == 1 else int(fd[0])
-
                 cnt = 1
                 if not stop_event:
                     stop_event = self._stop_event
@@ -217,7 +207,7 @@ class Xdma(object):
                         xdma_base.fpga_break_dma(fd)
                         break
                     st = time.time()
-                    recv_total = xdma_base.fpga_wait_dma(fd, timeout=TIMEOUT)
+                    recv_total = xdma_base.fpga_wait_dma(fd, timeout=time_out)
                     diff_time = time.time() - st
                     if flag and cnt and diff_time > TIMEOUT_FLAG:
                         # xdma超时打印
@@ -235,11 +225,11 @@ class Xdma(object):
     def _stop_event():
         return False
 
-    def fpga_send(self, board, chnl, prt, dma_num, length, offset=0):
-        return xdma_base.fpga_send(board, chnl, prt, dma_num, length, offset=offset, timeout=0)
+    def fpga_send(self, board, chnl, prt, length, offset=0):
+        return xdma_base.fpga_send(board, chnl, prt, length, offset=offset, timeout=0)
 
-    def fpga_recv(self, board, chnl, prt, dma_num, length, offset=0):
-        return xdma_base.fpga_recv(board, chnl, prt, dma_num, length, offset=offset, timeout=0)
+    def fpga_recv(self, board, chnl, prt, length, offset=0):
+        return xdma_base.fpga_recv(board, chnl, prt, length, offset=offset, timeout=0)
 
     def wait_dma(self, fd, timeout=0):
         if timeout:

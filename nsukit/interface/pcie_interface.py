@@ -37,7 +37,7 @@ class PCIECmdUItf(BaseCmdUItf):
             self.xdma.close_board(self.board)
             self.open_flag = False
 
-    def accept(self, board: int = 0, sent_base=0, recv_base=0):
+    def accept(self, board, sent_base, recv_base, **kwargs):
         """
 
         @param board: board number
@@ -48,7 +48,6 @@ class PCIECmdUItf(BaseCmdUItf):
         self.board = board
         self.sent_base = sent_base
         self.recv_base = recv_base
-        self.open_board()
 
     def close(self):
         self.lock.release()
@@ -155,21 +154,6 @@ class PCIECmdUItf(BaseCmdUItf):
         self.reset_irq()
         self.recv_event.set()
 
-    @classmethod
-    def get_service(cls, board, pscn, sent_base, recv_base, timeout=None, _break_status=None):
-        # TODO: 这个是干什么用的
-        try:
-            assert timeout is None or (
-                        isinstance(timeout, (int, float)) and timeout >= 0), f"illegal timeout ({timeout})"
-            self = cls(board, pscn, sent_base, recv_base)
-            if callable(_break_status):
-                setattr(self, "_break_status", _break_status)
-            # x and y 的值, x为真就是y, x为假就是x
-            self.set_timeout(timeout)
-            return self
-        except Exception as e:
-            return f"{e}"
-
     def __enter__(self):
         self.lock.acquire(timeout=self.timeout)
         return self
@@ -186,11 +170,10 @@ class PCIEChnlUItf(BaseChnlUItf):
         self.board = None
         self.open_flag = False
 
-    def accept(self, board: int = 0):
+    def accept(self, board, **kwargs):
         if not self.open_flag:
             self.board = board
             self.open_board()
-            self.open_flag = True
 
     def open_board(self):
         if not self.open_flag and self.board:
@@ -212,13 +195,13 @@ class PCIEChnlUItf(BaseChnlUItf):
     def get_buffer(self, fd, length):
         return self.xdma.get_buffer(fd, length)
 
-    def send_open(self, chnl, prt, dma_num, length, offset=0):
+    def send_open(self, chnl, fd, length, offset=0):
         if self.open_flag:
-            return self.xdma.fpga_send(self.board, chnl, prt, dma_num, length, offset=offset)
+            return self.xdma.fpga_send(self.board, chnl, fd, length, offset=offset)
 
-    def recv_open(self, chnl, prt, dma_num, length, offset=0):
+    def recv_open(self, chnl, fd, length, offset=0):
         if self.open_flag:
-            return self.xdma.fpga_recv(self.board, chnl, prt, dma_num, length, offset=offset)
+            return self.xdma.fpga_recv(self.board, chnl, fd, length, offset=offset)
 
     def wait_dma(self, fd, timeout: int = 0):
         return self.xdma.wait_dma(fd, timeout)
@@ -226,13 +209,13 @@ class PCIEChnlUItf(BaseChnlUItf):
     def break_dma(self, fd):
         return self.xdma.break_dma(fd=fd)
 
-    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
         if self.open_flag:
-            return self.xdma.stream_read(self.board, chnl, fd, length, offset, stop_event, flag)
+            return self.xdma.stream_read(self.board, chnl, fd, length, offset, stop_event, time_out, flag)
 
-    def stream_send(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+    def stream_send(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
         if self.open_flag:
-            return self.xdma.stream_write(self.board, chnl, fd, length, offset, stop_event, flag)
+            return self.xdma.stream_write(self.board, chnl, fd, length, offset, stop_event, time_out, flag)
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.open_flag:

@@ -67,10 +67,10 @@ class BaseChnlUItf(UInterface):
     def get_buffer(self, fd, length):
         ...
 
-    def send_open(self, chnl, prt, dma_num, length, offset=0):
+    def send_open(self, chnl, fd, length, offset=0):
         ...
 
-    def recv_open(self, chnl, prt, dma_num, length, offset=0):
+    def recv_open(self, chnl, fd, length, offset=0):
         ...
 
     def wait_dma(self, fd, timeout: int = 0):
@@ -79,8 +79,8 @@ class BaseChnlUItf(UInterface):
     def break_dma(self, fd):
         ...
 
-    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
         ...
 
-    def stream_send(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+    def stream_send(self, chnl, fd, length, offset=0, stop_event=None, time_out=5,  flag=1):
         ...

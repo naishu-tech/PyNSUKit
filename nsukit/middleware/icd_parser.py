@@ -69,8 +69,7 @@ class ICDRegMw(BaseRegMw):
         self._file_name = file_name
         self.icd_data = {}
         self.param = {}
-        self.command_send = {}
-        self.command_recv = {}
+        self.command = {}
         self.sequence = {}
 
     def config(self, *, icd_path=None, **kwargs):
@@ -96,8 +95,7 @@ class ICDRegMw(BaseRegMw):
                 return False
         try:
             self.param = self.icd_data['param']
-            self.command_send = self.icd_data['command_send']
-            self.command_recv = self.icd_data['command_recv']
+            self.command = self.icd_data['command']
             self.sequence = self.icd_data['sequence']
             logging.info(msg='ICD Parameters loaded successfully')
         except Exception as e:
@@ -134,7 +132,7 @@ class ICDRegMw(BaseRegMw):
             param[2] = value_python[param[1]](value)
         self.param.update({param_name: param})
 
-    def fmt_command(self, command_name, file_name=None) -> bytes:
+    def fmt_command(self, command_name, command_type: str = "send", file_name=None) -> bytes:
         file_data = b''
         command = []
         file_length = 0
@@ -160,7 +158,7 @@ class ICDRegMw(BaseRegMw):
                         value, _fmt = self.__fmt_register(_reg, value)
                         target_bytes.append(struct.pack(self.fmt_mode + _fmt, value))
 
-            for register in self.command_send[command_name]:
+            for register in self.command[command_name][command_type]:
                 if isinstance(register, list):
                     value, _fmt = self.__fmt_register(register, register[2])
                     command.append(struct.pack(self.fmt_mode + _fmt, value))
@@ -221,8 +219,24 @@ class ICDRegMw(BaseRegMw):
         @return 包含此参数的的指令集合 list
 
         """
-        send_len = []
-        for command in self.command_send:
-            if parm_name in self.command_send[command]:
-                send_len.append(self.kit.itf_cmd.send_bytes(self.fmt_command(command)))
-        return send_len
+        result_list = []
+        for command in self.command:
+            if parm_name in self.command[command]["send"]:
+                if len(self.command[command]["recv"]) < 5:
+                    raise RuntimeError(f"The command recv register is not define, command:{command}")
+                send_cmd = self.fmt_command(command_name=command, command_type="send")
+                recv_cmd = self.fmt_command(command_name=command, command_type="recv")
+                if len(send_cmd) != self.kit.itf_cmd.send_bytes(send_cmd):
+                    raise RuntimeError(f"Fail in send")
+                recv = self.kit.itf_cmd.recv_bytes(struct.unpack("=I", recv_cmd[12:16])[0])
+                self.check_recv(recv_cmd, recv, command)
+                result_list.append(recv)
+                for index, data in enumerate(self.command[command]["recv"]):
+                    if index >= 4:
+                        self.set_param(data, struct.unpack("=I", recv[index*4:index*4+4])[0])
+        return result_list
+
+    @staticmethod
+    def check_recv(recv_cmd, recv, command):
+        if recv_cmd[0:12] != recv[0:12]:
+            raise RuntimeError(f"Recv head error command:{command}")

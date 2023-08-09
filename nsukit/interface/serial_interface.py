@@ -19,17 +19,15 @@ class SerialCmdUItf(BaseCmdUItf):
         self._device_serial = None
         self.busy_lock = Lock()
 
-    def accept(self, target_id=None, *args):
+    def accept(self, target_id=None, target_baud_rate: int = None, **kwargs):
         _target_id = self._target_id if target_id is None else target_id
+        _target_baud_rate = self._target_baud_rate if target_baud_rate is None else target_baud_rate
         with self.busy_lock:
             if self._device_serial is not None:
                 self._device_serial.close()
-            if args:
-                self._device_serial = serial.Serial(target_id, *args)
-            else:
-                self._device_serial = serial.Serial(port=_target_id,
-                                                    baudrate=int(self._target_baud_rate),
-                                                    timeout=self._timeout)
+            self._device_serial = serial.Serial(port=_target_id,
+                                                baudrate=int(_target_baud_rate),
+                                                timeout=self._timeout)
 
     def recv_bytes(self, size: int = 1024) -> bytes:
         """

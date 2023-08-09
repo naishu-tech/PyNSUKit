@@ -83,11 +83,11 @@ def fpga_free_dma(fd):
     libxdma.fpga_free_dma(fd)
 
 
-def fpga_send(board, chnl, fd, _, length, offset=0, last=1, mm_addr=0, mm_addr_inc=0, timeout=TIMEOUT):
+def fpga_send(board, chnl, fd, length, offset=0, last=1, mm_addr=0, mm_addr_inc=0, timeout=TIMEOUT):
     return libxdma.fpga_send(board, chnl, fd, length, offset, last, mm_addr, mm_addr_inc, timeout)
 
 
-def fpga_recv(board, chnl, fd, _, length, offset=0, last=1, mm_addr=0, mm_addr_inc=0, timeout=TIMEOUT):
+def fpga_recv(board, chnl, fd, length, offset=0, last=1, mm_addr=0, mm_addr_inc=0, timeout=TIMEOUT):
     return libxdma.fpga_recv(board, chnl, fd, length, offset, last, mm_addr, mm_addr_inc, timeout)
 
 
