@@ -32,7 +32,7 @@ class BaseCmdUItf(UInterface):
     @staticmethod
     def _fmt_reg_write(reg: int = 0, value: int = 0) -> bytes:
         """!
-        格式化TCP/serial模拟写寄存器功能的icd
+        @brief 格式化TCP/serial模拟写寄存器功能的icd
         @param reg: 寄存器地址
         @param value: 寄存器值
         @return: 格式化好的icd指令
@@ -43,7 +43,7 @@ class BaseCmdUItf(UInterface):
     @staticmethod
     def _fmt_reg_read(reg: int = 0) -> bytes:
         """!
-        格式化TCP/serial模拟读寄存器功能的icd
+        @brief 格式化TCP/serial模拟读寄存器功能的icd
         @param reg: 寄存器地址
         @return: 格式化好的icd指令
         """

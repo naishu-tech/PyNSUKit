@@ -23,7 +23,7 @@ def head_check(send_cmd, recv_cmd):
         raise RuntimeError("返回ID错误")
     if recv_head[2] != send_head[2]:
         raise RuntimeError("返回序号错误")
-    return recv_cmd[3]
+    return recv_head[3]
 
 
 class TCPCmdUItf(BaseCmdUItf):
@@ -74,7 +74,7 @@ class TCPCmdUItf(BaseCmdUItf):
             raise RuntimeError(f"Fail in send")
         recv = self.recv_bytes(16)
         result_len = head_check(cmd, recv)
-        result = self.recv_bytes(result_len - 20)
+        result = self.recv_bytes(result_len - 16)
         return int.from_bytes(result, "little")
 
     def read(self, addr: int) -> int:
@@ -83,7 +83,7 @@ class TCPCmdUItf(BaseCmdUItf):
             raise RuntimeError(f"Fail in send")
         recv = self.recv_bytes(16)
         result_len = head_check(cmd, recv)
-        result = self.recv_bytes(result_len - 20)
+        result = self.recv_bytes(result_len - 16)
         return int.from_bytes(result, "little")
 
     def close(self):

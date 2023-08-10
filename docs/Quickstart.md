@@ -7,30 +7,31 @@
     - pip install NSUKit
 ### 使用接口
 ``` python
-from nsukit.core.NSUKit import NSUKit
-from nsukit.core.interface import CommandTCP, CommandPCIE, CommandSerial, DataTCP
+from nsukit import *
 
 # 使用TCP指令
-nsukit = NSUKit(CommandTCP, DataTCP)
-nsukit.start_command('127.0.0.1')
+nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)
+nsukit.start_command(target='127.0.0.1', port=5001)
 
 # 使用Serial指令
-nsukit = NSUKit(CommandSerial, DataTCP)
-nsukit.start_command('COM0')
+nsukit = NSUKit(SerialCmdUItf, TCPChnlUItf)
+nsukit.start_command("COM1", target_baud_rate=9600)
 
 # 使用PCIE指令
-nsukit = NSUKit(CommandPCIE, DataTCP)
-nsukit.start_command(0)
+nsukit = NSUKit(PCIECmdUItf, TCPChnlUItf)
+nsukit.start_command(target=0, sent_base=0, recv_base=0)
 
 # 示例
-nsukit = NSUKit(CommandTCP, DataTCP)
-nsukit.start_command('127.0.0.1')
-print(nsukit.read('dds0中心频率'))
-print(nsukit.read(0x01))
-print(nsukit.bulk_read(['dds0中心频率', 0x01, 'dds0中心频率']))
-print(nsukit.write(0x01, 0x04))
-print(nsukit.write("dds0中心频率", 0x04))
-print(nsukit.bulk_write({0x02: 0x02, "dds0中心频率": 0x04, 0x03: 0x03}))
+nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)
+nsukit.start_command(target='127.0.0.1', port=5001)
+print(nsukit.read("ADC NCO频率"))
+print(nsukit.read(0x1))
+print(nsukit.bulk_read([0x1, 0x1]))
+print(nsukit.bulk_read([0x1, "ADC NCO频率"]))
+print(nsukit.write(0x1, 0x1))
+print(nsukit.write("ADC NCO频率", 1))
+print(nsukit.bulk_write({0x1: 0x1, 0x2: 0x1}))
+print(nsukit.bulk_write({0x1: 0x1, "ADC NCO频率": 1}))
 ```
 
     

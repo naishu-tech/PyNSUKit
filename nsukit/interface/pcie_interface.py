@@ -8,6 +8,11 @@ from ..tools.xdma import Xdma
 
 
 class PCIECmdUItf(BaseCmdUItf):
+    """!
+    @brief PCIE指令接口
+    @details 包括连接/断开、发送等功能
+    """
+
     _once_send_or_recv_timeout = 1  # _break_status状态改变间隔应超过该值
     _timeout = 30
     _block_size = 4096
@@ -28,43 +33,75 @@ class PCIECmdUItf(BaseCmdUItf):
         self.open_flag = False
 
     def open_board(self):
+        """!
+        @brief 开启板卡
+        @details 使用xdma开启板卡
+        @return:
+        """
         if not self.open_flag:
             self.xdma.open_board(self.board)
             self.open_flag = True
 
     def close_board(self):
+        """!
+        @brief 关闭板卡
+        @details 使用xdma关闭板卡
+        @return:
+        """
         if self.open_flag:
             self.xdma.close_board(self.board)
             self.open_flag = False
 
     def accept(self, board, sent_base, recv_base, **kwargs):
-        """
-
-        @param board: board number
-        @param sent_base:
-        @param recv_base:
+        """!
+        @brief 初始化pcie指令接口
+        @details 初始化pcie指令接口，获取发送基地址，返回基地址
+        @param board: 板卡号
+        @param sent_base: 发送基地址
+        @param recv_base: 返回基地址
+        @param kwargs:
         @return:
         """
         self.board = board
         self.sent_base = sent_base
         self.recv_base = recv_base
+        self.open_board()
 
     def close(self):
+        """!
+        @brief 关闭连接
+        @details 关闭板卡，释放锁
+        @return:
+        """
+        self.close_board()
         self.lock.release()
 
     def set_timeout(self, s: int):
-        """
-
-        @param s: second
-        @return:
+        """!
+        @brief 设置超时时间
+        @details 设置pcie指令的超时时间
+        @param s: 秒
+        :return:
         """
         self.timeout = s
 
     def write(self, addr: int, value: int):
+        """!
+        @brief pcie写寄存器
+        @details 按照输入地址值方式，使用wr_lite写入目标寄存器
+        @param addr: 寄存器地址
+        @param value: 要写入的值
+        @return: True/False
+        """
         if self.open_flag:
-            self.xdma.alite_write(addr, value, self.board)
+            return self.xdma.alite_write(addr, value, self.board)
 
     def read(self, addr: int):
+        """!
+
+        @param addr:
+        @return:
+        """
         return self.xdma.alite_read(addr, self.board)[1]
 
     def send_bytes(self, data: bytes):
@@ -159,9 +196,8 @@ class PCIECmdUItf(BaseCmdUItf):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.lock.release()
         if self.open_flag:
-            self.close_board()
+            self.close()
 
 
 class PCIEChnlUItf(BaseChnlUItf):
