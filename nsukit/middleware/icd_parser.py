@@ -62,6 +62,10 @@ feedback_value_fmt = {
 
 
 class ICDRegMw(BaseRegMw):
+    """!
+    @brief ICD控制
+    @details 用于使用icd进行指令收发
+    """
     fmt_mode = "="  # pack/unpack 大小端模式
 
     def __init__(self, kit: "NSUKit", file_name='icd.json'):
@@ -74,9 +78,10 @@ class ICDRegMw(BaseRegMw):
 
     def config(self, *, icd_path=None, **kwargs):
         """!
-        指定icd配置文件的路径
-        @param icd_path:
-        @param kwargs:
+        @brief 配置icd路径
+        @details 指定icd配置文件的路径，并加载icd
+        @param icd_path: icd文件路径
+        @param kwargs: 其他参数
         @return:
         """
         if icd_path is None:
@@ -86,6 +91,11 @@ class ICDRegMw(BaseRegMw):
         self.load()
 
     def load(self):
+        """!
+        @brief  加载icd
+        @details 根据icd文件加载参数指令等
+        @return: True/False
+        """
         file_path = self._file_name
         with open(file_path, 'r', encoding='utf-8') as fp:
             try:
@@ -104,7 +114,13 @@ class ICDRegMw(BaseRegMw):
         return True
 
     def save(self, path=''):
-        # TODO: ICD的保存怎么在nsukit中引出
+        """!
+        @brief 保存icd
+        @details 将当前运行icd参数以另一个名称进行保存
+        @param path: 文件路径
+        @return: True
+        """
+        # todo: ICD的保存怎么在nsukit中引出
         path = path + '\\' if path else path
         with open(path + self._file_name.split('.')[0] + '_run.json', 'w', encoding='utf-8') as fp:
             # 按utf-8的格式格式化并写入文件
@@ -113,6 +129,14 @@ class ICDRegMw(BaseRegMw):
         return True
 
     def get_param(self, param_name: str, default=0, fmt_type=int):
+        """!
+        @brief 获取icd参数
+        @details 根据参数名称获取参数值
+        @param param_name: 参数名称
+        @param default: 默认值
+        @param fmt_type: 参数值格式化类型
+        @return: 格式化后的参数值
+        """
         param = self.param.get(param_name, None)
         if param is None:
             logging.warning(msg=f'未找到参数：{param_name}')
@@ -121,6 +145,14 @@ class ICDRegMw(BaseRegMw):
         return fmt_type(param[2])
 
     def set_param(self, param_name: str, value, fmt_type=int):
+        """!
+        @brief 设置参数值
+        @details 根据参数名称设置相应的值
+        @param param_name: 参数名称
+        @param value: 参数值
+        @param fmt_type: 参数值格式化类型
+        @return:
+        """
         param = self.param.get(param_name, [param_name, 'uint32', value])
         if isinstance(value, str) and value.startswith('0x'):
             param[2] = int(value, 16)
@@ -133,6 +165,14 @@ class ICDRegMw(BaseRegMw):
         self.param.update({param_name: param})
 
     def fmt_command(self, command_name, command_type: str = "send", file_name=None) -> bytes:
+        """!
+        @brief 格式化指令
+        @details 根据指令名、指令类型和文件名组合成指令
+        @param command_name: 指令名称
+        @param command_type: 指令类型(发送接收)
+        @param file_name: 文件名
+        @return: 格式化好的指令
+        """
         file_data = b''
         command = []
         file_length = 0
@@ -213,11 +253,10 @@ class ICDRegMw(BaseRegMw):
 
     def find_command(self, parm_name: str) -> list:
         """!
-        根据参数名称,查找所有包含此参数的指令名
-
+        @brief 查找指令并执行
+        @details 根据参数名查找指令并执行指令
         @param parm_name: 参数名
-        @return 包含此参数的的指令集合 list
-
+        @return: 结果列表
         """
         result_list = []
         for command in self.command:
@@ -238,5 +277,13 @@ class ICDRegMw(BaseRegMw):
 
     @staticmethod
     def check_recv(recv_cmd, recv, command):
+        """!
+        @brief 检查返回值
+        @details 检查返回指令的包头与icd文件中的是否一样
+        @param recv_cmd: icd中对应指令的recv指令
+        @param recv: 返回的指令
+        @param command: 指令名
+        @return:
+        """
         if recv_cmd[0:12] != recv[0:12]:
             raise RuntimeError(f"Recv head error command:{command}")
