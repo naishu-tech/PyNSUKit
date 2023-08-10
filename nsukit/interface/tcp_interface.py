@@ -15,6 +15,13 @@ from ..tools.logging import logging
 
 
 def head_check(send_cmd, recv_cmd):
+    """!
+    @brief 包头检查
+    @details 返回数据包头检查
+    @param send_cmd: 发送的指令
+    @param recv_cmd: 返回的指令
+    @return: 返回指令的总长度
+    """
     send_head = struct.unpack('=IIII', send_cmd[0:16])
     recv_head = struct.unpack('=IIII', recv_cmd)
     if recv_head[0] != 0xCFCFCFCF:
@@ -27,6 +34,10 @@ def head_check(send_cmd, recv_cmd):
 
 
 class TCPCmdUItf(BaseCmdUItf):
+    """!
+    @brief 网络指令接口
+    @details 包括连接/断开、发送、接收等功能
+    """
     _timeout = 5
 
     def __init__(self):
@@ -36,10 +47,12 @@ class TCPCmdUItf(BaseCmdUItf):
         self.busy_lock = Lock()
 
     def accept(self, target: str, port: int, **kwargs):
-        """
-
+        """!
+        @brief 初始化网络指令接口
+        @details 初始化网络指令接口，获取IP地址，端口号等参数
         @param target: IP地址
-        @param port:
+        @param port: 端口号
+        @param kwargs: 其他参数
         @return:
         """
         with self.busy_lock:
@@ -50,25 +63,34 @@ class TCPCmdUItf(BaseCmdUItf):
             self._tcp_server.connect((target, port))
 
     def recv_bytes(self, size: int) -> bytes:
-        """
-
-        @param size: 返回长度
-        @return:
+        """!
+        @brief 接收数据
+        @details 使用网络接收指定大小的数据
+        @param size: 接收数据的长度
+        @return: 接收到的数据
         """
         with self.busy_lock:
             return self._tcp_server.recv(size)
 
     def send_bytes(self, data: bytes) -> int:
-        """
-
-        @param data: 数据
-        @return: 已发送的长度
+        """!
+        @brief 发送数据
+        @details 使用网络发送数据
+        @param data: 要发送的数据
+        @return: 发送完成的数据长度
         """
         with self.busy_lock:
             send_len = self._tcp_server.send(data)
             return send_len
 
     def write(self, addr: int, value: int) -> int:
+        """!
+        @brief 发送数据
+        @details 使用网络以地址值的方式发送一条约定好的特殊指令
+        @param addr: 要修改的地址
+        @param value: 地址中要赋的值
+        @return: 返回数据中的结果
+        """
         cmd = self._fmt_reg_write(addr, value)
         if len(cmd) != self.send_bytes(cmd):
             raise RuntimeError(f"Fail in send")
@@ -78,6 +100,12 @@ class TCPCmdUItf(BaseCmdUItf):
         return int.from_bytes(result, "little")
 
     def read(self, addr: int) -> int:
+        """!
+        @brief 接收数据
+        @details 使用网络以地址的方式发送一条约定好的特殊指令
+        @param addr: 要读取的地址
+        @return: 返回读取到的结果
+        """
         cmd = self._fmt_reg_read(addr)
         if len(cmd) != self.send_bytes(cmd):
             raise RuntimeError(f"Fail in send")
@@ -87,6 +115,11 @@ class TCPCmdUItf(BaseCmdUItf):
         return int.from_bytes(result, "little")
 
     def close(self):
+        """!
+        @brief 关闭连接
+        @details 关闭网络连接
+        @return:
+        """
         try:
             self._tcp_server.shutdown(socket.SHUT_RDWR)
             self._tcp_server.close()
@@ -94,15 +127,22 @@ class TCPCmdUItf(BaseCmdUItf):
             logging.error(msg=e)
 
     def set_timeout(self, s: int = 5):
-        """
-
-        @param s: 时间（秒）
+        """!
+        @brief 设置超时时间
+        @details 根据传入的数值设置串口的超时时间
+        @param s: 秒
         @return:
         """
         self._tcp_server.settimeout(s)
 
 
 def get_port(ip):
+    """!
+    @brief 获取数据流端口
+    @details 根据目标IP地址计算出端口号
+    @param ip: 目标ip
+    @return: 计算的端口号
+    """
     ip_match = r'^(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[1-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)$'
     if len(ip) >= 12 and re.match(ip_match, ip):
         _port = ip.split('.')[3][-2:]
@@ -113,17 +153,30 @@ def get_port(ip):
 
 
 class TCPChnlUItf(BaseChnlUItf):
+    """!
+    @brief 网络数据流接口
+    @details 包括连接/断开、内存操作、接收/等待/终止等功能
+    """
     _local_port = 0
     _timeout = 10
 
     @dataclass
     class Memory:
+        """!
+        @brief 内存类
+        @details 开辟一块内存使用的类
+        """
         memory: np.ndarray
         size: int
         idx: int
         using_event: Event = field(default_factory=Event)
 
         def __post_init__(self):
+            """!
+            @brief 初始化
+            @details 初始化内存对象，给属性赋值
+            @return:
+            """
             self.lock: Lock = Lock()
             self._u_size: int = 0
 
@@ -134,14 +187,16 @@ class TCPChnlUItf(BaseChnlUItf):
 
         @using_size.setter
         def using_size(self, value):
+            """
+            @brief 设置已经使用的内存大小
+            @details 在写入数据时填入写入数据的大小
+            @param value: 使用的内存大小
+            @return:
+            """
             with self.lock:
                 self._u_size = value
 
     def __init__(self):
-        """
-        网络数据上下行接口
-
-        """
         self.fd = None
         self.stop_event: Union[None, Event] = threading.Event()
         self._tcp_server = None
@@ -153,6 +208,14 @@ class TCPChnlUItf(BaseChnlUItf):
         self._recv_thread: threading.Thread = None
 
     def accept(self, target: str, port: int = 0, **kwargs):
+        """!
+        @brief 连接
+        @details 根据IP地址端口号建立连接
+        @param target: IP地址
+        @param port: 端口号
+        @param kwargs: 其他参数
+        @return:
+        """
         if not self.open_flag:
             self._local_port = get_port(ip=target) if port == 0 else port
             self._tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -161,14 +224,30 @@ class TCPChnlUItf(BaseChnlUItf):
             logging.info(msg='TCP connection established')
 
     def set_timeout(self, value=2):
+        """!
+        @brief 设置超时时间
+        @details 根据传入的数值设置TCPServer的超时时间
+        @param value: 秒
+        @return:
+        """
         self._tcp_server.settimeout(value)
 
     def open_board(self):
+        """!
+        @brief 监听TCP
+        @details 根据设置的端口号进行监听
+        @return:
+        """
         self.open_flag = True
         self._tcp_server.bind(('0.0.0.0', self._local_port))
         self._tcp_server.listen(10)
 
     def close_board(self):
+        """!
+        @brief 关闭连接
+        @details 关闭server以及用于传输数据的子链接
+        @return:
+        """
         if self.open_flag:
             try:
                 self._tcp_server.close()
@@ -181,10 +260,11 @@ class TCPChnlUItf(BaseChnlUItf):
 
     def alloc_buffer(self, length: int, buf: Union[int, np.ndarray, None] = None) -> int:
         """!
-        申请内存
-        @param length: 内存大小，单位为4Byte
-        @param buf: 指定一片内存，buf可为内存指针或np.ndarray
-        @return: 内存描述对象的id
+        @brief 申请一片内存
+        @details 根据传入参数实例化内存类，存入字典中
+        @param length: 申请长度
+        @param buf: 内存类型
+        @return: 申请的内存在字典中的key
         """
         # 输入buf为内存指针时
         if isinstance(buf, int):
@@ -205,15 +285,50 @@ class TCPChnlUItf(BaseChnlUItf):
         return memory_obj.idx
 
     def free_buffer(self, fd):
-        return self.memory_dict.pop(fd)
+        """!
+        @brief 释放一片内存
+        @details 使用fpga_free_dma在pcie设备上释放一片内存，该内存为输入的内存
+        @param fd: 要释放的内存地址
+        @return: True/Flse
+        """
+        try:
+            self.memory_dict.pop(fd)
+            return True
+        except Exception:
+            return False
 
     def get_buffer(self, fd, length):
+        """!
+        @brief 获取内存中的值
+        @details 根据内存的key获取内存中存储的数据
+        @param fd: 内存地址
+        @param length: 获取长度
+        @return: 内存中存储的数据
+        """
         return self.memory_dict[fd].memory[:length]
 
-    def send_open(self, chnl, prt, length, offset=0):
+    def send_open(self, chnl, fd, length, offset=0):
+        """!
+        @brief 数据下行开启
+        @details 开启数据流下行
+        @param chnl:
+        @param fd: 内存标号(key)
+        @param length: 要发送数据的长度
+        @param offset: 内存偏移量
+        @return:
+        """
         raise RuntimeError("Not supported yet")
 
-    def recv_open(self, chnl, prt, length, offset=0):
+    def recv_open(self, chnl, fd, length, offset=0):
+        """!
+        @brief 数据上行开启
+        @details 开启数据流上行
+        @param chnl:
+        @param fd: 内存标号(key)
+        @param length: 要接收数据的长度
+        @param offset: 内存偏移量
+        @return: True/False
+        """
         try:
             if not self.open_flag:
                 raise RuntimeError("You must use open_board first")
@@ -223,7 +338,7 @@ class TCPChnlUItf(BaseChnlUItf):
             logging.info(msg="Client connection")
             self._recv_server.settimeout(self._timeout)
             event = self.stop_event
-            self._recv_thread = threading.Thread(target=self._recv, args=(prt, length, offset, event),
+            self._recv_thread = threading.Thread(target=self._recv, args=(fd, length, offset, event),
                                                  daemon=True, name='TCP_recv')
             self._recv_thread.start()
         except Exception as e:
@@ -231,10 +346,19 @@ class TCPChnlUItf(BaseChnlUItf):
             return False
         return True
 
-    def _recv(self, prt, length, offset, event):
-        if prt not in self.memory_dict:
+    def _recv(self, fd, length, offset, event):
+        """!
+        @brief 数据上行
+        @details 数据流上行的具体实现
+        @param fd: 内存标号(key)
+        @param length: 要接收数据的长度
+        @param offset: 内存偏移量
+        @param event: 外部停止信号量
+        @return: 已使用内存大小
+        """
+        if fd not in self.memory_dict:
             raise RuntimeError(f"没有此内存块")
-        memory_object = self.memory_dict[prt]
+        memory_object = self.memory_dict[fd]
         if memory_object.using_event.is_set():
             raise RuntimeError("内存正在被使用")
         memory_object.using_event.set()
@@ -276,6 +400,13 @@ class TCPChnlUItf(BaseChnlUItf):
                 break
 
     def wait_dma(self, fd, timeout: int = 0):
+        """!
+        @brief 等待完成一次dma操作
+        @details 等待所有数据写入内存
+        @param fd: 内存标号(key)
+        @param timeout: 超时时间
+        @return: 已经写入内存中数据的大小
+        """
         if not self.open_flag:
             raise RuntimeError("You must use open_board first")
         if not self._recv_thread.is_alive():
@@ -290,6 +421,12 @@ class TCPChnlUItf(BaseChnlUItf):
             logging.error(msg=e)
 
     def break_dma(self, fd):
+        """!
+        @brief 终止本次dma操作
+        @details 停止向内存中写入数据
+        @param fd: 内存标号(key)
+        @return: 已经写入内存中数据的大小
+        """
         if not self.open_flag:
             raise RuntimeError("You must use open_board first")
         self.stop_event.set()
@@ -300,14 +437,27 @@ class TCPChnlUItf(BaseChnlUItf):
         return self.memory_dict[fd].using_size
 
     def stream_read(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
-        if not self.recv_open(chnl=chnl, prt=fd, length=length, offset=offset):
+        """!
+        @brief 数据流上行
+        @details 封装好的数据流上行函数
+        @param chnl:
+        @param fd: 内存标号(key)
+        @param length: 数据长度
+        @param offset: 内存偏移量
+        @param stop_event: 外部停止信号
+        @param time_out: 超时时间
+        @param flag: 1
+        @return: True/False
+        """
+        if not self.recv_open(chnl=chnl, fd=fd, length=length, offset=offset):
             return False
         while True:
             try:
+                time.sleep(0.2)
                 if stop_event.is_set():
                     break
                 if self.wait_dma(fd, time_out) == length:
-                    break
+                    return True
                 else:
                     continue
             except Exception as e:
@@ -315,6 +465,18 @@ class TCPChnlUItf(BaseChnlUItf):
                 break
 
     def stream_send(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
+        """!
+        @brief 数据流下行
+        @details 封装好的数据流下行函数
+        @param chnl:
+        @param fd: 内存标号(key)
+        @param length: 数据长度
+        @param offset: 内存偏移量
+        @param stop_event: 外部停止信号
+        @param time_out: 超时时间
+        @param flag: 1
+        @return: True/False
+        """
         raise RuntimeError("Not supported yet")
 
     def __exit__(self, exc_type, exc_val, exc_tb):

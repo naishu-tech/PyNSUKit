@@ -10,7 +10,7 @@ from ..tools.xdma import Xdma
 class PCIECmdUItf(BaseCmdUItf):
     """!
     @brief PCIE指令接口
-    @details 包括连接/断开、发送等功能
+    @details 包括连接/断开、发送、接收等功能
     """
 
     _once_send_or_recv_timeout = 1  # _break_status状态改变间隔应超过该值
@@ -35,7 +35,7 @@ class PCIECmdUItf(BaseCmdUItf):
     def open_board(self):
         """!
         @brief 开启板卡
-        @details 使用xdma开启板卡
+        @details 使用fpga_open开启板卡
         @return:
         """
         if not self.open_flag:
@@ -45,7 +45,7 @@ class PCIECmdUItf(BaseCmdUItf):
     def close_board(self):
         """!
         @brief 关闭板卡
-        @details 使用xdma关闭板卡
+        @details 使用fpga_close关闭板卡
         @return:
         """
         if self.open_flag:
@@ -88,7 +88,7 @@ class PCIECmdUItf(BaseCmdUItf):
     def write(self, addr: int, value: int):
         """!
         @brief pcie写寄存器
-        @details 按照输入地址值方式，使用wr_lite写入目标寄存器
+        @details 按照输入的地址、值，使用fpga_wr_lite写入目标寄存器
         @param addr: 寄存器地址
         @param value: 要写入的值
         @return: True/False
@@ -98,17 +98,19 @@ class PCIECmdUItf(BaseCmdUItf):
 
     def read(self, addr: int):
         """!
-
-        @param addr:
-        @return:
+        @brief pcie读寄存器
+        @details 按照输入的地址，使用fpga_rd_lite查询该地址的值并返回
+        @param addr: 寄存器地址
+        @return: 该寄存的值
         """
         return self.xdma.alite_read(addr, self.board)[1]
 
     def send_bytes(self, data: bytes):
         """!
-
-        @param data:
-        @return:
+        @brief icd指令使用pcie发送
+        @details 只有在使用icd_parser发送指令时会用
+        @param data: 要发送的数据
+        @return: 已发送的数据长度
         """
         try:
             total_length, sent_length = len(data), 0
@@ -119,14 +121,16 @@ class PCIECmdUItf(BaseCmdUItf):
                 assert time.time() - st < self.timeout, f"send timeout, sent {sent_length}"
             self.sent_down = True
             self.timeout -= (time.time() - st)
+            return sent_length
         except AssertionError as e:
             assert 0, f"[toaxi] {e}"
 
     def recv_bytes(self, bufsize: int):
         """!
-        接收数据
-        @param bufsize:
-        @return:
+        @brief icd指令使用pcie接收
+        @details 只有在使用icd_parser接收指令时会用
+        @param bufsize: 要接收数据的长度
+        @return: 接收到的数据
         """
         try:
             if bufsize != 0:
@@ -147,9 +151,10 @@ class PCIECmdUItf(BaseCmdUItf):
 
     def _send(self, data):
         """!
-        不满足4Bytes整倍数的，被自动补齐为4Bytes整倍数
-        @param data:
-        @return:
+        @brief 指令发送
+        @details 数据不满足4Bytes整倍数的，被自动补齐为4Bytes整倍数，使用wr_lite写入数据
+        @param data: 要发送的数据
+        @return: 已经发送的数据长度
         """
         data += b'\x00' * (len(data) % 4)
         data = np.frombuffer(data, dtype=np.uint32)
@@ -159,6 +164,12 @@ class PCIECmdUItf(BaseCmdUItf):
         return int(data.nbytes)
 
     def _recv(self, size):
+        """!
+        @brief 指令接收
+        @details 使用rd_lite读取数据
+        @param size: 要接收的数据大小
+        @return: 接收的数据
+        """
         recv_size = size + size % 4
         recv_size //= 4
         res = np.zeros((recv_size,), dtype=np.uint32)
@@ -173,16 +184,32 @@ class PCIECmdUItf(BaseCmdUItf):
 
     @sent_down.setter
     def sent_down(self, value):
+        """
+        @brief 标识
+        @details 数据写入完成标识
+        @return:
+        """
         if value:
             self.xdma.alite_write(0x00003030, 1, self.board)
             time.sleep(0.02)
             self.xdma.alite_write(0x00003030, 0, self.board)
 
     def reset_irq(self):
+        """!
+        @brief 重置中断
+        @details 重置fpga给的中断
+        @return:
+        """
         self.xdma.alite_write(0 + 44, 0x80000000, self.board)
         self.xdma.alite_write(0 + 44, 0x0, self.board)
 
     def per_recv(self, callback=None):
+        """
+        @brief 接收数据前
+        @details 在接收数据前运行，等待数据准备完成
+        @param callback: 回调函数
+        @return:
+        """
         res = self.xdma.wait_irq(self.irq_num, self.board, self.timeout * 1000)
         if not res:
             raise TimeoutError(f'toaxi timeout')
@@ -201,55 +228,152 @@ class PCIECmdUItf(BaseCmdUItf):
 
 
 class PCIEChnlUItf(BaseChnlUItf):
+    """!
+    @brief PCIE数据流接口
+    @details 包括连接/断开、内存操作、接收/等待/终止等功能
+    """
+
     def __init__(self):
         self.xdma = Xdma()
         self.board = None
         self.open_flag = False
 
     def accept(self, board, **kwargs):
+        """!
+        @brief 连接
+        @details 连接对应板卡
+        @param board: 板卡逻辑id
+        @param kwargs: 其他参数
+        @return:
+        """
         if not self.open_flag:
             self.board = board
             self.open_board()
 
     def open_board(self):
+        """!
+        @brief 开启板卡
+        @details 使用fpga_open开启对应pcie设备
+        @return:
+        """
         if not self.open_flag and self.board:
             self.xdma.open_board(self.board)
             self.open_flag = True
 
     def close_board(self):
+        """!
+        @brief 关闭板卡
+        @details 使用fpga_close关闭对应pcie设备
+        @return:
+        """
         if self.open_flag:
             self.xdma.close_board(self.board)
             self.open_flag = False
 
     def alloc_buffer(self, length, buf: int = None):
+        """!
+        @brief 申请一片内存
+        @details 使用fpga_alloc_dma在pcie设备上申请一片内存，该内存与pcie设备绑定
+        @param length: 申请长度
+        @param buf: 内存类型
+        @return: 申请的内存的地址
+        """
         if self.open_flag:
             return self.xdma.alloc_buffer(self.board, length, buf)
 
     def free_buffer(self, fd):
+        """!
+        @brief 释放一片内存
+        @details 使用fpga_free_dma在pcie设备上释放一片内存，该内存为输入的内存
+        @param fd: 要释放的内存地址
+        @return: True/Flse
+        """
         return self.xdma.free_buffer(fd)
 
     def get_buffer(self, fd, length):
+        """!
+        @brief 获取内存中的值
+        @details 使用fpga_get_dma_buffer在pcie设备上获取一片内存的数据
+        @param fd: 内存地址
+        @param length: 获取长度
+        @return: 内存中存储的数据
+        """
         return self.xdma.get_buffer(fd, length)
 
     def send_open(self, chnl, fd, length, offset=0):
+        """!
+        @brief 数据下行开启
+        @details 开启数据流下行
+        @param chnl: 通道号
+        @param fd: 一片内存的地址
+        @param length: 数据长度
+        @param offset: 内存偏移量
+        @return:
+        """
         if self.open_flag:
             return self.xdma.fpga_send(self.board, chnl, fd, length, offset=offset)
 
     def recv_open(self, chnl, fd, length, offset=0):
+        """!
+        @brief 数据上行开启
+        @details 开启数据流上行
+        @param chnl: 通道号
+        @param fd: 一片内存的地址
+        @param length: 数据长度
+        @param offset: 内存偏移量
+        @return:
+        """
         if self.open_flag:
             return self.xdma.fpga_recv(self.board, chnl, fd, length, offset=offset)
 
     def wait_dma(self, fd, timeout: int = 0):
+        """!
+        @brief 等待完成一次dma操作
+        @details 等待所有数据写入内存
+        @param fd: 内存地址
+        @param timeout: 超时时间
+        @return: 已经写入内存中数据的大小
+        """
         return self.xdma.wait_dma(fd, timeout)
 
     def break_dma(self, fd):
+        """!
+        @brief 终止本次dma操作
+        @details 停止向内存中写入数据
+        @param fd: 内存地址
+        @return: 已经写入内存中数据的大小
+        """
         return self.xdma.break_dma(fd=fd)
 
     def stream_read(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
+        """!
+        @brief 数据流上行
+        @details 封装好的数据流上行函数
+        @param chnl: 通道号
+        @param fd: 内存地址
+        @param length: 数据长度
+        @param offset: 内存偏移量
+        @param stop_event: 外部停止信号
+        @param time_out: 超时时间
+        @param flag: 1
+        @return: True/False
+        """
         if self.open_flag:
             return self.xdma.stream_read(self.board, chnl, fd, length, offset, stop_event, time_out, flag)
 
     def stream_send(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
+        """!
+        @brief 数据流下行
+        @details 封装好的数据流下行函数
+        @param chnl: 通道号
+        @param fd: 内存地址
+        @param length: 数据长度
+        @param offset: 内存偏移量
+        @param stop_event: 外部停止信号
+        @param time_out: 超时时间
+        @param flag: 1
+        @return: True/False
+        """
         if self.open_flag:
             return self.xdma.stream_write(self.board, chnl, fd, length, offset, stop_event, time_out, flag)
 

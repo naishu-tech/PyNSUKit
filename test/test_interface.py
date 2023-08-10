@@ -29,10 +29,14 @@ def test_nsukit_cmd_pcie():
     """
     nsukit = NSUKit(PCIECmdUItf, TCPChnlUItf)
     nsukit.start_command(target=0, sent_base=0, recv_base=0)
+    print(nsukit.read("ADC NCO频率"))
     print(nsukit.read(0x1))
-    print(nsukit.bulk_read([0x1, 0x2, 0x3]))
-    print(nsukit.write(0x1, 0x2))
+    print(nsukit.bulk_read([0x1, 0x1]))
+    print(nsukit.bulk_read([0x1, "ADC NCO频率"]))
+    print(nsukit.write(0x1, 0x1))
+    print(nsukit.write("ADC NCO频率", 1))
     print(nsukit.bulk_write({0x1: 0x1, 0x2: 0x1}))
+    print(nsukit.bulk_write({0x1: 0x1, "ADC NCO频率": 1}))
 
 
 def test_nsukit_cmd_serial():
