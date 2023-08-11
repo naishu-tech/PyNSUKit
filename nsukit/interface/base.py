@@ -35,9 +35,9 @@ class BaseCmdUItf(UInterface):
         @brief 格式化TCP/serial模拟写寄存器功能的icd
         @param reg: 寄存器地址
         @param value: 寄存器值
-        @return: 格式化好的icd指令
+        @return 格式化好的icd指令
         """
-        pack = (0x5F5F5F5F, 0x31000000, 0x00000000, 24, reg, value)
+        pack = (0x5F5F5F5F, 0x31000000, 0x00000000, 0x18000000, reg, value)
         return struct.pack('=IIIIII', *pack)
 
     @staticmethod
@@ -45,9 +45,9 @@ class BaseCmdUItf(UInterface):
         """!
         @brief 格式化TCP/serial模拟读寄存器功能的icd
         @param reg: 寄存器地址
-        @return: 格式化好的icd指令
+        @return 格式化好的icd指令
         """
-        pack = (0x5F5F5F5F, 0x31000000, 0x00000000, 24, reg)
+        pack = (0x5F5F5F5F, 0x31000000, 0x00000000, 0x14000000, reg)
         return struct.pack('=IIIII', *pack)
 
 

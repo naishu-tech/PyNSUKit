@@ -36,7 +36,7 @@ class PCIECmdUItf(BaseCmdUItf):
         """!
         @brief 开启板卡
         @details 使用fpga_open开启板卡
-        @return:
+        @return
         """
         if not self.open_flag:
             self.xdma.open_board(self.board)
@@ -46,7 +46,7 @@ class PCIECmdUItf(BaseCmdUItf):
         """!
         @brief 关闭板卡
         @details 使用fpga_close关闭板卡
-        @return:
+        @return
         """
         if self.open_flag:
             self.xdma.close_board(self.board)
@@ -59,8 +59,8 @@ class PCIECmdUItf(BaseCmdUItf):
         @param board: 板卡号
         @param sent_base: 发送基地址
         @param recv_base: 返回基地址
-        @param kwargs:
-        @return:
+        @param kwargs: 其他参数
+        @return
         """
         self.board = board
         self.sent_base = sent_base
@@ -71,7 +71,7 @@ class PCIECmdUItf(BaseCmdUItf):
         """!
         @brief 关闭连接
         @details 关闭板卡，释放锁
-        @return:
+        @return
         """
         self.close_board()
         self.lock.release()
@@ -80,8 +80,8 @@ class PCIECmdUItf(BaseCmdUItf):
         """!
         @brief 设置超时时间
         @details 设置pcie指令的超时时间
-        @param s: 秒
-        :return:
+        @param s 秒
+        @return
         """
         self.timeout = s
 
@@ -89,9 +89,9 @@ class PCIECmdUItf(BaseCmdUItf):
         """!
         @brief pcie写寄存器
         @details 按照输入的地址、值，使用fpga_wr_lite写入目标寄存器
-        @param addr: 寄存器地址
-        @param value: 要写入的值
-        @return: True/False
+        @param addr 寄存器地址
+        @param value 要写入的值
+        @return True/False
         """
         if self.open_flag:
             return self.xdma.alite_write(addr, value, self.board)
@@ -100,8 +100,8 @@ class PCIECmdUItf(BaseCmdUItf):
         """!
         @brief pcie读寄存器
         @details 按照输入的地址，使用fpga_rd_lite查询该地址的值并返回
-        @param addr: 寄存器地址
-        @return: 该寄存的值
+        @param addr 寄存器地址
+        @return 该寄存的值
         """
         return self.xdma.alite_read(addr, self.board)[1]
 
@@ -109,8 +109,8 @@ class PCIECmdUItf(BaseCmdUItf):
         """!
         @brief icd指令使用pcie发送
         @details 只有在使用icd_parser发送指令时会用
-        @param data: 要发送的数据
-        @return: 已发送的数据长度
+        @param data 要发送的数据
+        @return 已发送的数据长度
         """
         try:
             total_length, sent_length = len(data), 0
@@ -129,8 +129,8 @@ class PCIECmdUItf(BaseCmdUItf):
         """!
         @brief icd指令使用pcie接收
         @details 只有在使用icd_parser接收指令时会用
-        @param bufsize: 要接收数据的长度
-        @return: 接收到的数据
+        @param bufsize 要接收数据的长度
+        @return 接收到的数据
         """
         try:
             if bufsize != 0:
@@ -153,8 +153,8 @@ class PCIECmdUItf(BaseCmdUItf):
         """!
         @brief 指令发送
         @details 数据不满足4Bytes整倍数的，被自动补齐为4Bytes整倍数，使用wr_lite写入数据
-        @param data: 要发送的数据
-        @return: 已经发送的数据长度
+        @param data 要发送的数据
+        @return 已经发送的数据长度
         """
         data += b'\x00' * (len(data) % 4)
         data = np.frombuffer(data, dtype=np.uint32)
@@ -167,8 +167,8 @@ class PCIECmdUItf(BaseCmdUItf):
         """!
         @brief 指令接收
         @details 使用rd_lite读取数据
-        @param size: 要接收的数据大小
-        @return: 接收的数据
+        @param size 要接收的数据大小
+        @return 接收的数据
         """
         recv_size = size + size % 4
         recv_size //= 4
@@ -184,10 +184,10 @@ class PCIECmdUItf(BaseCmdUItf):
 
     @sent_down.setter
     def sent_down(self, value):
-        """
+        """！
         @brief 标识
         @details 数据写入完成标识
-        @return:
+        @return
         """
         if value:
             self.xdma.alite_write(0x00003030, 1, self.board)
@@ -198,17 +198,17 @@ class PCIECmdUItf(BaseCmdUItf):
         """!
         @brief 重置中断
         @details 重置fpga给的中断
-        @return:
+        @return
         """
         self.xdma.alite_write(0 + 44, 0x80000000, self.board)
         self.xdma.alite_write(0 + 44, 0x0, self.board)
 
     def per_recv(self, callback=None):
-        """
+        """！
         @brief 接收数据前
         @details 在接收数据前运行，等待数据准备完成
-        @param callback: 回调函数
-        @return:
+        @param callback 回调函数
+        @return
         """
         res = self.xdma.wait_irq(self.irq_num, self.board, self.timeout * 1000)
         if not res:
@@ -242,9 +242,9 @@ class PCIEChnlUItf(BaseChnlUItf):
         """!
         @brief 连接
         @details 连接对应板卡
-        @param board: 板卡逻辑id
-        @param kwargs: 其他参数
-        @return:
+        @param board 板卡逻辑id
+        @param kwargs 其他参数
+        @return
         """
         if not self.open_flag:
             self.board = board
@@ -254,7 +254,7 @@ class PCIEChnlUItf(BaseChnlUItf):
         """!
         @brief 开启板卡
         @details 使用fpga_open开启对应pcie设备
-        @return:
+        @return
         """
         if not self.open_flag and self.board:
             self.xdma.open_board(self.board)
@@ -264,7 +264,7 @@ class PCIEChnlUItf(BaseChnlUItf):
         """!
         @brief 关闭板卡
         @details 使用fpga_close关闭对应pcie设备
-        @return:
+        @return
         """
         if self.open_flag:
             self.xdma.close_board(self.board)
@@ -274,9 +274,9 @@ class PCIEChnlUItf(BaseChnlUItf):
         """!
         @brief 申请一片内存
         @details 使用fpga_alloc_dma在pcie设备上申请一片内存，该内存与pcie设备绑定
-        @param length: 申请长度
-        @param buf: 内存类型
-        @return: 申请的内存的地址
+        @param length 申请长度
+        @param buf 内存类型
+        @return 申请的内存的地址
         """
         if self.open_flag:
             return self.xdma.alloc_buffer(self.board, length, buf)
@@ -285,8 +285,8 @@ class PCIEChnlUItf(BaseChnlUItf):
         """!
         @brief 释放一片内存
         @details 使用fpga_free_dma在pcie设备上释放一片内存，该内存为输入的内存
-        @param fd: 要释放的内存地址
-        @return: True/Flse
+        @param fd 要释放的内存地址
+        @return True/Flse
         """
         return self.xdma.free_buffer(fd)
 
@@ -294,9 +294,9 @@ class PCIEChnlUItf(BaseChnlUItf):
         """!
         @brief 获取内存中的值
         @details 使用fpga_get_dma_buffer在pcie设备上获取一片内存的数据
-        @param fd: 内存地址
-        @param length: 获取长度
-        @return: 内存中存储的数据
+        @param fd 内存地址
+        @param length 获取长度
+        @return 内存中存储的数据
         """
         return self.xdma.get_buffer(fd, length)
 
@@ -304,11 +304,11 @@ class PCIEChnlUItf(BaseChnlUItf):
         """!
         @brief 数据下行开启
         @details 开启数据流下行
-        @param chnl: 通道号
-        @param fd: 一片内存的地址
-        @param length: 数据长度
-        @param offset: 内存偏移量
-        @return:
+        @param chnl 通道号
+        @param fd 一片内存的地址
+        @param length 数据长度
+        @param offset 内存偏移量
+        @return
         """
         if self.open_flag:
             return self.xdma.fpga_send(self.board, chnl, fd, length, offset=offset)
@@ -317,11 +317,11 @@ class PCIEChnlUItf(BaseChnlUItf):
         """!
         @brief 数据上行开启
         @details 开启数据流上行
-        @param chnl: 通道号
-        @param fd: 一片内存的地址
-        @param length: 数据长度
-        @param offset: 内存偏移量
-        @return:
+        @param chnl 通道号
+        @param fd 一片内存的地址
+        @param length 数据长度
+        @param offset 内存偏移量
+        @return
         """
         if self.open_flag:
             return self.xdma.fpga_recv(self.board, chnl, fd, length, offset=offset)
@@ -330,9 +330,9 @@ class PCIEChnlUItf(BaseChnlUItf):
         """!
         @brief 等待完成一次dma操作
         @details 等待所有数据写入内存
-        @param fd: 内存地址
-        @param timeout: 超时时间
-        @return: 已经写入内存中数据的大小
+        @param fd 内存地址
+        @param timeout 超时时间
+        @return 已经写入内存中数据的大小
         """
         return self.xdma.wait_dma(fd, timeout)
 
@@ -340,8 +340,8 @@ class PCIEChnlUItf(BaseChnlUItf):
         """!
         @brief 终止本次dma操作
         @details 停止向内存中写入数据
-        @param fd: 内存地址
-        @return: 已经写入内存中数据的大小
+        @param fd 内存地址
+        @return 已经写入内存中数据的大小
         """
         return self.xdma.break_dma(fd=fd)
 
@@ -349,14 +349,14 @@ class PCIEChnlUItf(BaseChnlUItf):
         """!
         @brief 数据流上行
         @details 封装好的数据流上行函数
-        @param chnl: 通道号
-        @param fd: 内存地址
-        @param length: 数据长度
-        @param offset: 内存偏移量
-        @param stop_event: 外部停止信号
-        @param time_out: 超时时间
-        @param flag: 1
-        @return: True/False
+        @param chnl 通道号
+        @param fd 内存地址
+        @param length 数据长度
+        @param offset 内存偏移量
+        @param stop_event 外部停止信号
+        @param time_out 超时时间
+        @param flag 1
+        @return True/False
         """
         if self.open_flag:
             return self.xdma.stream_read(self.board, chnl, fd, length, offset, stop_event, time_out, flag)
@@ -365,14 +365,14 @@ class PCIEChnlUItf(BaseChnlUItf):
         """!
         @brief 数据流下行
         @details 封装好的数据流下行函数
-        @param chnl: 通道号
-        @param fd: 内存地址
-        @param length: 数据长度
-        @param offset: 内存偏移量
-        @param stop_event: 外部停止信号
-        @param time_out: 超时时间
-        @param flag: 1
-        @return: True/False
+        @param chnl 通道号
+        @param fd 内存地址
+        @param length 数据长度
+        @param offset 内存偏移量
+        @param stop_event 外部停止信号
+        @param time_out 超时时间
+        @param flag 1
+        @return True/False
         """
         if self.open_flag:
             return self.xdma.stream_write(self.board, chnl, fd, length, offset, stop_event, time_out, flag)

@@ -23,6 +23,7 @@ class NSUKit:
         >>> nsukit = NSUKit(TCPCmdUItf, PCIECmdUItf)
         >>> ...
         @endcode
+
         @brief 初始化接口
         @details 根据传入的指令接口和数据流接口进行初始化
         @param cmd_itf_class: 指令类
@@ -45,6 +46,7 @@ class NSUKit:
         >>> print(nsukit.read(0x00000000))
         >>> print(nsukit.bulk_read(['dds0中心频率', 0x00000004, 0x00000008]))
         @endcode
+
         @brief 发送指令前准备
         @details 根据目标设备类型、参数建立链接
         @param target: 目标设备
@@ -172,11 +174,11 @@ class NSUKit:
     def stream_send(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
         return self.itf_chnl.stream_send(chnl, fd, length, offset, stop_event, flag)
 
-    def send_open(self, chnl, prt, dma_num, length, offset=0):
-        return self.itf_chnl.send_open(chnl, prt, dma_num, length, offset)
+    def send_open(self, chnl, fd, length, offset=0):
+        return self.itf_chnl.send_open(chnl, fd, length, offset)
 
-    def recv_open(self, chnl, prt, dma_num, length, offset=0):
-        return self.itf_chnl.recv_open(chnl, prt, dma_num, length, offset)
+    def recv_open(self, chnl, fd, length, offset=0):
+        return self.itf_chnl.recv_open(chnl, fd, length, offset)
 
     def wait_dma(self, fd, timeout: int = 0):
         return self.itf_chnl.wait_dma(fd, timeout)

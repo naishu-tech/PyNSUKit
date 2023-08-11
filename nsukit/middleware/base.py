@@ -34,13 +34,6 @@ class BaseRegMw(UMiddleware):
         ...
 
     def find_command(self, parm_name: str) -> list:
-        """!
-        根据参数名称,查找所有包含此参数的指令名
-
-        @param parm_name: 参数名
-        @return 包含此参数的的指令集合 list
-
-        """
         ...
 
 
