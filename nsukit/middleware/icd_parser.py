@@ -35,7 +35,9 @@ value_python = {
     "int32": int,
     "float": float,
     "double": float,
-    "file": str
+    "file": str,
+    "file_data": str,
+    "file_length": str
 }
 
 type_size = {
@@ -138,6 +140,8 @@ class ICDRegMw(BaseRegMw):
         @return: 格式化后的参数值
         """
         param = self.param.get(param_name, None)
+        if param[1] == "file_data" or param[1] == "file_length":
+            return param[2]
         if param is None:
             logging.warning(msg=f'未找到参数：{param_name}')
             self.param.update({param_name: [param_name, 'uint32', default]})
@@ -158,6 +162,8 @@ class ICDRegMw(BaseRegMw):
             param[2] = int(value, 16)
         elif isinstance(value, str) and value.startswith('0b'):
             param[2] = int(value, 2)
+        elif param[1] == "file_data" or param[1] == "file_length":
+            param[2] = value
         elif isinstance(value, str) and '.' in value and param[1] != 'file':
             param[2] = float(value)
         else:
@@ -201,7 +207,10 @@ class ICDRegMw(BaseRegMw):
             for register in self.command[command_name][command_type]:
                 if isinstance(register, list):
                     value, _fmt = self.__fmt_register(register, register[2])
-                    command.append(struct.pack(self.fmt_mode + _fmt, value))
+                    if _fmt == 'file_data':
+                        command.append(value)
+                    else:
+                        command.append(struct.pack(self.fmt_mode + _fmt, value))
                 elif isinstance(register, str):
                     if register == file_context_flag:
                         command.append(file_data)
@@ -209,7 +218,10 @@ class ICDRegMw(BaseRegMw):
                         command.append(struct.pack(self.fmt_mode + 'I', file_length))
                     elif register in self.param:
                         value, _fmt = self.__fmt_register(self.param[register], self.param[register][2])
-                        command.append(struct.pack(self.fmt_mode + _fmt, value))
+                        if _fmt == 'file_data':
+                            command.append(value)
+                        else:
+                            command.append(struct.pack(self.fmt_mode + _fmt, value))
                     elif register == f'{{{{{command_name}}}}}':
                         command.extend(target_bytes)
                     else:
@@ -224,9 +236,15 @@ class ICDRegMw(BaseRegMw):
         # self.kit.interface.send_bytes(command[0: 12] + struct.pack(self.fmt_mode + 'I', len(command)) + command[16:])
         return command[0: 12] + struct.pack(self.fmt_mode + 'I', len(command)) + command[16:]
 
-    @staticmethod
-    def __fmt_register(register: list, value):
+    def __fmt_register(self, register: list, value):
         try:
+
+            if register[1] == "file_data":
+                file_data, file_length = self.__get_file(value)
+                return file_data, "file_data"
+            if register[1] == "file_length":
+                file_data, file_length = self.__get_file(value)
+                return file_length, 'I'
             if isinstance(value, str) and value.startswith('0x'):
                 value = int(value, 16)
             if isinstance(value, str) and value.startswith('0b'):
@@ -261,19 +279,24 @@ class ICDRegMw(BaseRegMw):
         result_list = []
         for command in self.command:
             if parm_name in self.command[command]["send"]:
-                if len(self.command[command]["recv"]) < 5:
-                    raise RuntimeError(f"The command recv register is not define, command:{command}")
+                # if len(self.command[command]["recv"]) < 5:
+                #     raise RuntimeError(f"The command recv register is not define, command:{command}")
+                # send_cmd = self.fmt_command(command_name=command, command_type="send")
+                # recv_cmd = self.fmt_command(command_name=command, command_type="recv")
+                # if len(send_cmd) != self.kit.itf_cmd.send_bytes(send_cmd):
+                #     raise RuntimeError(f"Fail in send")
+                # recv = self.kit.itf_cmd.recv_bytes(struct.unpack("=I", recv_cmd[12:16])[0])
+                # self.check_recv(recv_cmd, recv, command)
+                # result_list.append(recv)
+                # for index, data in enumerate(self.command[command]["recv"]):
+                #     if index >= 4:
+                #         self.set_param(data, struct.unpack("=I", recv[index*4:index*4+4])[0])
+                #
                 send_cmd = self.fmt_command(command_name=command, command_type="send")
-                recv_cmd = self.fmt_command(command_name=command, command_type="recv")
                 if len(send_cmd) != self.kit.itf_cmd.send_bytes(send_cmd):
                     raise RuntimeError(f"Fail in send")
-                recv = self.kit.itf_cmd.recv_bytes(struct.unpack("=I", recv_cmd[12:16])[0])
-                self.check_recv(recv_cmd, recv, command)
-                result_list.append(recv)
-                for index, data in enumerate(self.command[command]["recv"]):
-                    if index >= 4:
-                        self.set_param(data, struct.unpack("=I", recv[index*4:index*4+4])[0])
-        return result_list
+                recv = self.kit.itf_cmd.recv_bytes(1024)
+        return recv.hex()
 
     @staticmethod
     def check_recv(recv_cmd, recv, command):

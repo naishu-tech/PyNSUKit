@@ -169,21 +169,74 @@ class NSUKit:
         return self.itf_chnl.get_buffer(fd, length)
 
     def stream_read(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+        """!
+        @brief 封装好的数据流上行函数
+        @details 预封装好的上行函数，将数据写入内存中
+        @param chnl: 通道号
+        @param fd: 内存表示
+        @param length: 上行数据大小
+        @param offset: 内存偏移量
+        @param stop_event: 外部停止信号
+        @param flag:
+        @return: True/False
+        """
         return self.itf_chnl.stream_read(chnl, fd, length, offset, stop_event, flag)
 
     def stream_send(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+        """!
+        @brief 封装好的数据流下行函数
+        @details 预封装好的下行函数
+        @param chnl: 通道号
+        @param fd: 内存表示
+        @param length: 上行数据大小
+        @param offset: 内存偏移量
+        @param stop_event: 外部停止信号
+        @param flag:
+        @return: True/False
+        """
         return self.itf_chnl.stream_send(chnl, fd, length, offset, stop_event, flag)
 
     def send_open(self, chnl, fd, length, offset=0):
+        """!
+        @brief 数据下行开启
+        @details 开启数据流下行
+        @param chnl 未使用
+        @param fd 内存标号
+        @param length 要发送数据的长度
+        @param offset 内存偏移量
+        @return
+        """
         return self.itf_chnl.send_open(chnl, fd, length, offset)
 
     def recv_open(self, chnl, fd, length, offset=0):
+        """!
+        @brief 数据上行开启
+        @details 开启数据流上行
+        @param chnl
+        @param fd 内存标号
+        @param length 要接收数据的长度
+        @param offset 内存偏移量
+        @return True/False
+        """
         return self.itf_chnl.recv_open(chnl, fd, length, offset)
 
     def wait_dma(self, fd, timeout: int = 0):
+        """!
+        @brief 等待完成一次dma操作
+        @details 等待所有数据写入内存
+        @param fd 内存标号
+        @param timeout 超时时间
+        @return 已经写入内存中数据的大小
+        """
         return self.itf_chnl.wait_dma(fd, timeout)
 
     def break_dma(self, fd):
+        """!
+        @brief 终止本次dma操作
+        @details 停止向内存中写入数据
+        @param fd 内存标号(key)
+        @return 已经写入内存中数据的大小
+        """
         return self.itf_chnl.break_dma(fd)
 
     def __exit__(self, exc_type, exc_val, exc_tb):

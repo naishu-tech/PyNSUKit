@@ -74,7 +74,8 @@ class PCIECmdUItf(BaseCmdUItf):
         @return
         """
         self.close_board()
-        self.lock.release()
+        if self.lock.locked():
+            self.lock.release()
 
     def set_timeout(self, s: int):
         """!

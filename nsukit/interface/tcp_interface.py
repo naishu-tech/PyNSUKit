@@ -38,7 +38,7 @@ class TCPCmdUItf(BaseCmdUItf):
     @brief 网络指令接口
     @details 包括连接/断开、发送、接收等功能
     """
-    _timeout = 5
+    _timeout = 15
 
     def __init__(self):
         self._tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

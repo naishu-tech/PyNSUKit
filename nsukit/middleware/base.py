@@ -30,7 +30,7 @@ class BaseRegMw(UMiddleware):
     def set_param(self, param_name: str, value, fmt_type=int):
         ...
 
-    def fmt_command(self, command_name, file_name=None) -> bytes:
+    def fmt_command(self, command_name, command_type: str = "send", file_name=None) -> bytes:
         ...
 
     def find_command(self, parm_name: str) -> list:
