@@ -3,7 +3,7 @@ from threading import Lock, Event
 
 import numpy as np
 
-from .base import BaseCmdUItf, BaseChnlUItf
+from .base import BaseCmdUItf, BaseChnlUItf, RegOperationMixin
 from ..tools.xdma import Xdma
 
 
@@ -254,7 +254,7 @@ class PCIECmdUItf(BaseCmdUItf):
             self.close()
 
 
-class PCIEChnlUItf(BaseChnlUItf):
+class PCIEChnlUItf(BaseChnlUItf, RegOperationMixin):
     """!
     @brief PCIE数据流接口
     @details 包括连接/断开、内存操作、接收/等待/终止等功能
@@ -264,6 +264,14 @@ class PCIEChnlUItf(BaseChnlUItf):
         self.xdma = Xdma()
         self.board = None
         self.open_flag = False
+
+    def reg_write(self, addr, value) -> bool:
+        if self.open_flag:
+            return self.xdma.alite_write(addr, value, self.board)
+
+    def reg_read(self, addr) -> int:
+        if self.open_flag:
+            return self.xdma.alite_read(addr, self.board)[1]
 
     def accept(self, board, **kwargs):
         """!

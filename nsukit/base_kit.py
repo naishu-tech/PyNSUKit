@@ -8,7 +8,11 @@ if TYPE_CHECKING:
     from .middleware.base import UMiddlewareMeta, BaseRegMw, BaseChnlMw
 
 
-class NSUKit:
+class KitMeta(type):
+    ...
+
+
+class NSUKit(metaclass=KitMeta):
     """!
     @brief 控制设备的快速开发接口
     @details 该接口支持向设备发送TCP、Serial、PCIE指令，并同时支持TCP、PCIE数据流的上下行。
