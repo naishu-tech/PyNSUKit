@@ -66,7 +66,7 @@ def test_nsukit_data_tcp():
     nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)
     print(nsukit.alloc_buffer(10))
     nsukit.start_stream(target="127.0.0.1", port=6001)
-    nsukit.stream_read(99, 0, 10, 0, event)
+    nsukit.stream_recv(99, 0, 10, 0, event)
     print(nsukit.get_buffer(0, 10))
 
 
@@ -79,7 +79,7 @@ def test_nsukit_data_pcie():
     nsukit = NSUKit(TCPCmdUItf, PCIEChnlUItf)
     print(nsukit.alloc_buffer(10))
     nsukit.start_stream(target=0)
-    nsukit.stream_read(0, 0, 10, 0, event)
+    nsukit.stream_recv(0, 0, 10, 0, event)
     print(nsukit.get_buffer(0, 10))
 
 

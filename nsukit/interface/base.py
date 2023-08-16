@@ -79,7 +79,7 @@ class BaseChnlUItf(UInterface):
     def break_dma(self, fd):
         ...
 
-    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
+    def stream_recv(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
         ...
 
     def stream_send(self, chnl, fd, length, offset=0, stop_event=None, time_out=5,  flag=1):

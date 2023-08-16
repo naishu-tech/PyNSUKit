@@ -54,6 +54,7 @@ class NSUKit:
         @return:
         """
         self.itf_cmd.accept(target, **kwargs)
+        # check_recv_head = False
         self.mw_cmd.config(**kwargs)
 
     def stop_command(self) -> None:
@@ -74,9 +75,10 @@ class NSUKit:
         @return: 写入结果
         """
         if isinstance(addr, str):
-            self.mw_cmd.set_param(param_name=addr, value=value)
+            if not self.mw_cmd.param_is_command(addr):
+                self.mw_cmd.set_param(param_name=addr, value=value)
             if execute:
-                return self.mw_cmd.find_command(addr)
+                return self.mw_cmd.execute_icd_command(addr)
         else:
             return self.itf_cmd.write(addr, value)
 
@@ -168,7 +170,7 @@ class NSUKit:
         """
         return self.itf_chnl.get_buffer(fd, length)
 
-    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+    def stream_recv(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
         """!
         @brief 封装好的数据流上行函数
         @details 预封装好的上行函数，将数据写入内存中
@@ -180,7 +182,7 @@ class NSUKit:
         @param flag:
         @return: True/False
         """
-        return self.itf_chnl.stream_read(chnl, fd, length, offset, stop_event, flag)
+        return self.itf_chnl.stream_recv(chnl, fd, length, offset, stop_event, flag=flag)
 
     def stream_send(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
         """!

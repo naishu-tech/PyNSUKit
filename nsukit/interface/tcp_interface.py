@@ -69,7 +69,16 @@ class TCPCmdUItf(BaseCmdUItf):
         @return 接收到的数据
         """
         with self.busy_lock:
-            return self._tcp_server.recv(size)
+            recv_data = b''
+            recv_size = 0
+            while True:
+                if recv_size != size:
+                    data = self._tcp_server.recv(size-recv_size)
+                    recv_data += data
+                    recv_size += len(data)
+                if recv_size >= size:
+                    break
+            return recv_data
 
     def send_bytes(self, data: bytes) -> int:
         """!
@@ -79,8 +88,15 @@ class TCPCmdUItf(BaseCmdUItf):
         @return 发送完成的数据长度
         """
         with self.busy_lock:
-            send_len = self._tcp_server.send(data)
-            return send_len
+            total_len = len(data)
+            total_sendlen = 0
+            while True:
+                send_len = self._tcp_server.send(data)
+                total_sendlen += send_len
+                if total_len == total_sendlen:
+                    return total_len
+                if send_len == 0:
+                    raise RuntimeError("Connection interruption")
 
     def write(self, addr: int, value: int) -> int:
         """!
@@ -146,7 +162,7 @@ def get_port(ip):
     if len(ip) >= 12 and re.match(ip_match, ip):
         _port = ip.split('.')[3][-2:]
         _port = _port[0] + '00' + _port[1]
-        return _port
+        return int(_port)
     else:
         return 6001
 
@@ -157,7 +173,7 @@ class TCPChnlUItf(BaseChnlUItf):
     @details 包括连接/断开、内存操作、接收/等待/终止等功能
     """
     _local_port = 0
-    _timeout = 10
+    _timeout = 15
 
     @dataclass
     class Memory:
@@ -365,15 +381,24 @@ class TCPChnlUItf(BaseChnlUItf):
             raise RuntimeError(f"数据大小超过内存大小")
         if length > (memory_object.size - offset):
             raise RuntimeError(f"偏移量过大")
+        if length % 4 != 0:
+            raise RuntimeError(f"数据不能被4整除")
         write_len = 0
         while True:
             try:
                 if event.is_set():
                     memory_object.using_event.clear()
                     return memory_object.using_size
+                if length*4 > 1024:
+                    recv_length = 1024
+                else:
+                    recv_length = length*4
 
-                fd = self._recv_server.recv(length * 4)
+                fd = self._recv_server.recv(recv_length)
                 fd_len = len(fd)
+                if fd_len < recv_length:
+                    fd += self._recv_server.recv(recv_length-fd_len)
+                    fd_len = len(fd)
                 if fd_len == 0:
                     memory_object.using_event.clear()
                     logging.info("Recv complete")
@@ -381,18 +406,17 @@ class TCPChnlUItf(BaseChnlUItf):
 
                 # logging.debug(msg=f"Recv data is: {fd.hex()}")
 
-                memory_object.memory[write_len + offset:write_len + offset + fd_len // 4] = np.frombuffer(fd,
-                                                                                                          dtype='u4')
+                memory_object.memory[write_len + offset:write_len + offset + fd_len // 4] = np.frombuffer(fd, dtype='u4')
                 write_len += (fd_len // 4)
 
                 memory_object.using_size = memory_object.using_size + (write_len + offset + fd_len // 4) - (
                             write_len + offset)
 
-                if length == 0:
+                if length <= 0:
                     memory_object.using_event.clear()
                     return memory_object.using_size
 
-                length -= fd_len // 4
+                length -= (fd_len // 4)
             except Exception as e:
                 logging.error(msg=e)
                 memory_object.using_event.clear()
@@ -435,7 +459,7 @@ class TCPChnlUItf(BaseChnlUItf):
         self.stop_event.clear()
         return self.memory_dict[fd].using_size
 
-    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
+    def stream_recv(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
         """!
         @brief 数据流上行
         @details 封装好的数据流上行函数
@@ -453,7 +477,7 @@ class TCPChnlUItf(BaseChnlUItf):
         while True:
             try:
                 time.sleep(0.2)
-                if stop_event.is_set():
+                if stop_event():
                     break
                 if self.wait_dma(fd, time_out) == length:
                     return True

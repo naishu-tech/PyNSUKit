@@ -12,7 +12,7 @@ class PCIECmdUItf(BaseCmdUItf):
     @brief PCIE指令接口
     @details 包括连接/断开、发送、接收等功能
     """
-
+    wait_irq = False
     _once_send_or_recv_timeout = 1  # _break_status状态改变间隔应超过该值
     _timeout = 30
     _block_size = 4096
@@ -29,6 +29,8 @@ class PCIECmdUItf(BaseCmdUItf):
         self.recv_base = 0
         self.sent_ptr = 0
         self.recv_ptr = 0
+        self.irq_base = 0
+        self.sent_down_base = 0
         self.recv_event = Event()
         self.open_flag = False
 
@@ -52,19 +54,23 @@ class PCIECmdUItf(BaseCmdUItf):
             self.xdma.close_board(self.board)
             self.open_flag = False
 
-    def accept(self, board, sent_base, recv_base, **kwargs):
+    def accept(self, board, sent_base, recv_base, irq_base, sent_down_base, **kwargs):
         """!
         @brief 初始化pcie指令接口
         @details 初始化pcie指令接口，获取发送基地址，返回基地址
         @param board: 板卡号
         @param sent_base: 发送基地址
         @param recv_base: 返回基地址
+        @param irq_base: 中断地址
+        @param sent_down_base: 写入完成标识地址
         @param kwargs: 其他参数
         @return
         """
         self.board = board
         self.sent_base = sent_base
         self.recv_base = recv_base
+        self.irq_base = irq_base
+        self.sent_down_base = sent_down_base
         self.open_board()
 
     def close(self):
@@ -114,6 +120,7 @@ class PCIECmdUItf(BaseCmdUItf):
         @return 已发送的数据长度
         """
         try:
+            self.sent_ptr = 0
             total_length, sent_length = len(data), 0
             st = time.time()
             while total_length != sent_length:
@@ -134,8 +141,12 @@ class PCIECmdUItf(BaseCmdUItf):
         @return 接收到的数据
         """
         try:
+            self.recv_ptr = 0
             if bufsize != 0:
-                self.per_recv()
+                if self.wait_irq:
+                    self.per_recv()
+                else:
+                    self.per_recv_polled()
             block_size, bytes_data, bytes_data_length = self._block_size, b"", 0
             st = time.time()
             while bytes_data_length != bufsize:
@@ -191,9 +202,9 @@ class PCIECmdUItf(BaseCmdUItf):
         @return
         """
         if value:
-            self.xdma.alite_write(0x00003030, 1, self.board)
+            self.xdma.alite_write(self.sent_down_base, 1, self.board)
             time.sleep(0.02)
-            self.xdma.alite_write(0x00003030, 0, self.board)
+            self.xdma.alite_write(self.sent_down_base, 0, self.board)
 
     def reset_irq(self):
         """!
@@ -201,8 +212,9 @@ class PCIECmdUItf(BaseCmdUItf):
         @details 重置fpga给的中断
         @return
         """
-        self.xdma.alite_write(0 + 44, 0x80000000, self.board)
-        self.xdma.alite_write(0 + 44, 0x0, self.board)
+        self.xdma.alite_write(self.irq_base, 0x80000000, self.board)
+        time.sleep(0.2)
+        self.xdma.alite_write(self.irq_base, 0x0, self.board)
 
     def per_recv(self, callback=None):
         """！
@@ -218,6 +230,20 @@ class PCIECmdUItf(BaseCmdUItf):
             callback()
         self.reset_irq()
         self.recv_event.set()
+
+    def per_recv_polled(self):
+        timeout = self.timeout
+        while True:
+            if self.xdma.alite_read(self.irq_base, self.board)[1] != 0x8000:
+                time.sleep(1)
+                if timeout > 0:
+                    timeout -= 1
+                else:
+                    raise TimeoutError(f'toaxi timeout')
+            else:
+                self.reset_irq()
+                self.recv_event.set()
+                break
 
     def __enter__(self):
         self.lock.acquire(timeout=self.timeout)
@@ -249,7 +275,6 @@ class PCIEChnlUItf(BaseChnlUItf):
         """
         if not self.open_flag:
             self.board = board
-            self.open_board()
 
     def open_board(self):
         """!
@@ -257,7 +282,7 @@ class PCIEChnlUItf(BaseChnlUItf):
         @details 使用fpga_open开启对应pcie设备
         @return
         """
-        if not self.open_flag and self.board:
+        if not self.open_flag and self.board != None:
             self.xdma.open_board(self.board)
             self.open_flag = True
 
@@ -346,7 +371,7 @@ class PCIEChnlUItf(BaseChnlUItf):
         """
         return self.xdma.break_dma(fd=fd)
 
-    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
+    def stream_recv(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
         """!
         @brief 数据流上行
         @details 封装好的数据流上行函数

@@ -186,7 +186,7 @@ class Xdma(object):
 
     def stream_public(self, board, chnl, prt, fd, length, function, offset, stop_event, time_out, flag):
         try:
-            recv = function(board, chnl, prt, length, offset=offset, timeout=time_out)
+            recv = function(board, chnl, prt, length, offset=offset, timeout=0)
             return self.__check_buffer(recv, board, chnl, fd, length, stop_event, time_out, flag)
         except Exception as e:
             logging.error(msg=e)

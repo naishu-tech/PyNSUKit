@@ -33,9 +33,11 @@ class BaseRegMw(UMiddleware):
     def fmt_command(self, command_name, command_type: str = "send", file_name=None) -> bytes:
         ...
 
-    def find_command(self, parm_name: str) -> list:
+    def execute_icd_command(self, parm_name: str) -> list:
         ...
 
+    def param_is_command(self, parm_name: str) -> bool:
+        ...
 
 class BaseChnlMw(UMiddleware):
     def alloc_buffer(self, length, buf: int = None):
