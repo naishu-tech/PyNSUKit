@@ -39,6 +39,7 @@ class BaseRegMw(UMiddleware):
     def param_is_command(self, parm_name: str) -> bool:
         ...
 
+
 class BaseChnlMw(UMiddleware):
     def alloc_buffer(self, length, buf: int = None):
         ...

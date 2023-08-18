@@ -58,7 +58,7 @@ class NSUKit(metaclass=KitMeta):
         @return:
         """
         self.itf_cmd.accept(target, **kwargs)
-        # check_recv_head = False
+        # 默认check_recv_head = False
         self.mw_cmd.config(**kwargs)
 
     def stop_command(self) -> None:
