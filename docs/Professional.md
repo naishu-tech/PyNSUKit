@@ -25,7 +25,7 @@
 <span id="工程详细结构结构" />
 
 ## 工程详细结构结构
-详细的类图
+<center>![工程详细结构结构图](professional_工程详细结构结构图.jpg)</center>
 
 ---
 
@@ -95,20 +95,20 @@ nsukit.start_command(target='127.0.0.1', port=5001)
 nsukit.stop_command()
 ```
 
-### write(self, addr, value, execute=True) -> "list | int":
+### write(self, addr: int, value: bytes) -> bytes:
 ```python
 # 修改寄存器地址操作。调用该函数传入寄存器地址和要修改的值，来完成寄存器值修改。
 from nsukit import *
 nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)
 nsukit.start_command(target='127.0.0.1', port=5001)
-nsukit.write(0x1, 0x2)
+nsukit.write(0x1, b'\x02\x00\x00\x00')
 # 上述改操作意思为：
 # ！！注意！！ PCI-E指令会直接将设备地址0x1的值改为0x2
 # ！！注意！！ 在网络指令与串口指令中将会发送 (0x5F5F5F5F, 0x31001000, 0x00000000, 24, addr, value) 的二进制数据
 # 参数 execute 会在icd_paresr中进行统一讲解
 ```
 
-### read(self, addr) -> int:
+### read(self, addr: int) -> bytes:
 ```python
 # 读取寄存器操作。调用该函数传入要读取寄存器地址，来完成读取操作。
 from nsukit import *
@@ -126,7 +126,7 @@ print(nsukit.read(0x1))
 from nsukit import *
 nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)
 nsukit.start_command(target='127.0.0.1', port=5001)
-nsukit.bulk_write({0x1:0x2, 0x3:0x4})
+nsukit.bulk_write({0x1: b'\x02\x00\x00\x00', 0x2: b'\x03\x00\x00\x00'})
 # 批量修改时会根据参数依次调用nsukit.write()函数
 ```
 
@@ -208,16 +208,89 @@ print(nsukit.get_buffer(fd, 1024))
 ```
 
 ### send_open(self, chnl, fd, length, offset=0):
+```python
+# 暂不支持
+# ！！注意！！ 数据上下行是以设备角度进行描述的，设备的数据上行，设备的数据下行
+```
 
 ### recv_open(self, chnl, fd, length, offset=0):
+```python
+# 开启数据上行。调用该函数根据参数开启数据上行
+from nsukit import *
+# 网络数据流上行
+length = 1024
+nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)
+nsukit.start_stream(target="192.168.1.179")
+fd = nsukit.alloc_buffer(length)
+nsukit.recv_open(chnl=9999, fd=fd, length=1024, offset=0)
+
+# PCI-E数据流上行
+nsukit = NSUKit(TCPCmdUItf, PCIECmdUItf)
+nsukit.start_stream(target=0)
+fd = nsukit.alloc_buffer(length)
+nsukit.recv_open(chnl=0, fd=fd, length=1024, offset=0)
+# 开启数据流上行
+# ！！注意！！ 数据上下行是以设备角度进行描述的，设备的数据上行，设备的数据下行
+# ！！注意！！ 因网络数据流没有通道的概念故chnl参数填写任意数字即可，PCIE数据流有通道概念故根据实际情况填写通道编号
+```
 
 ### wait_dma(self, fd, timeout: int = 0):
+```python
+# 等待完成一次dma操作。调用该函数传入对应的内存地址来查看内存已经使用的大小
+from nsukit import *
+length = 1024
+nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)
+nsukit.start_stream(target="192.168.1.179")
+fd = nsukit.alloc_buffer(length)
+nsukit.recv_open(chnl=9999, fd=fd, length=1024, offset=0)
+print(nsukit.wait_dma(fd=fd, timeout=5))
+# 等待完成一次dma操作
+# !!注意！！ wait_dma()可能不会立即完成
+```
 
 ### break_dma(self, fd):
+```python
+# 终止本次dma操作。调用该函数传入对应的内存地址来停止本次dma操作，并返回内存已经使用的大小
+from nsukit import *
+length = 1024
+nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)
+nsukit.start_stream(target="192.168.1.179")
+fd = nsukit.alloc_buffer(length)
+nsukit.recv_open(chnl=9999, fd=fd, length=1024, offset=0)
+print(nsukit.break_dma(fd=fd))
+# 终止本次dma操作
+# !!注意！！ break_dma()可能不会立即完成
+```
 
 ### stream_recv(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+```python
+# 预封装好的数据流上行函数。调用预封装好的数据流上行函数可快速开始使用本工具
+from nsukit import *
+import threading
+length = 1024
+event = threading.Event()
+# 网络数据流
+nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)
+nsukit.start_stream(target="192.168.1.179")
+fd = nsukit.alloc_buffer(length)
+nsukit.stream_recv(99, fd, length, 0, event.is_set)
+
+# PCI-E数据流
+nsukit = NSUKit(TCPCmdUItf, PCIEChnlUItf)
+fd = nsukit.alloc_buffer(length)
+nsukit.start_stream(target=0)
+nsukit.stream_recv(0, fd, length, 0, event.is_set)
+
+# 预封装好的数据流上行。函数内部分别调用了recv_open,wait_dma
+# ！！注意！！ 该函数会阻塞
+# ！！注意！！ 符合规则的数据流上行开启方法应该是：
+# ！！注意！！ NSUKit(初始化) -> start_stream(建立数据流链接) -> alloc_buffer(开辟缓存) -> stream_recv(开始上行) -> stop_stream(关闭链接)
+```
 
 ### stream_send(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+```python
+# 暂不支持
+```
 
 ---
 

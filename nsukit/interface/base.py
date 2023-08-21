@@ -29,15 +29,19 @@ class RegOperationMixin:
 
 class BaseCmdUItf(UInterface):
     @staticmethod
-    def _fmt_reg_write(reg: int = 0, value: int = 0) -> bytes:
+    def _fmt_reg_write(reg: int = 0, value: bytes = b'') -> bytes:
         """!
         @brief 格式化TCP/serial模拟写寄存器功能的icd
         @param reg: 寄存器地址
         @param value: 寄存器值
         @return 格式化好的icd指令
         """
-        pack = (0x5F5F5F5F, 0x31001000, 0x00000000, 24, reg, value)
-        return struct.pack('=IIIIII', *pack)
+        if not isinstance(value, bytes):
+            raise RuntimeError("The value not be pack")
+        pack = (0x5F5F5F5F, 0x31001000, 0x00000000, 24, reg)
+        send_cmd = struct.pack('=IIIII', *pack)
+        send_cmd += value
+        return send_cmd
 
     @staticmethod
     def _fmt_reg_read(reg: int = 0) -> bytes:

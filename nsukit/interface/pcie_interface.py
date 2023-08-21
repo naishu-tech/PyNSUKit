@@ -196,7 +196,7 @@ class PCIECmdUItf(BaseCmdUItf):
 
     @sent_down.setter
     def sent_down(self, value):
-        """！
+        """!
         @brief 标识
         @details 数据写入完成标识
         @return
@@ -217,7 +217,7 @@ class PCIECmdUItf(BaseCmdUItf):
         self.xdma.alite_write(self.irq_base, 0x0, self.board)
 
     def per_recv(self, callback=None):
-        """！
+        """!
         @brief 接收数据前
         @details 在接收数据前运行，等待数据准备完成
         @param callback 回调函数

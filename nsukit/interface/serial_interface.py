@@ -33,7 +33,7 @@ class SerialCmdUItf(BaseCmdUItf):
     """
     _target = 'COM0'
     _target_baud_rate = 9600
-    _timeout = 5
+    _timeout = 15
 
     def __init__(self):
         self._device_serial = None
@@ -57,7 +57,7 @@ class SerialCmdUItf(BaseCmdUItf):
                                                 baudrate=int(_target_baud_rate),
                                                 timeout=self._timeout)
 
-    def recv_bytes(self, size: int = 1024) -> bytes:
+    def recv_bytes(self, size) -> bytes:
         """!
         @brief 接收数据
         @details 使用串口接收指定大小的数据
@@ -65,7 +65,16 @@ class SerialCmdUItf(BaseCmdUItf):
         @return 接收到的数据
         """
         with self.busy_lock:
-            return self._device_serial.read(size)
+            recv_data = b''
+            recv_size = 0
+            while True:
+                if recv_size != size:
+                    data = self._device_serial.read(size)
+                    recv_data += data
+                    recv_size += len(data)
+                if recv_size >= size:
+                    break
+            return recv_data
 
     def send_bytes(self, data: bytes):
         """!
@@ -75,9 +84,17 @@ class SerialCmdUItf(BaseCmdUItf):
         @return 发送完成的数据长度
         """
         with self.busy_lock:
-            return self._device_serial.write(data)
+            total_len = len(data)
+            total_sendlen = 0
+            while True:
+                send_len = self._device_serial.write(data)
+                total_sendlen += send_len
+                if total_len == total_sendlen:
+                    return total_len
+                if send_len == 0:
+                    raise RuntimeError("Connection interruption")
 
-    def write(self, addr: int, value: int) -> int:
+    def write(self, addr: int, value: bytes) -> bytes:
         """!
         @brief 发送数据
         @details 使用串口以地址值的方式发送一条约定好的特殊指令
@@ -91,9 +108,9 @@ class SerialCmdUItf(BaseCmdUItf):
         recv = self.recv_bytes(16)
         result_len = head_check(cmd, recv)
         result = self.recv_bytes(result_len - 16)
-        return int.from_bytes(result, "little")
+        return result
 
-    def read(self, addr: int) -> int:
+    def read(self, addr: int) -> bytes:
         """!
         @brief 接收数据
         @details 使用串口以地址的方式发送一条约定好的特殊指令
@@ -106,7 +123,7 @@ class SerialCmdUItf(BaseCmdUItf):
         recv = self.recv_bytes(16)
         result_len = head_check(cmd, recv)
         result = self.recv_bytes(result_len - 16)
-        return int.from_bytes(result, "little")
+        return result
 
     def close(self):
         """!

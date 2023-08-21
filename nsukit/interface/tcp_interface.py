@@ -98,7 +98,7 @@ class TCPCmdUItf(BaseCmdUItf):
                 if send_len == 0:
                     raise RuntimeError("Connection interruption")
 
-    def write(self, addr: int, value: int) -> int:
+    def write(self, addr: int, value: bytes) -> bytes:
         """!
         @brief 发送数据
         @details 使用网络以地址值的方式发送一条约定好的特殊指令
@@ -112,9 +112,9 @@ class TCPCmdUItf(BaseCmdUItf):
         recv = self.recv_bytes(16)
         result_len = head_check(cmd, recv)
         result = self.recv_bytes(result_len - 16)
-        return int.from_bytes(result, "little")
+        return result
 
-    def read(self, addr: int) -> int:
+    def read(self, addr: int) -> bytes:
         """!
         @brief 接收数据
         @details 使用网络以地址的方式发送一条约定好的特殊指令
@@ -127,7 +127,7 @@ class TCPCmdUItf(BaseCmdUItf):
         recv = self.recv_bytes(16)
         result_len = head_check(cmd, recv)
         result = self.recv_bytes(result_len - 16)
-        return int.from_bytes(result, "little")
+        return result
 
     def close(self):
         """!

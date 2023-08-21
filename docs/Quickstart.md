@@ -52,9 +52,9 @@ _**网络指令代码示例**_
 from nsukit import *
 nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)
 nsukit.start_command(target="x.x.x.x", port=5001)
-nsukit.write(0x1, 4)
+nsukit.write(0x1, b'\x02\x00\x00\x00')
 nsukit.read(0x1)
-nsukit.bulk_write({0x1: 4, 0x2: 8})
+nsukit.bulk_write({0x1: b'\x02\x00\x00\x00', 0x2: b'\x03\x00\x00\x00'})
 nsukit.bulk_read([0x1, 0x2])
 ```
 
@@ -70,9 +70,9 @@ _**串口指令代码示例**_
 from nsukit import *
 nsukit = NSUKit(SerialCmdUItf, TCPChnlUItf)
 nsukit.start_command(target="COM1", target_baud_rate=9600)
-nsukit.write(0x1, 4)
+nsukit.write(0x1, b'\x02\x00\x00\x00')
 nsukit.read(0x1)
-nsukit.bulk_write({0x1: 4, 0x2: 8})
+nsukit.bulk_write({0x1: b'\x02\x00\x00\x00', 0x2: b'\x03\x00\x00\x00'})
 nsukit.bulk_read([0x1, 0x2])
 ```
 
@@ -88,9 +88,9 @@ _**PCI-E指令代码示例**_
 from nsukit import *
 nsukit = NSUKit(PCIECmdUItf, PCIEChnlUItf)
 nsukit.start_command(target=0, sent_base=0x10000000, recv_base=0x13000000, irq_base=0x00003000 + 44, sent_down_base=0x00003030)
-nsukit.write(0x1, 4)
+nsukit.write(0x1, b'\x02\x00\x00\x00')
 nsukit.read(0x1)
-nsukit.bulk_write({0x1: 4, 0x2: 8})
+nsukit.bulk_write({0x1: b'\x02\x00\x00\x00', 0x2: b'\x03\x00\x00\x00'})
 nsukit.bulk_read([0x1, 0x2])
 ```
 
