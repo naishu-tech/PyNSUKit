@@ -146,7 +146,7 @@ class NSUKit(metaclass=KitMeta):
         self.itf_chnl.close()
 
     def alloc_buffer(self, length, buf: int = None):
-        """
+        """!
         @brief 申请一块内存
         @details 根据传入参数开辟一块内存
         @param length: 内存长度
@@ -156,7 +156,7 @@ class NSUKit(metaclass=KitMeta):
         return self.itf_chnl.alloc_buffer(length, buf)
 
     def free_buffer(self, fd):
-        """
+        """!
         @brief 释放内存
         @details 根据内存标号释放内存
         @param fd: 内存标号

@@ -35,7 +35,6 @@ value_python = {
     "int32": int,
     "float": float,
     "double": float,
-    "file": str,
     "file_data": str,
     "file_length": str
 }
