@@ -161,7 +161,14 @@ print(nsukit.bulk_read([0x1,0x2,0x3]))
 # 批量读取时会根据参数依次调用nsukit.read()函数
 ```
 
+---
+
+_**以下函数为数据流相关函数，只有一张附图**_
+<center>![](professional_NSUKit_stream_recv.png)</center>
+<center>数据流相关附图</center>
+
 ### start_stream(self, target=None, **kwargs):
+
 ```python
 # 开启数据流前的操作。调用该函数根据目标设备类型传入参数、参数建立链接
 from nsukit import *
@@ -284,10 +291,6 @@ print(nsukit.break_dma(fd=fd))
 ```
 
 ### stream_recv(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
-
-<center>![](professional_NSUKit_stream_recv.png)</center>
-<center>批量向指定地址写入数据</center>
-
 ```python
 # 预封装好的数据流上行函数。调用预封装好的数据流上行函数可快速开始使用本工具
 from nsukit import *
@@ -335,6 +338,10 @@ _**icd_paresr：指令处理中间件，用来使用约定式的icd指令**_
 ```
 
 ### icd.json
+
+<center>![](professional_icd_parser_icd.json.png)</center>
+<center>icd.json文件格式</center>
+
 ```python
 # icd.json是指令处理中间件的必要文件
 # 其文件格式可以大概描述为
@@ -408,6 +415,11 @@ nsukit.start_command(target='127.0.0.1', **param)
 # check_recv_head默认关闭
 ```
 
+---
+
+<center>![](professional_icd_parser_getset_param.png)</center>
+<center>get_param/set_param调用流程</center>
+
 ### get_param(self, param_name: str, default=0, fmt_type=int):
 ```python
 # 获取icd中某个参数的的值。该函数不用单独调用
@@ -446,28 +458,38 @@ nsukit.write(addr="参数1", value=1, execute=False)
 nsukit.write(addr="指令1", value=123)
 ```
 
-### fmt_command(self, command_name, command_type: str = "send", file_name=None) -> bytes:
-```python
-# 将某个指令的所有寄存器格式化成指令。该函数不用单独调用
-# 在icd发送指令和接收返回值会调用该函数
-```
-
-### execute_icd_command(self, parm_name: str) -> list:
-```python
-# 执行icd指令。该函数不用单独调用
-```
-
-### param_is_command(self, parm_name: str) -> bool:
-```python
-# 用于判断参数名是不是指令。该函数不用单独调用
-```
-
 ---
 
 <span id="virtual_chnl"></span>
 
 ## virtual_chnl
 _**virtual_chnl：虚拟通道中间件**_
+```text
+虚拟通道主要用于：当设备只有1个数传通道，但想分开传输多路数据时所使用
+```
+
+### virtual_chnl未开启时
+
+<center>![](professional_virtual_chnl_stop.png)</center>
+<center>虚拟通道未开启时数据流的流程图</center>
+
+```text
+举例说明：
+花园需要浇水，每种花需要浇不同的水，且每种水不相容。现在只有一个水管（1个数传通道）
+当我用水管进行浇水时，我需要一个挡板把水管中的不同的水分开进行使用
+```
+
+### virtual_chnl开启时
+
+<center>![](professional_virtual_chnl_start.png)</center>
+<center>虚拟通道开启时数据流的流程图</center>
+
+```text
+举例说明：(还是上边的例子)
+花园需要浇水，每种花需要浇不同的水，且每种水不相容。现在只有一个水管（1个数传通道）
+现在我买了一台机器，这台机器上有很多出水口，并且机器可以自动把每种水自动分开
+这时我只需要使用机器上对应出水口的水去浇特定的花就可以了
+```
 
 ---
 
@@ -477,24 +499,109 @@ _**virtual_chnl：虚拟通道中间件**_
 _**此节描述如何自定义指令、数据流接口，icd、通道中间件**_
 
 ### 自定义指令接口
+_**自定义指令接口需要重写以下方法**_
 ```python
-# 自定义指令需要继承BaseCmdUItf类，并重写accept、close、set_timeout、send_bytes、recv_bytes、write、read 7个方法并遵循每个方法参数限制
-# accept方法          需要实现 用使用的链接方式建立链接。例如网络指令需要在accept建立网络链接
-# close方法           需要实现 将已经建立的链接关闭、断开。例如网络指令中在close方法断开TCP链接
-# set_timeout方法     需要实现 给使用的连接方式设置超时时间。例如网络指令中给TCP设置超时时间
-# send_bytes方法      需要实现 使用已建立的链接进行数据发送。例如网络指令中的sockek.send()
-# recv_bytes方法      需要实现 使用已建立的链接进行数据接收。例如网络指令中的sockek.recv()
-# write方法           需要实现 使用类属性_fmt_reg_write格式化（或使用自定义方法）指令发送并接受数据
-# read方法            需要实现 使用类属性_fmt_reg_read 格式化（或使用自定义方法）指令发送并接受数据
-# 如类属性_fmt_reg_write、类属性_fmt_reg_read不能满足实际需求可以进行重写
+import nsukit.interface.base as base
+
+class xxCmdUItf(base.BaseCmdUItf):
+    def __init__(self):
+        #初始化
+        ...
+
+    def accept(self, target: str, **kwargs):
+        # 建立指令链接
+        ...
+
+    def recv_bytes(self, size: int) -> bytes:
+        # 接收数据返回接收的数据（bytes）
+        ...
+
+    def send_bytes(self, data: bytes) -> int:
+        # 发送数据返回已发送的长度（int）
+        ...
+
+    def write(self, addr: int, value: bytes) -> bytes:
+        # 寄存器写入返回返回数据（bytes）
+        ...
+
+    def read(self, addr: int) -> bytes:
+        # 寄存器读取返回读取到的数据（bytes）
+        ...
+
+    def close(self):
+        # 关闭连接
+        ...
+
+    def set_timeout(self, s: int = 5):
+        # 设置连接超时时间
+        ...
 ```
 
 
 ### 自定义数据流接口
+_**自定义数据流接口需要重写以下方法**_
+```python
+import nsukit.interface.base as base
+import numpy as np
+from typing import Union
 
-### 自定义icd中间件
+class xxChnlUItf(base.BaseChnlUItf):
+    def __init__(self):
+        # 初始化
+        ...
 
-### 自定义通道中间件
+    def accept(self, target: str, **kwargs):
+        # 建立链接前准备
+        ...
+
+    def set_timeout(self, s: int = 5):
+        # 设置连接超时时间
+        ...
+
+    def open_board(self):
+        # 连接设备
+        ...
+
+    def close_board(self):
+        # 关闭链接
+        ...
+    
+    def alloc_buffer(self, length: int, buf: Union[int, np.ndarray, None] = None) -> int:
+        # 开辟一块缓存返回缓存地址号
+        ...
+    
+    def free_buffer(self, fd):
+        # 释放一块缓存传入缓存地址号
+        ...
+    
+    def get_buffer(self, fd, length):
+        # 获取一块缓存中的数据，传入缓存地址号，要获取多长的数据。返回同等长度的数据
+        ...
+    
+    def send_open(self, chnl, fd, length, offset=0):
+        # 开启一次数据流下行
+        ...
+    
+    def recv_open(self, chnl, fd, length, offset=0):
+        # 开启一次数据流上行，返回True/False
+        ...
+
+    def wait_dma(self, fd, timeout: int = 0):
+        # 等待完成一次dma操作，返回当前内存中的数据大小
+        ...
+
+    def break_dma(self, fd):
+        # 结束当前的dma操作，返回当前内存中的数据大小
+        ...
+
+    def stream_recv(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
+        # 将完整的数据流上行封装好，返回True/False
+        ...
+
+    def stream_send(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
+        # 将完整的数据流下行封装好
+        ...
+```
 
 ---
 
@@ -554,6 +661,10 @@ _**PCIEChnlUItf：PCI-E数据流类**_
 <span id="名词解释"></span>
 
 ## 名词解释
+
+_数据流上行_ : 以设备的角度描述数据流的收发，数据流上行是指设备将数据发送给本机
+
+_数据流下行_ : 以设备的角度描述数据流的收发，数据流下行是指本机将数据发送给设备
 
 ---
 

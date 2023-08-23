@@ -383,6 +383,7 @@ class TCPChnlUItf(BaseChnlUItf):
             raise RuntimeError(f"偏移量过大")
         if length % 4 != 0:
             raise RuntimeError(f"数据不能被4整除")
+        memory_object.using_size = 0
         write_len = 0
         while True:
             try:

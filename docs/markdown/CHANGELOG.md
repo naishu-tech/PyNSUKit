@@ -1,9 +1,10 @@
 # 更新记录
 
-## Unreleased
+## V0.1.0 (2023-08-23)
 
 ### Feat
 
+- **完善文档**: 继续进行文档完善
 - **文档**: 增加更新记录页面，完善快速开始和进阶使用
 - **文档**: 编写快速开始、进阶使用文档
 - **VirtualChnlMw**: 完成虚拟通道中间件
@@ -19,6 +20,8 @@
 
 ### Fix
 
+- **修改图片名称**: 更改所有图片名称为英文，放入image文件夹，doxygen导入图片不能识别中文
+- **更改目录结构**: 将文档相关单独建立文件夹进行存储
 - **read、write**: write的value直接传bytes，返回值为bytes。read的返回值改为bytes
 - **接口名称**: 接口名称修改stream_read->stream_recv，find_command->execute_icd_command。
 - **icd**: icd.json文件完善。

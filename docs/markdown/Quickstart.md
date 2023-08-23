@@ -29,9 +29,17 @@ _**NSUKit为一套用于控制设备的快速开发接口。该接口支持向�
 <span id="环境安装"></span>
 
 ## 环境安装
-```shell
-python>=3.8
 
+### 环境依赖
+```text
+python = ">=3.8,<4.0"
+numpy = ">=1.24"
+pyserial = "^3.5"
+pandas = "^2.0.3"
+```
+
+### 安装
+```shell
 使用虚拟环境进行安装
 1. conda create -n NSUKit python=3.9
 2. conda activate NSUKit
@@ -87,7 +95,7 @@ nsukit.bulk_read([0x1, 0x2])
 ### PCI-E指令
 在本工具中，PCI-E指令是指使用PCI-E总线将主机与设备连接，来实现主机与设备相互通信发送数据的一种方法
 
-<center>![quick_start_PCI-E指令连接示意图](quick_start_PCI-E_cmd.png)</center>
+<center>![](quick_start_PCI-E_cmd.png)</center>
 将设备插入主机后，根据设备号（0到本机所有插入的设备数量-1）连接并进行指令收发。
 
 _**PCI-E指令代码示例**_
@@ -106,7 +114,7 @@ nsukit.bulk_read([0x1, 0x2])
 ### 网络数据流
 在本工具中，网络数据流是指使用TCP/IP通信协议，来实现主机与设备相互发送流式数据的一种方法
 
-<center>![quick_start_网络数据流连接示意图](quick_start_tcp_data.png)</center>
+<center>![](quick_start_tcp_data.png)</center>
 
 _**端口号会根据设备的IP进行自动计算，用户自己指定端口**_
 
@@ -130,7 +138,7 @@ print(nsukit.get_buffer(fd, length))
 ### PCI-E数据流
 在本开发工具中，PCI-E数据流是指使用PCI-E总线将主机与设备连接，来实现主机与设备相互发送流式数据的一种方法
 
-<center>![quick_start_PCI-E数据流连接示意图](quick_start_PCI-E_cmd.png)</center>
+<center>![](quick_start_PCI-E_cmd.png)</center>
 将设备插入主机后，根据设备号（0到本机所有插入的设备数量-1）连接并取出数据。
 
 _**PCI-E数据流代码示例**_
@@ -173,7 +181,7 @@ _PCIEChnlUItf_ : PCI-E数据流类
 ## 工程基本结构
 本快速开发工具基本结构如下所示，下图展示了NSUKit中的所有可调用功能
 
-![quick_start_工程基本结构](quick_start_basic.png)
+<center>![](quick_start_basic.png)</center>
 <center>用户直接调用NSUKit类，使用NSUKit的功能</center>
 
 ---
