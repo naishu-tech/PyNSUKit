@@ -1,4 +1,4 @@
-# 快速开始
+# 🚀快速开始
 
 <div style="position: fixed; top: 90%; left: 90%">
 <a href="#目录" style="text-decoration: none">返回目录</a>
@@ -16,7 +16,7 @@
 * <a href="#PCI-E数据流">PCI-E数据流</a>
 * <a href="#名词解释">名词解释</a>
 * <a href="#工程基本结构">工程基本结构</a>
-* [进阶使用](Professional.md)
+* [进阶使用](3_Professional.md)
 
 ---
 
