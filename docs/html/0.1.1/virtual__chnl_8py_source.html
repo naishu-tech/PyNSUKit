@@ -1,0 +1,360 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NSUKit: D:/Work/PythonProject/NSUKit/nsukit/middleware/virtual_chnl.py 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo切图-竖版.png"/></td>
+     <script type="text/javascript" src="../version.js"></script>
+  <td id="projectalign">
+   <div id="projectname">NSUKit
+        <span id="projectnumber">0.1.1</span>
+   </div>
+   <div id="projectbrief">板卡级统一交互接口</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part --><!-- 制作者 Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('virtual__chnl_8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">virtual_chnl.py</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment"># Copyright (c) [2023] [Mulan PSL v2]</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"># [NSUKit] is licensed under Mulan PSL v2.</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"># You can use this software according to the terms and conditions of the Mulan PSL v2.</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"># You may obtain a copy of Mulan PSL v2 at:</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">#          http://license.coscl.org.cn/MulanPSL2</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"># THIS SOFTWARE IS PROVIDED ON AN &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OF ANY KIND,</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"># EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"># MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"># See the Mulan PSL v2 for more details.</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">import</span> threading</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">import</span> time</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">from</span> enum <span class="keyword">import</span> Enum</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">from</span> queue <span class="keyword">import</span> PriorityQueue, Empty</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">from</span> typing <span class="keyword">import</span> TYPE_CHECKING, Union, Optional, Dict</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">from</span> .base <span class="keyword">import</span> BaseChnlMw</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">from</span> ..interface.base <span class="keyword">import</span> RegOperationMixin</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">from</span> ..tools.logging <span class="keyword">import</span> logging</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">from</span> ..tools.xdma.xdma <span class="keyword">import</span> FAIL</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keywordflow">if</span> TYPE_CHECKING:</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">from</span> .. <span class="keyword">import</span> NSUKit</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">from</span> ..interface.base <span class="keyword">import</span> BaseChnlUItf</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">def </span>dispenser(func):</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="stringliteral">&quot;&quot;&quot;!</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="stringliteral">    装饰器，让被装饰的函数根据stream_mode将调用分到指定的实现上</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="stringliteral">    </span><span class="preprocessor">@param</span> func:</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="preprocessor">@return</span>:</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="stringliteral">    </span><span class="preprocessor">@wraps(func)</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">def </span>wrapper(*args, **kwargs):</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        self: <span class="stringliteral">&quot;VirtualChnlMw&quot;</span> = args[0]</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keywordflow">if</span> self.stream_mode == self.StreamMode.VIRTUAL:</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            _func = func</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            _func = getattr(self.kit.itf_chnl, func.__name__)</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordflow">return</span> _func(*args, **kwargs)</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordflow">return</span> wrapper</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html">   48</a></span><span class="keyword">class </span><a class="code hl_class" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html">VirtualChnlMw</a>(<a class="code hl_class" href="classnsukit_1_1middleware_1_1base_1_1_base_chnl_mw.html">BaseChnlMw</a>):</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="stringliteral">&quot;&quot;&quot;!</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="stringliteral">    按一定规则，从一个物理通道虚拟出若干个虚拟数据通道进行上行</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="stringliteral">    VCHNL_NUM = 8</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="stringliteral">    R2V_CHNL = 0</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="stringliteral">    PARAM_ADDR = 0x00000000</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="stringliteral">    PARAM_WR_ADDR = 0x00000000</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="stringliteral">    STATUS_ADDR = 0x00000000</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_stream_mode.html">   58</a></span><span class="stringliteral">    </span><span class="keyword">class </span><a class="code hl_class" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_stream_mode.html">StreamMode</a>(str, Enum):</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        VIRTUAL = <span class="stringliteral">&#39;virtual&#39;</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        REAL = <span class="stringliteral">&#39;real&#39;</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="preprocessor">@dataclass</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_chnl_entry.html">   63</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_chnl_entry.html">ChnlEntry</a>:</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        chnl: int</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        priority: int</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keyword">def </span>__lt__(self, other):</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="keywordflow">return</span> self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_chnl_entry.html#a782e0865c93063474e8148c8965c2dd8">priority</a> &lt; other.priority</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keyword">def </span>__init__(self, kit: <span class="stringliteral">&quot;NSUKit&quot;</span>):</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        super(VirtualChnlMw, self).__init__(kit)</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        self.itf_chnl: <span class="stringliteral">&quot;Union[BaseChnlUItf, RegOperationMixin, None]&quot;</span> = <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        self.stream_mode = self.StreamMode.REAL</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        self.running_lock = threading.Lock()</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        self.cancel_event = threading.Event()</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        self.canceled = threading.Event()</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        self.priority_lock = threading.Lock()</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        self.priority_thread = <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        self.priority_queue = PriorityQueue(maxsize=self.VCHNL_NUM)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        self.priority_chnl: <span class="stringliteral">&quot;Dict[int, int]&quot;</span> = {ch: 0 <span class="keywordflow">for</span> ch <span class="keywordflow">in</span> range(self.VCHNL_NUM)}</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        self.priority_events: <span class="stringliteral">&quot;Dict[int, threading.Event]&quot;</span> = {ch: threading.Event() <span class="keywordflow">for</span> ch <span class="keywordflow">in</span> range(self.VCHNL_NUM)}</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a0def14e6bc25913bc457daff2cebfe0c">   83</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a0def14e6bc25913bc457daff2cebfe0c">config</a>(self, *, stream_mode=&#39;real&#39;, **kwargs):</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="stringliteral">&quot;&quot;&quot;!</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="stringliteral">        配置中间件所使用的数据流模式，是直接转发给对应的Chnl</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="stringliteral">        </span><span class="preprocessor">@param</span> stream_mode: 可选</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="preprocessor">@param</span> kwargs:</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="preprocessor">@return</span>:</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="stringliteral">        self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a8650578c0e6df8567f28910c1cb244cb">stream_mode</a> = self.<a class="code hl_class" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_stream_mode.html">StreamMode</a>(stream_mode)</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="stringliteral">        self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#af56de8558cc43ef619215d82b9923e0b">cancel_event</a>.set()</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="stringliteral">        </span><span class="keywordflow">if</span> <span class="keywordflow">not</span> self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a82b1f4433f28eeb23bc43eac87d3062f">canceled</a>.wait(timeout=10):</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&#39;stream_mode switch failed&#39;</span>)</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        self.priority_chnl: <span class="stringliteral">&quot;Dict[int, int]&quot;</span> = {ch: 0 <span class="keywordflow">for</span> ch <span class="keywordflow">in</span> range(self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ac3b39d14fe720e2615f92d42959cd969">VCHNL_NUM</a>)}</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a70bdad6c7d2d74847bf4c12a6d95986b">itf_chnl</a> = <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <span class="keywordflow">if</span> self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a8650578c0e6df8567f28910c1cb244cb">stream_mode</a> == self.<a class="code hl_class" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_stream_mode.html">StreamMode</a>.REAL:</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            ...</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <span class="keywordflow">elif</span> self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a8650578c0e6df8567f28910c1cb244cb">stream_mode</a> == self.<a class="code hl_class" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_stream_mode.html">StreamMode</a>.VIRTUAL:</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> isinstance(self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1base_1_1_u_middleware.html#a6c723c708199eed0a6aee78da72086f4">kit</a>.itf_chnl, RegOperationMixin):</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&#39;When {stream_mode=} is virtual, &#39;</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                                 f<span class="stringliteral">&#39;{self.kit.__class__}.itf_chnl should be a subclass of {RegOperationMixin}&#39;</span>)</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a6582f8f1dab9e24c31b24c1c68a7d1f8">priority_thread</a> = threading.Thread(target=self.<a class="code hl_function" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ac069b5986bca8bb7d2833911abe789d5">priority_wheel</a>, name=f<span class="stringliteral">&#39;virtual_chnl&#39;</span>, daemon=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a6582f8f1dab9e24c31b24c1c68a7d1f8">priority_thread</a>.start()</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="preprocessor">@dispenser</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="keyword">def </span>alloc_buffer(self, length, buf: int = <span class="keywordtype">None</span>):</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keywordflow">return</span> self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1base_1_1_u_middleware.html#a6c723c708199eed0a6aee78da72086f4">kit</a>.itf_chnl.alloc_buffer(length, buf)</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="preprocessor">@dispenser</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keyword">def </span>free_buffer(self, fd):</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keywordflow">return</span> self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1base_1_1_u_middleware.html#a6c723c708199eed0a6aee78da72086f4">kit</a>.itf_chnl.free_buffer(fd)</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="preprocessor">@dispenser</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keyword">def </span>get_buffer(self, fd, length):</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="keywordflow">return</span> self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1base_1_1_u_middleware.html#a6c723c708199eed0a6aee78da72086f4">kit</a>.itf_chnl.get_buffer(fd, length)</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keyword">def </span>priority_wheel(self):</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a82b1f4433f28eeb23bc43eac87d3062f">canceled</a>.clear()</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        <span class="keywordflow">while</span> <span class="keywordflow">not</span> self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#af56de8558cc43ef619215d82b9923e0b">cancel_event</a>.is_set():</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>                <span class="keyword">with</span> self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ade71d7b26bbc412874dcce16cb08b4e0">running_lock</a>:</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>                    entry: <span class="stringliteral">&quot;VirtualChnlMw.ChnlEntry&quot;</span> = self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ad244377aa1d6455abc9b609ad6899b3d">priority_queue</a>.get(timeout=1)</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>            <span class="keywordflow">except</span> Empty <span class="keyword">as</span> e:</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>            <span class="keywordflow">for</span> ch <span class="keywordflow">in</span> range(self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ac3b39d14fe720e2615f92d42959cd969">VCHNL_NUM</a>):</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>                <span class="keywordflow">if</span> ch == entry.chnl:</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>                    self.priority_events[ch].set()</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>                    self.priority_events[ch].clear()</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#af56de8558cc43ef619215d82b9923e0b">cancel_event</a>.clear()</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a82b1f4433f28eeb23bc43eac87d3062f">canceled</a>.set()</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="keyword">def </span>register_chnl(self, chnl):</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        entry = self.<a class="code hl_class" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_chnl_entry.html">ChnlEntry</a>(chnl, self.priority_chnl[chnl])</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ad244377aa1d6455abc9b609ad6899b3d">priority_queue</a>.put(entry)</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <span class="keyword">def </span>_priority_lock(self, chnl, stop_event, timeout):</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        event = self.priority_events[chnl]</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <span class="keywordflow">while</span> <span class="keywordflow">not</span> stop_event():</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>            <span class="keywordflow">if</span> event.wait(timeout):</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                <span class="keywordflow">break</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        self.priority_chnl[chnl] += 1</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <span class="preprocessor">@dispenser</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno"><a class="line" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a07a1a586d0f07aa763756e84b867dfa7">  146</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a07a1a586d0f07aa763756e84b867dfa7">stream_read</a>(self, chnl, fd, length, offset=0, stop_event=None, flag=1, timeout=1) -&gt; bool:</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        <span class="stringliteral">&quot;&quot;&quot;!</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="stringliteral">        使用虚拟通道上行，通道会遵循</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="stringliteral">        </span><span class="preprocessor">@param</span> chnl:</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        <span class="preprocessor">@param</span> fd:</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="preprocessor">@param</span> length:</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        <span class="preprocessor">@param</span> offset:</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        <span class="preprocessor">@param</span> stop_event:</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        <span class="preprocessor">@param</span> flag:</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        <span class="preprocessor">@param</span> timeout:</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="preprocessor">@return</span>:</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="stringliteral">        </span><span class="keywordflow">if</span> chnl &gt;= self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ac3b39d14fe720e2615f92d42959cd969">VCHNL_NUM</a>:</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            <span class="keywordflow">raise</span> ValueError(</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>                f<span class="stringliteral">&#39;{chnl=} should not be greater than the maximum number of virtual channels {self.VCHNL_NUM}&#39;</span>)</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> stop_event:</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            stop_event = self.<a class="code hl_function" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ad6095421df8c4ba50c86e5bd801c1755">_stop_event</a></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        self.<a class="code hl_function" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a09e5027ec5e4eeecd833c9e1ecc165a5">register_chnl</a>(chnl)</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        self.<a class="code hl_function" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ad0ee6e48457f9220db1d9f68945bc063">_priority_lock</a>(chnl, stop_event, timeout)</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        <span class="keyword">with</span> self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ade71d7b26bbc412874dcce16cb08b4e0">running_lock</a>:</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a70bdad6c7d2d74847bf4c12a6d95986b">itf_chnl</a> = itf = self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1base_1_1_u_middleware.html#a6c723c708199eed0a6aee78da72086f4">kit</a>.itf_chnl</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                flag = itf.recv_open(self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#aef9eca1648907153c384747fa578e59a">R2V_CHNL</a>, fd, length=length, offset=offset)</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                <span class="keywordflow">if</span> flag == FAIL:</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>                    logging.error(msg=f<span class="stringliteral">&#39;VChnl start Fail&#39;</span>)</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                    <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a2238b71c419ebd841561c789296e5162">v_param</a><a class="code hl_function" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a1907b7812956b50831d097af1990152d">v_param</a><a class="code hl_function" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a60db66536db7397c7af35d01ad24345f">v_param</a> = (length, chnl)</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                recv_total = 0</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                <span class="keywordflow">while</span> length != recv_total:</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                    <span class="keywordflow">if</span> stop_event():</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                        itf.break_dma(fd)</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                        <span class="keywordflow">break</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                    recv_total = itf.wait_dma(fd, timeout=timeout)</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                residue, valid_ch = self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a2238b71c419ebd841561c789296e5162">v_param</a><a class="code hl_function" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a1907b7812956b50831d097af1990152d">v_param</a><a class="code hl_function" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a60db66536db7397c7af35d01ad24345f">v_param</a></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                <span class="keywordflow">if</span> residue:</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                    <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&#39;The current virtual channel {chnl}:{valid_ch} still has residual data&#39;</span>)</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                <span class="keywordflow">return</span> <span class="keyword">True</span></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>            <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                logging.error(msg=e)</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>                <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    <span class="preprocessor">@dispenser</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    <span class="keyword">def </span>stream_send(self, chnl, fd, length, offset=0, stop_event=None, flag=1):</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        stream_mode = self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a8650578c0e6df8567f28910c1cb244cb">stream_mode</a></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&#39;This interface cannot be called when the {stream_mode=}&#39;</span>)</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    <span class="preprocessor">@property</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno"><a class="line" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a1907b7812956b50831d097af1990152d">  194</a></span>    <span class="keyword">def </span>v_param(self) -&gt; tuple:</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        <span class="stringliteral">&quot;&quot;&quot;!</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="stringliteral">        status[26:0]: 当前传输剩余的字数（当前位宽的字数）；</span></div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="stringliteral">        status[29:27]: 当前传输的源通道号，0-7；</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="stringliteral">        </span><span class="preprocessor">@return</span>: (当前传输剩余的字数, 当前传输的源通道号)</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="stringliteral">        _v = self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a70bdad6c7d2d74847bf4c12a6d95986b">itf_chnl</a>.reg_read(self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a535bd938a88a1ef0cde8f000ea6a7d08">STATUS_ADDR</a>)</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span><span class="stringliteral">        </span><span class="keywordflow">return</span> _v &amp; (2 ** 26 - 1), _v &gt;&gt; 26</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    <span class="preprocessor">@v_param.setter</span></div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno"><a class="line" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a60db66536db7397c7af35d01ad24345f">  205</a></span>    <span class="keyword">def </span>v_param(self, value: tuple):</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        <span class="stringliteral">&quot;&quot;&quot;!</span></div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span><span class="stringliteral">        param[26:0]: 本次传输长度（当前位宽的字数）；</span></div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span><span class="stringliteral">        param[29:27]:选通的axis-s端口号，0-7；</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span><span class="stringliteral">        </span><span class="preprocessor">@param</span> value: (本次传输长度, 选通的axis-s端口号)</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        <span class="preprocessor">@return</span>:</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span><span class="stringliteral">        _param = (value[0] &amp; (2 ** 26 - 1)) + (value[1] &lt;&lt; 26)</span></div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span><span class="stringliteral">        self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a70bdad6c7d2d74847bf4c12a6d95986b">itf_chnl</a>.reg_write(self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ac5bf77f95b727874d11f17ea91b3d1af">PARAM_ADDR</a>, _param)</span></div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="stringliteral">        self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a70bdad6c7d2d74847bf4c12a6d95986b">itf_chnl</a>.reg_write(self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#af84fee8170a6c3e01ace117ceab379d4">PARAM_WR_ADDR</a>, 0xFFFFFFFF)</span></div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span><span class="stringliteral">        time.sleep(0.005)</span></div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span><span class="stringliteral">        self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a70bdad6c7d2d74847bf4c12a6d95986b">itf_chnl</a>.reg_write(self.<a class="code hl_variable" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#af84fee8170a6c3e01ace117ceab379d4">PARAM_WR_ADDR</a>, 0)</span></div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span><span class="stringliteral">    </span><span class="preprocessor">@staticmethod</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    <span class="keyword">def </span>_stop_event():</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1base_1_1_base_chnl_mw_html"><div class="ttname"><a href="classnsukit_1_1middleware_1_1base_1_1_base_chnl_mw.html">nsukit.middleware.base.BaseChnlMw</a></div><div class="ttdef"><b>Definition:</b> <a href="middleware_2base_8py_source.html#l00053">base.py:53</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1base_1_1_u_middleware_html_a6c723c708199eed0a6aee78da72086f4"><div class="ttname"><a href="classnsukit_1_1middleware_1_1base_1_1_u_middleware.html#a6c723c708199eed0a6aee78da72086f4">nsukit.middleware.base.UMiddleware.kit</a></div><div class="ttdeci">kit</div><div class="ttdef"><b>Definition:</b> <a href="middleware_2base_8py_source.html#l00023">base.py:23</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_chnl_entry_html"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_chnl_entry.html">nsukit.middleware.virtual_chnl.VirtualChnlMw.ChnlEntry</a></div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00063">virtual_chnl.py:63</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_chnl_entry_html_a782e0865c93063474e8148c8965c2dd8"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_chnl_entry.html#a782e0865c93063474e8148c8965c2dd8">nsukit.middleware.virtual_chnl.VirtualChnlMw.ChnlEntry.priority</a></div><div class="ttdeci">int priority</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00065">virtual_chnl.py:65</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_stream_mode_html"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_stream_mode.html">nsukit.middleware.virtual_chnl.VirtualChnlMw.StreamMode</a></div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00058">virtual_chnl.py:58</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html">nsukit.middleware.virtual_chnl.VirtualChnlMw</a></div><div class="ttdoc">按一定规则，从一个物理通道虚拟出若干个虚拟数据通道进行上行</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00048">virtual_chnl.py:48</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_a07a1a586d0f07aa763756e84b867dfa7"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a07a1a586d0f07aa763756e84b867dfa7">nsukit.middleware.virtual_chnl.VirtualChnlMw.stream_read</a></div><div class="ttdeci">bool stream_read(self, chnl, fd, length, offset=0, stop_event=None, flag=1, timeout=1)</div><div class="ttdoc">使用虚拟通道上行，通道会遵循</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00146">virtual_chnl.py:146</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_a09e5027ec5e4eeecd833c9e1ecc165a5"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a09e5027ec5e4eeecd833c9e1ecc165a5">nsukit.middleware.virtual_chnl.VirtualChnlMw.register_chnl</a></div><div class="ttdeci">def register_chnl(self, chnl)</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00134">virtual_chnl.py:134</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_a0def14e6bc25913bc457daff2cebfe0c"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a0def14e6bc25913bc457daff2cebfe0c">nsukit.middleware.virtual_chnl.VirtualChnlMw.config</a></div><div class="ttdeci">def config(self, *stream_mode='real', **kwargs)</div><div class="ttdoc">配置中间件所使用的数据流模式，是直接转发给对应的Chnl</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00083">virtual_chnl.py:83</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_a1907b7812956b50831d097af1990152d"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a1907b7812956b50831d097af1990152d">nsukit.middleware.virtual_chnl.VirtualChnlMw.v_param</a></div><div class="ttdeci">tuple v_param(self)</div><div class="ttdoc">status[26:0]: 当前传输剩余的字数（当前位宽的字数）； status[29:27]: 当前传输的源通道号，0-7；</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00194">virtual_chnl.py:194</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_a2238b71c419ebd841561c789296e5162"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a2238b71c419ebd841561c789296e5162">nsukit.middleware.virtual_chnl.VirtualChnlMw.v_param</a></div><div class="ttdeci">v_param</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00173">virtual_chnl.py:173</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_a535bd938a88a1ef0cde8f000ea6a7d08"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a535bd938a88a1ef0cde8f000ea6a7d08">nsukit.middleware.virtual_chnl.VirtualChnlMw.STATUS_ADDR</a></div><div class="ttdeci">int STATUS_ADDR</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00056">virtual_chnl.py:56</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_a60db66536db7397c7af35d01ad24345f"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a60db66536db7397c7af35d01ad24345f">nsukit.middleware.virtual_chnl.VirtualChnlMw.v_param</a></div><div class="ttdeci">def v_param(self, tuple value)</div><div class="ttdoc">param[26:0]: 本次传输长度（当前位宽的字数）； param[29:27]:选通的axis-s端口号，0-7；</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00205">virtual_chnl.py:205</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_a6582f8f1dab9e24c31b24c1c68a7d1f8"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a6582f8f1dab9e24c31b24c1c68a7d1f8">nsukit.middleware.virtual_chnl.VirtualChnlMw.priority_thread</a></div><div class="ttdeci">priority_thread</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00078">virtual_chnl.py:78</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_a70bdad6c7d2d74847bf4c12a6d95986b"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a70bdad6c7d2d74847bf4c12a6d95986b">nsukit.middleware.virtual_chnl.VirtualChnlMw.itf_chnl</a></div><div class="ttdeci">itf_chnl</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00095">virtual_chnl.py:95</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_a82b1f4433f28eeb23bc43eac87d3062f"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a82b1f4433f28eeb23bc43eac87d3062f">nsukit.middleware.virtual_chnl.VirtualChnlMw.canceled</a></div><div class="ttdeci">canceled</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00076">virtual_chnl.py:76</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_a8650578c0e6df8567f28910c1cb244cb"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a8650578c0e6df8567f28910c1cb244cb">nsukit.middleware.virtual_chnl.VirtualChnlMw.stream_mode</a></div><div class="ttdeci">stream_mode</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00073">virtual_chnl.py:73</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_ac069b5986bca8bb7d2833911abe789d5"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ac069b5986bca8bb7d2833911abe789d5">nsukit.middleware.virtual_chnl.VirtualChnlMw.priority_wheel</a></div><div class="ttdeci">def priority_wheel(self)</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00118">virtual_chnl.py:118</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_ac3b39d14fe720e2615f92d42959cd969"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ac3b39d14fe720e2615f92d42959cd969">nsukit.middleware.virtual_chnl.VirtualChnlMw.VCHNL_NUM</a></div><div class="ttdeci">int VCHNL_NUM</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00052">virtual_chnl.py:52</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_ac5bf77f95b727874d11f17ea91b3d1af"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ac5bf77f95b727874d11f17ea91b3d1af">nsukit.middleware.virtual_chnl.VirtualChnlMw.PARAM_ADDR</a></div><div class="ttdeci">int PARAM_ADDR</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00054">virtual_chnl.py:54</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_ad0ee6e48457f9220db1d9f68945bc063"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ad0ee6e48457f9220db1d9f68945bc063">nsukit.middleware.virtual_chnl.VirtualChnlMw._priority_lock</a></div><div class="ttdeci">def _priority_lock(self, chnl, stop_event, timeout)</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00138">virtual_chnl.py:138</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_ad244377aa1d6455abc9b609ad6899b3d"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ad244377aa1d6455abc9b609ad6899b3d">nsukit.middleware.virtual_chnl.VirtualChnlMw.priority_queue</a></div><div class="ttdeci">priority_queue</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00079">virtual_chnl.py:79</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_ad6095421df8c4ba50c86e5bd801c1755"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ad6095421df8c4ba50c86e5bd801c1755">nsukit.middleware.virtual_chnl.VirtualChnlMw._stop_event</a></div><div class="ttdeci">def _stop_event()</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00220">virtual_chnl.py:220</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_ade71d7b26bbc412874dcce16cb08b4e0"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ade71d7b26bbc412874dcce16cb08b4e0">nsukit.middleware.virtual_chnl.VirtualChnlMw.running_lock</a></div><div class="ttdeci">running_lock</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00074">virtual_chnl.py:74</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_aef9eca1648907153c384747fa578e59a"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#aef9eca1648907153c384747fa578e59a">nsukit.middleware.virtual_chnl.VirtualChnlMw.R2V_CHNL</a></div><div class="ttdeci">int R2V_CHNL</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00053">virtual_chnl.py:53</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_af56de8558cc43ef619215d82b9923e0b"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#af56de8558cc43ef619215d82b9923e0b">nsukit.middleware.virtual_chnl.VirtualChnlMw.cancel_event</a></div><div class="ttdeci">cancel_event</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00075">virtual_chnl.py:75</a></div></div>
+<div class="ttc" id="aclassnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_html_af84fee8170a6c3e01ace117ceab379d4"><div class="ttname"><a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#af84fee8170a6c3e01ace117ceab379d4">nsukit.middleware.virtual_chnl.VirtualChnlMw.PARAM_WR_ADDR</a></div><div class="ttdeci">int PARAM_WR_ADDR</div><div class="ttdef"><b>Definition:</b> <a href="virtual__chnl_8py_source.html#l00055">virtual_chnl.py:55</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_480d567683d2e61ca6e4b4accfba4f32.html">nsukit</a></li><li class="navelem"><a class="el" href="dir_6cfe53c5c36644b959563346531c2cbe.html">middleware</a></li><li class="navelem"><b>virtual_chnl.py</b></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,585 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NSUKit: nsukit.interface.tcp_interface.TCPCmdUItf类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo切图-竖版.png"/></td>
+     <script type="text/javascript" src="../version.js"></script>
+  <td id="projectalign">
+   <div id="projectname">NSUKit
+        <span id="projectnumber">0.1.1</span>
+   </div>
+   <div id="projectbrief">板卡级统一交互接口</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part --><!-- 制作者 Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pub-attribs">Public 属性</a> &#124;
+<a href="#pro-attribs">Protected 属性</a> &#124;
+<a href="#pro-static-attribs">静态 Protected 属性</a> &#124;
+<a href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf-members.html">所有成员列表</a>  </div>
+  <div class="headertitle"><div class="title">nsukit.interface.tcp_interface.TCPCmdUItf类 参考</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>网络指令接口  
+ <a href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.html#details">更多...</a></p>
+<div class="dynheader">
+类 nsukit.interface.tcp_interface.TCPCmdUItf 继承关系图:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.png" usemap="#nsukit.interface.tcp_5Finterface.TCPCmdUItf_map" alt=""/>
+  <map id="nsukit.interface.tcp_5Finterface.TCPCmdUItf_map" name="nsukit.interface.tcp_5Finterface.TCPCmdUItf_map">
+<area href="classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf.html" alt="nsukit.interface.base.BaseCmdUItf" shape="rect" coords="128,168,375,192"/>
+<area href="classnsukit_1_1interface_1_1base_1_1_u_interface.html" alt="nsukit.interface.base.UInterface" shape="rect" coords="128,112,375,136"/>
+<area href="classnsukit_1_1interface_1_1base_1_1_u_interface_meta.html" alt="nsukit.interface.base.UInterfaceMeta" shape="rect" coords="257,56,504,80"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:a3c7b4f52070a8a95c50e2e93a370a586"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.html#a3c7b4f52070a8a95c50e2e93a370a586">__init__</a> (self)</td></tr>
+<tr class="separator:a3c7b4f52070a8a95c50e2e93a370a586"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5838b217832b526d51549be807a9a3a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.html#af5838b217832b526d51549be807a9a3a">accept</a> (self, str target, int port, **kwargs)</td></tr>
+<tr class="memdesc:af5838b217832b526d51549be807a9a3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">初始化网络指令接口  <br /></td></tr>
+<tr class="separator:af5838b217832b526d51549be807a9a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84660108d9742574875c1cbe0e69fd7f"><td class="memItemLeft" align="right" valign="top">bytes&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.html#a84660108d9742574875c1cbe0e69fd7f">recv_bytes</a> (self, int size)</td></tr>
+<tr class="memdesc:a84660108d9742574875c1cbe0e69fd7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">接收数据  <br /></td></tr>
+<tr class="separator:a84660108d9742574875c1cbe0e69fd7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb6ceb4d79357a24c5faa7455431c970"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.html#aeb6ceb4d79357a24c5faa7455431c970">send_bytes</a> (self, bytes data)</td></tr>
+<tr class="memdesc:aeb6ceb4d79357a24c5faa7455431c970"><td class="mdescLeft">&#160;</td><td class="mdescRight">发送数据  <br /></td></tr>
+<tr class="separator:aeb6ceb4d79357a24c5faa7455431c970"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a186af06fd3dbdb7ca0f5a8afa4a268ea"><td class="memItemLeft" align="right" valign="top">bytes&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.html#a186af06fd3dbdb7ca0f5a8afa4a268ea">write</a> (self, int addr, bytes value)</td></tr>
+<tr class="memdesc:a186af06fd3dbdb7ca0f5a8afa4a268ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">发送数据  <br /></td></tr>
+<tr class="separator:a186af06fd3dbdb7ca0f5a8afa4a268ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb4af85ef00471feeef8a9f06f164024"><td class="memItemLeft" align="right" valign="top">bytes&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.html#aeb4af85ef00471feeef8a9f06f164024">read</a> (self, int addr)</td></tr>
+<tr class="memdesc:aeb4af85ef00471feeef8a9f06f164024"><td class="mdescLeft">&#160;</td><td class="mdescRight">接收数据  <br /></td></tr>
+<tr class="separator:aeb4af85ef00471feeef8a9f06f164024"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a644525d8d4d6fc74245ae21b718b28ef"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.html#a644525d8d4d6fc74245ae21b718b28ef">close</a> (self)</td></tr>
+<tr class="memdesc:a644525d8d4d6fc74245ae21b718b28ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">关闭连接  <br /></td></tr>
+<tr class="separator:a644525d8d4d6fc74245ae21b718b28ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79f0d98f5cab051d254b4e9fd74e7a1a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.html#a79f0d98f5cab051d254b4e9fd74e7a1a">set_timeout</a> (self, int s=5)</td></tr>
+<tr class="memdesc:a79f0d98f5cab051d254b4e9fd74e7a1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">设置超时时间  <br /></td></tr>
+<tr class="separator:a79f0d98f5cab051d254b4e9fd74e7a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe10ae454ac237b3a9dd48af74b91e0d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf.html#abe10ae454ac237b3a9dd48af74b91e0d">send_bytes</a> (self, data)</td></tr>
+<tr class="separator:abe10ae454ac237b3a9dd48af74b91e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a763ec5a2a3eabf209759eda1b8ed8fc3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf.html#a763ec5a2a3eabf209759eda1b8ed8fc3">recv_bytes</a> (self, size)</td></tr>
+<tr class="separator:a763ec5a2a3eabf209759eda1b8ed8fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28889fb29710f70a731c69b6c9e4ba73"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf.html#a28889fb29710f70a731c69b6c9e4ba73">write</a> (self, addr, value)</td></tr>
+<tr class="separator:a28889fb29710f70a731c69b6c9e4ba73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac05940450a69d8e3b3e5db27353e6efb"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf.html#ac05940450a69d8e3b3e5db27353e6efb">read</a> (self, addr)</td></tr>
+<tr class="separator:ac05940450a69d8e3b3e5db27353e6efb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e2023d246a7eeeadc0bf8ff80ed8acb"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html#a5e2023d246a7eeeadc0bf8ff80ed8acb">accept</a> (self, *args, **kwargs)</td></tr>
+<tr class="separator:a5e2023d246a7eeeadc0bf8ff80ed8acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab066b09e2568763db751a03089480c1f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html#ab066b09e2568763db751a03089480c1f">close</a> (self)</td></tr>
+<tr class="separator:ab066b09e2568763db751a03089480c1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c2126e6cc81c4c6ce1a0dfc6f732c97"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html#a0c2126e6cc81c4c6ce1a0dfc6f732c97">set_timeout</a> (self, int s)</td></tr>
+<tr class="separator:a0c2126e6cc81c4c6ce1a0dfc6f732c97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public 属性</h2></td></tr>
+<tr class="memitem:a035e3f51f5d52e2a64f42d18bcc57f4a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.html#a035e3f51f5d52e2a64f42d18bcc57f4a">busy_lock</a></td></tr>
+<tr class="separator:a035e3f51f5d52e2a64f42d18bcc57f4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected 属性</h2></td></tr>
+<tr class="memitem:a1f49445f32b5fb16b549760bff56bdde"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.html#a1f49445f32b5fb16b549760bff56bdde">_tcp_server</a></td></tr>
+<tr class="separator:a1f49445f32b5fb16b549760bff56bdde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
+静态 Protected 属性</h2></td></tr>
+<tr class="memitem:a47580b439df57ec0767d81d93b7e9c71"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.html#a47580b439df57ec0767d81d93b7e9c71">_timeout</a> = 15</td></tr>
+<tr class="separator:a47580b439df57ec0767d81d93b7e9c71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+额外继承的成员函数</h2></td></tr>
+<tr class="inherit_header pro_static_methods_classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf')"><img src="closed.png" alt="-"/>&#160;静态 Protected 成员函数 继承自 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf.html">nsukit.interface.base.BaseCmdUItf</a></td></tr>
+<tr class="memitem:ae8efcc6bcec78295d21274eae702d9df inherit pro_static_methods_classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf"><td class="memItemLeft" align="right" valign="top">bytes&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf.html#ae8efcc6bcec78295d21274eae702d9df">_fmt_reg_write</a> (int reg=0, bytes value=b'')</td></tr>
+<tr class="memdesc:ae8efcc6bcec78295d21274eae702d9df inherit pro_static_methods_classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf"><td class="mdescLeft">&#160;</td><td class="mdescRight">格式化TCP/serial模拟写寄存器功能的icd  <br /></td></tr>
+<tr class="separator:ae8efcc6bcec78295d21274eae702d9df inherit pro_static_methods_classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a882aa60722e9eb7cd7efe645a1efc37c inherit pro_static_methods_classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf"><td class="memItemLeft" align="right" valign="top">bytes&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf.html#a882aa60722e9eb7cd7efe645a1efc37c">_fmt_reg_read</a> (int reg=0)</td></tr>
+<tr class="memdesc:a882aa60722e9eb7cd7efe645a1efc37c inherit pro_static_methods_classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf"><td class="mdescLeft">&#160;</td><td class="mdescRight">格式化TCP/serial模拟读寄存器功能的icd  <br /></td></tr>
+<tr class="separator:a882aa60722e9eb7cd7efe645a1efc37c inherit pro_static_methods_classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock"><p>网络指令接口 </p>
+<p>包括连接/断开、发送、接收等功能 </p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00046">46</a> 行定义.</p>
+</div><h2 class="groupheader">构造及析构函数说明</h2>
+<a id="a3c7b4f52070a8a95c50e2e93a370a586" name="a3c7b4f52070a8a95c50e2e93a370a586"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c7b4f52070a8a95c50e2e93a370a586">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.tcp_interface.TCPCmdUItf.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00053">53</a> 行定义.</p>
+
+</div>
+</div>
+<h2 class="groupheader">成员函数说明</h2>
+<a id="af5838b217832b526d51549be807a9a3a" name="af5838b217832b526d51549be807a9a3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5838b217832b526d51549be807a9a3a">&#9670;&#160;</a></span>accept()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.tcp_interface.TCPCmdUItf.accept </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>初始化网络指令接口 </p>
+<p>初始化网络指令接口，获取IP地址，端口号等参数 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target</td><td>IP地址 </td></tr>
+    <tr><td class="paramname">port</td><td>端口号 </td></tr>
+    <tr><td class="paramname">kwargs</td><td>其他参数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html">nsukit.interface.base.UInterface</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00059">59</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a644525d8d4d6fc74245ae21b718b28ef" name="a644525d8d4d6fc74245ae21b718b28ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a644525d8d4d6fc74245ae21b718b28ef">&#9670;&#160;</a></span>close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.tcp_interface.TCPCmdUItf.close </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>关闭连接 </p>
+<p>关闭网络连接 </p><dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html">nsukit.interface.base.UInterface</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00142">142</a> 行定义.</p>
+
+</div>
+</div>
+<a id="aeb4af85ef00471feeef8a9f06f164024" name="aeb4af85ef00471feeef8a9f06f164024"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb4af85ef00471feeef8a9f06f164024">&#9670;&#160;</a></span>read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bytes nsukit.interface.tcp_interface.TCPCmdUItf.read </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>接收数据 </p>
+<p>使用网络以地址的方式发送一条约定好的特殊指令 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>要读取的地址 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>返回读取到的结果 </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf.html">nsukit.interface.base.BaseCmdUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00127">127</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a84660108d9742574875c1cbe0e69fd7f" name="a84660108d9742574875c1cbe0e69fd7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84660108d9742574875c1cbe0e69fd7f">&#9670;&#160;</a></span>recv_bytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bytes nsukit.interface.tcp_interface.TCPCmdUItf.recv_bytes </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>接收数据 </p>
+<p>使用网络接收指定大小的数据 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>接收数据的长度 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>接收到的数据 </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf.html">nsukit.interface.base.BaseCmdUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00074">74</a> 行定义.</p>
+
+</div>
+</div>
+<a id="aeb6ceb4d79357a24c5faa7455431c970" name="aeb6ceb4d79357a24c5faa7455431c970"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb6ceb4d79357a24c5faa7455431c970">&#9670;&#160;</a></span>send_bytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> int nsukit.interface.tcp_interface.TCPCmdUItf.send_bytes </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bytes&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>发送数据 </p>
+<p>使用网络发送数据 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>要发送的数据 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>发送完成的数据长度 </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf.html">nsukit.interface.base.BaseCmdUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00093">93</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a79f0d98f5cab051d254b4e9fd74e7a1a" name="a79f0d98f5cab051d254b4e9fd74e7a1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79f0d98f5cab051d254b4e9fd74e7a1a">&#9670;&#160;</a></span>set_timeout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.tcp_interface.TCPCmdUItf.set_timeout </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>s</em> = <code>5</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>设置超时时间 </p>
+<p>根据传入的数值设置串口的超时时间 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>秒 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html">nsukit.interface.base.UInterface</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00154">154</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a186af06fd3dbdb7ca0f5a8afa4a268ea" name="a186af06fd3dbdb7ca0f5a8afa4a268ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a186af06fd3dbdb7ca0f5a8afa4a268ea">&#9670;&#160;</a></span>write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bytes nsukit.interface.tcp_interface.TCPCmdUItf.write </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bytes&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>发送数据 </p>
+<p>使用网络以地址值的方式发送一条约定好的特殊指令 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>要修改的地址 </td></tr>
+    <tr><td class="paramname">value</td><td>地址中要赋的值 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>返回数据中的结果 </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_cmd_u_itf.html">nsukit.interface.base.BaseCmdUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00111">111</a> 行定义.</p>
+
+</div>
+</div>
+<h2 class="groupheader">类成员变量说明</h2>
+<a id="a1f49445f32b5fb16b549760bff56bdde" name="a1f49445f32b5fb16b549760bff56bdde"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f49445f32b5fb16b549760bff56bdde">&#9670;&#160;</a></span>_tcp_server</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.interface.tcp_interface.TCPCmdUItf._tcp_server</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00054">54</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a47580b439df57ec0767d81d93b7e9c71" name="a47580b439df57ec0767d81d93b7e9c71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47580b439df57ec0767d81d93b7e9c71">&#9670;&#160;</a></span>_timeout</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nsukit.interface.tcp_interface.TCPCmdUItf._timeout = 15</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00051">51</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a035e3f51f5d52e2a64f42d18bcc57f4a" name="a035e3f51f5d52e2a64f42d18bcc57f4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a035e3f51f5d52e2a64f42d18bcc57f4a">&#9670;&#160;</a></span>busy_lock</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.interface.tcp_interface.TCPCmdUItf.busy_lock</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00057">57</a> 行定义.</p>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>D:/Work/PythonProject/NSUKit/nsukit/interface/<a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><b>nsukit</b></li><li class="navelem"><b>interface</b></li><li class="navelem"><b>tcp_interface</b></li><li class="navelem"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_cmd_u_itf.html">TCPCmdUItf</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+  </ul>
+</div>
+</body>
+</html>

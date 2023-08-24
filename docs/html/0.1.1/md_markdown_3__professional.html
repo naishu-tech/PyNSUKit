@@ -1,0 +1,620 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NSUKit: 进阶使用</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo切图-竖版.png"/></td>
+     <script type="text/javascript" src="../version.js"></script>
+  <td id="projectalign">
+   <div id="projectname">NSUKit
+        <span id="projectnumber">0.1.1</span>
+   </div>
+   <div id="projectbrief">板卡级统一交互接口</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part --><!-- 制作者 Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md_markdown_3__professional.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">进阶使用 </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><div style="position: fixed; top: 90%; left: 90%"> <a href="#目录" style="text-decoration: none">返回目录</a> </div><p><span id="目录"></span></p>
+<h1><a class="anchor" id="autotoc_md23"></a>
+目录</h1>
+<ul>
+<li><a href="#NSUKit">NSUKit</a></li>
+<li><a href="#icd_paresr">icd_paresr</a></li>
+<li><a href="#virtual_chnl">virtual_chnl</a></li>
+<li><a href="#自定义接口">自定义接口</a></li>
+<li><a href="#工程详细结构结构">工程详细结构结构</a></li>
+<li><a href="#TCPCmdUItf">TCPCmdUItf</a></li>
+<li><a href="#SerialCmdUItf">SerialCmdUItf</a></li>
+<li><a href="#PCIECmdUItf">PCIECmdUItf</a></li>
+<li><a href="#TCPChnlUItf">TCPChnlUItf</a></li>
+<li><a href="#PCIEChnlUItf">PCIEChnlUItf</a></li>
+<li><a href="#名词解释">名词解释</a></li>
+<li><a class="el" href="md_markdown_2__quickstart.html">快速开始</a></li>
+</ul>
+<hr  />
+<p><span id="NSUKit"></span></p>
+<h1><a class="anchor" id="autotoc_md25"></a>
+NSUKit</h1>
+<p><em><b>NSUKit：统一调用工具类</b></em></p>
+<h2><a class="anchor" id="autotoc_md26"></a>
+NSUKit():</h2>
+<center><img src="professional_NSUKit_NSUKit.png" alt="" class="inline"/>     </center> <center>NSUKit初始化</center><div class="fragment"><div class="line"><span class="comment"># 统一调用工具类实例化</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line"><span class="comment"># 初始化时需要传入两个接口类，第一个为指令类，第二个为数据流类</span></div>
+<div class="line"><span class="comment"># 指令类与数据流类无绑定关系、需根据实际使用自行传入</span></div>
+<div class="line"><span class="comment"># 指令类：TCPCmdUItf、SerialCmdUItf、PCIECmdUItf</span></div>
+<div class="line"><span class="comment"># 数据流类：TCPChnlUItf、PCIEChnlUItf</span></div>
+<div class="line"><span class="comment"># 也可根据自己需要实现属于自己指令、数据流接口，具体方法见目录中自定义接口</span></div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md27"></a>
+start_command(self, target=None, **kwargs) -&gt; None::</h2>
+<center><img src="professional_NSUKit_start_command.png" alt="" class="inline"/>     </center> <center>与设备建立连接</center><div class="fragment"><div class="line"><span class="comment"># 发送指令前准备。调用该函数并传入对应的参数以完成指令类、指令处理中间件的初始化操作。</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># 网络指令</span></div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>, port=5001)</div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># 串口指令</span></div>
+<div class="line">nsukit = NSUKit(SerialCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&quot;COM1&quot;</span>, target_baud_rate=9600)</div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># PCI-E指令</span></div>
+<div class="line">nsukit = NSUKit(PCIECmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_command(target=0, sent_base=0x10000000, recv_base=0x13000000, irq_base=0x00003000 + 44, sent_down_base=0x00003030)</div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># 也可将参数封装好，直接传入到函数中</span></div>
+<div class="line">param = {</div>
+<div class="line">    <span class="stringliteral">&#39;tcp_cmd&#39;</span>: {</div>
+<div class="line">        <span class="stringliteral">&quot;port&quot;</span>: 5001,</div>
+<div class="line">        <span class="stringliteral">&quot;check_recv_head&quot;</span>: <span class="keyword">False</span></div>
+<div class="line">    },</div>
+<div class="line">    <span class="stringliteral">&#39;serial_cmd&#39;</span>: {</div>
+<div class="line">        <span class="stringliteral">&quot;target_baud_rate&quot;</span>: 9600,</div>
+<div class="line">        <span class="stringliteral">&quot;check_recv_head&quot;</span>: <span class="keyword">False</span></div>
+<div class="line">    },</div>
+<div class="line">    <span class="stringliteral">&#39;pcie_cmd&#39;</span>: {</div>
+<div class="line">        <span class="stringliteral">&quot;sent_base&quot;</span>: 0x10000000,</div>
+<div class="line">        <span class="stringliteral">&quot;recv_base&quot;</span>: 0x13000000,</div>
+<div class="line">        <span class="stringliteral">&quot;irq_base&quot;</span>: 0x00003000 + 44,</div>
+<div class="line">        <span class="stringliteral">&quot;sent_down_base&quot;</span>: 0x00003030,</div>
+<div class="line">        <span class="stringliteral">&quot;check_recv_head&quot;</span>: <span class="keyword">False</span></div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>,  **param[<span class="stringliteral">&quot;tcp_cmd&quot;</span>])</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&quot;COM1&quot;</span>,  **param[<span class="stringliteral">&quot;serial_cmd&quot;</span>])</div>
+<div class="line">nsukit.start_command(target=0,  **param[<span class="stringliteral">&quot;pcie_cmd&quot;</span>])</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md28"></a>
+stop_command(self) -&gt; None:</h2>
+<center><img src="professional_NSUKit_stop_command.png" alt="" class="inline"/>     </center> <center>与设备断开连接</center><div class="fragment"><div class="line"><span class="comment"># 结束发送指令操作。调用该函数，会断开连接（断开TCP、串口、PCI-E连接）</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>, port=5001)</div>
+<div class="line">nsukit.stop_command()</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md29"></a>
+write(self, addr: int, value: bytes) -&gt; bytes:</h2>
+<center><img src="professional_NSUKit_write.png" alt="" class="inline"/>     </center> <center>向指定地址写入数据</center><div class="fragment"><div class="line"><span class="comment"># 修改寄存器地址操作。调用该函数传入寄存器地址和要修改的值，来完成寄存器值修改。</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>, port=5001)</div>
+<div class="line">nsukit.write(0x1, b<span class="stringliteral">&#39;\x02\x00\x00\x00&#39;</span>)</div>
+<div class="line"><span class="comment"># 上述改操作意思为：</span></div>
+<div class="line"><span class="comment"># ！！注意！！ PCI-E指令会直接将设备地址0x1的值改为0x2</span></div>
+<div class="line"><span class="comment"># ！！注意！！ 在网络指令与串口指令中将会发送 (0x5F5F5F5F, 0x31001000, 0x00000000, 24, addr, value) 的二进制数据</span></div>
+<div class="line"><span class="comment"># 参数 execute 会在icd_paresr中进行统一讲解</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md30"></a>
+read(self, addr: int) -&gt; bytes:</h2>
+<center><img src="professional_NSUKit_read.png" alt="" class="inline"/>     </center> <center>读取指定地址数据</center><div class="fragment"><div class="line"><span class="comment"># 读取寄存器操作。调用该函数传入要读取寄存器地址，来完成读取操作。</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>, port=5001)</div>
+<div class="line">print(nsukit.read(0x1))</div>
+<div class="line"><span class="comment"># 上述改操作意思为：</span></div>
+<div class="line"><span class="comment"># ！！注意！！ PCI-E指令会直接将设备地址0x1的值返回</span></div>
+<div class="line"><span class="comment"># ！！注意！！ 在网络指令与串口指令中将会发送 (0x5F5F5F5F, 0x31001001, 0x00000000, 20, addr) 的二进制数据</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md31"></a>
+bulk_write(self, params: dict) -&gt; list:</h2>
+<center><img src="professional_NSUKit_bulk_write.png" alt="" class="inline"/>     </center> <center>批量向指定地址写入数据</center><div class="fragment"><div class="line"><span class="comment"># 批量修改寄存器地址操作。调用该函数传入字典，来完成寄存器值批量修改。</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>, port=5001)</div>
+<div class="line">nsukit.bulk_write({0x1: b<span class="stringliteral">&#39;\x02\x00\x00\x00&#39;</span>, 0x2: b<span class="stringliteral">&#39;\x03\x00\x00\x00&#39;</span>})</div>
+<div class="line"><span class="comment"># 批量修改时会根据参数依次调用nsukit.write()函数</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md32"></a>
+bulk_read(self, addrs: list) -&gt; list:</h2>
+<center><img src="professional_NSUKit_bulk_read.png" alt="" class="inline"/>     </center> <center>批量读取指定地址数据</center><div class="fragment"><div class="line"><span class="comment"># 批量读取寄存器操作。调用该函数传入要读取寄存器地址，来完成读取操作。</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>, port=5001)</div>
+<div class="line">print(nsukit.bulk_read([0x1,0x2,0x3]))</div>
+<div class="line"><span class="comment"># 批量读取时会根据参数依次调用nsukit.read()函数</span></div>
+</div><!-- fragment --><hr  />
+<p><em><b>以下函数为数据流相关函数，只有一张附图</b></em> </p><center><img src="professional_NSUKit_stream_recv.png" alt="" class="inline"/>     </center> <center>数据流相关附图</center><h2><a class="anchor" id="autotoc_md34"></a>
+start_stream(self, target=None, **kwargs):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 开启数据流前的操作。调用该函数根据目标设备类型传入参数、参数建立链接</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line"><span class="comment"># 网络数据流</span></div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_stream(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>)</div>
+<div class="line"><span class="comment"># or</span></div>
+<div class="line">nsukit.start_stream(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>, port=6001)</div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># PCI-E数据流</span></div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, PCIEChnlUItf)</div>
+<div class="line">nsukit.start_stream(target=0)</div>
+<div class="line"><span class="comment"># 根据传入参数与设备建立数据流连接</span></div>
+<div class="line"><span class="comment"># ！！注意！！ 网络数据流在不传入端口号时会根据设备ip自动计算端口号，如传入端口号会使用传入的端口号</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md35"></a>
+stop_stream(self):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 接收完数据后操作。调用该函数关闭数据流链接</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_stream(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>)</div>
+<div class="line">nsukit.stop_stream()</div>
+<div class="line"><span class="comment"># 断开当前数据流链接</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md36"></a>
+alloc_buffer(self, length, buf: int = None):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 开辟一块缓存。调用该函数申请一块内存，用于存储设备测试数据</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">length = 1024</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_stream(target=<span class="stringliteral">&quot;192.168.1.179&quot;</span>)</div>
+<div class="line">fd = nsukit.alloc_buffer(length)</div>
+<div class="line"><span class="comment"># or</span></div>
+<div class="line">fd = nsukit.alloc_buffer(length, fd)</div>
+<div class="line"><span class="comment"># 根据传入的长度申请一块内存</span></div>
+<div class="line"><span class="comment"># ！！注意！！ 这里的1长度 = 4 bytes，上述程序length中大小为 1024*4 bytes</span></div>
+<div class="line"><span class="comment"># ！！注意！！ 申请的内存不可长久存储，程序退出后将清空已申请的内存</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md37"></a>
+free_buffer(self, fd):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 释放一块已申请的内存。调用该函数来释放已经用完的缓存，用于释放系统资源</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">length = 1024</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_stream(target=<span class="stringliteral">&quot;192.168.1.179&quot;</span>)</div>
+<div class="line">fd = nsukit.alloc_buffer(length)</div>
+<div class="line">nsukit.free_buffer(fd)</div>
+<div class="line"><span class="comment"># 根据传入的内存地址将其释放</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md38"></a>
+get_buffer(self, fd, length):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 获取内存中存储的数据。调用该函数根据参数来获取指定内存中指定长度的数据</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">length = 1024</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_stream(target=<span class="stringliteral">&quot;192.168.1.179&quot;</span>)</div>
+<div class="line">fd = nsukit.alloc_buffer(length)</div>
+<div class="line">print(nsukit.get_buffer(fd, 1024))</div>
+<div class="line"><span class="comment"># 获取内存中的数据</span></div>
+<div class="line"><span class="comment"># ！！注意！！ 这里的1长度 = 4 bytes，上述程序length中大小为 1024*4 bytes</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md39"></a>
+send_open(self, chnl, fd, length, offset=0):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 暂不支持</span></div>
+<div class="line"><span class="comment"># ！！注意！！ 数据上下行是以设备角度进行描述的，设备的数据上行，设备的数据下行</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md40"></a>
+recv_open(self, chnl, fd, length, offset=0):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 开启数据上行。调用该函数根据参数开启数据上行</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line"><span class="comment"># 网络数据流上行</span></div>
+<div class="line">length = 1024</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_stream(target=<span class="stringliteral">&quot;192.168.1.179&quot;</span>)</div>
+<div class="line">fd = nsukit.alloc_buffer(length)</div>
+<div class="line">nsukit.recv_open(chnl=9999, fd=fd, length=1024, offset=0)</div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># PCI-E数据流上行</span></div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, PCIECmdUItf)</div>
+<div class="line">nsukit.start_stream(target=0)</div>
+<div class="line">fd = nsukit.alloc_buffer(length)</div>
+<div class="line">nsukit.recv_open(chnl=0, fd=fd, length=1024, offset=0)</div>
+<div class="line"><span class="comment"># 开启数据流上行</span></div>
+<div class="line"><span class="comment"># ！！注意！！ 数据上下行是以设备角度进行描述的，设备的数据上行，设备的数据下行</span></div>
+<div class="line"><span class="comment"># ！！注意！！ 因网络数据流没有通道的概念故chnl参数填写任意数字即可，PCIE数据流有通道概念故根据实际情况填写通道编号</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md41"></a>
+wait_dma(self, fd, timeout: int = 0):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 等待完成一次dma操作。调用该函数传入对应的内存地址来查看内存已经使用的大小</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">length = 1024</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_stream(target=<span class="stringliteral">&quot;192.168.1.179&quot;</span>)</div>
+<div class="line">fd = nsukit.alloc_buffer(length)</div>
+<div class="line">nsukit.recv_open(chnl=9999, fd=fd, length=1024, offset=0)</div>
+<div class="line">print(nsukit.wait_dma(fd=fd, timeout=5))</div>
+<div class="line"><span class="comment"># 等待完成一次dma操作</span></div>
+<div class="line"><span class="comment"># !!注意！！ wait_dma()可能不会立即完成</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md42"></a>
+break_dma(self, fd):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 终止本次dma操作。调用该函数传入对应的内存地址来停止本次dma操作，并返回内存已经使用的大小</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">length = 1024</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_stream(target=<span class="stringliteral">&quot;192.168.1.179&quot;</span>)</div>
+<div class="line">fd = nsukit.alloc_buffer(length)</div>
+<div class="line">nsukit.recv_open(chnl=9999, fd=fd, length=1024, offset=0)</div>
+<div class="line">print(nsukit.break_dma(fd=fd))</div>
+<div class="line"><span class="comment"># 终止本次dma操作</span></div>
+<div class="line"><span class="comment"># !!注意！！ nsukit.break_dma()可能不会立即完成</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md43"></a>
+stream_recv(self, chnl, fd, length, offset=0, stop_event=None, flag=1):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 预封装好的数据流上行函数。调用预封装好的数据流上行函数可快速开始使用本工具</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line"><span class="keyword">import</span> threading</div>
+<div class="line">length = 1024</div>
+<div class="line">event = threading.Event()</div>
+<div class="line"><span class="comment"># 网络数据流</span></div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_stream(target=<span class="stringliteral">&quot;192.168.1.179&quot;</span>)</div>
+<div class="line">fd = nsukit.alloc_buffer(length)</div>
+<div class="line">nsukit.stream_recv(99, fd, length, 0, event.is_set)</div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># PCI-E数据流</span></div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, PCIEChnlUItf)</div>
+<div class="line">fd = nsukit.alloc_buffer(length)</div>
+<div class="line">nsukit.start_stream(target=0)</div>
+<div class="line">nsukit.stream_recv(0, fd, length, 0, event.is_set)</div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># 预封装好的数据流上行。函数内部分别调用了recv_open,wait_dma</span></div>
+<div class="line"><span class="comment"># ！！注意！！ 该函数会阻塞</span></div>
+<div class="line"><span class="comment"># ！！注意！！ 符合规则的数据流上行开启方法应该是：</span></div>
+<div class="line"><span class="comment"># ！！注意！！ NSUKit(初始化) -&gt; nsukit.start_stream(建立数据流链接) -&gt; nsukit.alloc_buffer(开辟缓存) -&gt; nsukit.stream_recv(开始上行) -&gt; nsukit.stop_stream(关闭链接)</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md44"></a>
+stream_send(self, chnl, fd, length, offset=0, stop_event=None, flag=1):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 暂不支持</span></div>
+</div><!-- fragment --><hr  />
+<p><span id="icd_paresr"></span></p>
+<h1><a class="anchor" id="autotoc_md46"></a>
+icd_paresr</h1>
+<p><em><b>icd_paresr：指令处理中间件，用来使用约定式的icd指令</b></em></p>
+<center><img src="professional_icd_parser.png" alt="" class="inline"/>     </center> <center>icd_parser结构</center><div class="fragment"><div class="line"><span class="comment"># 该类不用单独调用及初始化</span></div>
+<div class="line"><span class="comment"># 在NSUKit的nsukit.start_command()中会自动调用config()进行初始化，并使用nsukit文件夹下的icd.json</span></div>
+<div class="line"><span class="comment"># icd.json可根据实际情况按照规定格式进行更改</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md47"></a>
+icd.json</h2>
+<center><img src="professional_icd_parser_icd.json.png" alt="" class="inline"/>     </center> <center>icd.json文件格式</center><div class="fragment"><div class="line"><span class="comment"># icd.json是指令处理中间件的必要文件</span></div>
+<div class="line"><span class="comment"># 其文件格式可以大概描述为</span></div>
+</div><!-- fragment --><div class="fragment"><div class="line">{</div>
+<div class="line">    &quot;param&quot;: {</div>
+<div class="line">        &quot;参数1&quot;: [&quot;参数1&quot;, &quot;数据类型&quot;, &quot;数据值&quot;],</div>
+<div class="line">        &quot;参数2&quot;: [&quot;参数2&quot;, &quot;数据类型&quot;, &quot;数据值&quot;],</div>
+<div class="line">        &quot;参数3&quot;: [&quot;参数3&quot;, &quot;数据类型&quot;, &quot;数据值&quot;]</div>
+<div class="line">    },</div>
+<div class="line">    &quot;command&quot;:{</div>
+<div class="line">        &quot;指令1&quot;: {</div>
+<div class="line">            &quot;send&quot;: [</div>
+<div class="line">              &quot;参数1&quot;, </div>
+<div class="line">              &quot;参数2&quot;, </div>
+<div class="line">              [&quot;参数4&quot;, &quot;数据类型&quot;, &quot;数据值&quot;]</div>
+<div class="line">            ],</div>
+<div class="line">            &quot;recv&quot;: [</div>
+<div class="line">              &quot;参数3&quot;</div>
+<div class="line">            ]</div>
+<div class="line">        },</div>
+<div class="line">        &quot;指令2&quot;: {</div>
+<div class="line">            &quot;send&quot;: [</div>
+<div class="line">              &quot;参数1&quot;,</div>
+<div class="line">              &quot;参数2&quot;,</div>
+<div class="line">              [&quot;参数4&quot;, &quot;数据类型&quot;, &quot;数据值&quot;]</div>
+<div class="line">            ],</div>
+<div class="line">            &quot;recv&quot;: [</div>
+<div class="line">              &quot;参数3&quot;</div>
+<div class="line">            ]</div>
+<div class="line">        }</div>
+<div class="line">    },</div>
+<div class="line">    &quot;sequence&quot;: {</div>
+<div class="line">        &quot;指令3&quot;: [</div>
+<div class="line">            &quot;参数&quot;,</div>
+<div class="line">            [&quot;参数&quot;, &quot;数据类型&quot;, &quot;数据值&quot;]</div>
+<div class="line">        ]</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><div class="fragment"><div class="line"><span class="comment"># 暨以上三大类，由param、command、sequence组成</span></div>
+<div class="line"><span class="comment"># param中有多个参数</span></div>
+<div class="line"><span class="comment"># command中有两种指令类型 send、recv， 每种指令由多个参数拼接而成</span></div>
+<div class="line"><span class="comment"># sequence 指令的变长部分，每一项为一list，结构与command中的项相同，其可在command中被调用{{sequence1}}，程序自动根据excel文件中的内容重复一项</span></div>
+<div class="line"><span class="comment"># ！！注意！！ 参数中支持以下数据类型uint8、int8、uint16、int16、uint32、int32、float、double、file_data、file_length</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md48"></a>
+config(self, **kwargs):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 初始化指令处理中间件。该函数不用单独调用</span></div>
+<div class="line"><span class="comment"># 在NSUKit的start_command中会自动调用</span></div>
+<div class="line"><span class="comment"># 在调用时可附加参数以使用特定icd.json文件 例如：</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">param = {</div>
+<div class="line">    <span class="stringliteral">&#39;tcp_cmd&#39;</span>: {</div>
+<div class="line">        <span class="stringliteral">&quot;port&quot;</span>: 5001,</div>
+<div class="line">        <span class="stringliteral">&quot;check_recv_head&quot;</span>: <span class="keyword">False</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;icd_path&quot;</span>: <span class="stringliteral">&quot;icd文件路径&quot;</span></div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>, **param)</div>
+<div class="line"><span class="comment"># 其中icd_path为使用指定的icd.json路径（绝对路径）</span></div>
+<div class="line"><span class="comment"># check_recv_head为是否按照icd文件中指令的recv进行强验证</span></div>
+<div class="line"><span class="comment"># check_recv_head开启时：（返回指令）按照recv格式（包头，id，序号，长度，结果），进行强验证 即包头，id，序号必须为recv中所写的数值</span></div>
+<div class="line"><span class="comment"># check_recv_head关闭时：（返回指令）按照recv格式直接进行存储</span></div>
+<div class="line"><span class="comment"># check_recv_head默认关闭</span></div>
+</div><!-- fragment --><hr  />
+<center><img src="professional_icd_parser_getset_param.png" alt="" class="inline"/>     </center> <center>get_param/set_param调用流程</center><h2><a class="anchor" id="autotoc_md50"></a>
+get_param(self, param_name: str, default=0, fmt_type=int):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 获取icd中某个参数的的值。该函数不用单独调用</span></div>
+<div class="line"><span class="comment"># 在read函数中当add为字符型，且该字符是参数名时自动调用 例如：</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">param = {</div>
+<div class="line">    <span class="stringliteral">&#39;tcp_cmd&#39;</span>: {</div>
+<div class="line">        <span class="stringliteral">&quot;port&quot;</span>: 5001,</div>
+<div class="line">        <span class="stringliteral">&quot;check_recv_head&quot;</span>: <span class="keyword">False</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;icd_path&quot;</span>: <span class="stringliteral">&quot;icd文件路径&quot;</span></div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>, **param)</div>
+<div class="line">nsukit.read(<span class="stringliteral">&quot;参数1&quot;</span>)</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md51"></a>
+set_param(self, param_name: str, value, fmt_type=int):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 设置icd中某个参数的的值。该函数不用单独调用</span></div>
+<div class="line"><span class="comment"># 在write函数中当add为字符型，且该字符是参数名时自动调用 例如：</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">param = {</div>
+<div class="line">    <span class="stringliteral">&#39;tcp_cmd&#39;</span>: {</div>
+<div class="line">        <span class="stringliteral">&quot;port&quot;</span>: 5001,</div>
+<div class="line">        <span class="stringliteral">&quot;check_recv_head&quot;</span>: <span class="keyword">False</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;icd_path&quot;</span>: <span class="stringliteral">&quot;icd文件路径&quot;</span></div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>, **param)</div>
+<div class="line">nsukit.write(addr=<span class="stringliteral">&quot;参数1&quot;</span>, value=1)</div>
+<div class="line"><span class="comment">#！！注意！！ 在默认情况下write在更改完参数时会自动执行与之相关的指令，如不想直接执行请增加参数execute=False</span></div>
+<div class="line">nsukit.write(addr=<span class="stringliteral">&quot;参数1&quot;</span>, value=1, execute=<span class="keyword">False</span>)</div>
+<div class="line"><span class="comment"># 当addr为指令名时会直接发送对应指令，此时value可以填任何数</span></div>
+<div class="line">nsukit.write(addr=<span class="stringliteral">&quot;指令1&quot;</span>, value=123)</div>
+</div><!-- fragment --><hr  />
+<p><span id="virtual_chnl"></span></p>
+<h1><a class="anchor" id="autotoc_md53"></a>
+virtual_chnl</h1>
+<p><em><b>virtual_chnl：虚拟通道中间件</b></em> </p><div class="fragment"><div class="line">虚拟通道主要用于：当设备只有1个数传通道，但想分开传输多路数据时所使用</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md54"></a>
+virtual_chnl未开启时</h2>
+<center><img src="professional_virtual_chnl_stop.png" alt="" class="inline"/>     </center> <center>虚拟通道未开启时数据流的流程图</center><div class="fragment"><div class="line">举例说明：</div>
+<div class="line">花园需要浇水，每种花需要浇不同的水，且每种水不相容。现在只有一个水管（1个数传通道）</div>
+<div class="line">当我用水管进行浇水时，我需要一个挡板把水管中的不同的水分开进行使用</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md55"></a>
+virtual_chnl开启时</h2>
+<center><img src="professional_virtual_chnl_start.png" alt="" class="inline"/>     </center> <center>虚拟通道开启时数据流的流程图</center><div class="fragment"><div class="line">举例说明：(还是上边的例子)</div>
+<div class="line">花园需要浇水，每种花需要浇不同的水，且每种水不相容。现在只有一个水管（1个数传通道）</div>
+<div class="line">现在我买了一台机器，这台机器上有很多出水口，并且机器可以自动把每种水自动分开</div>
+<div class="line">这时我只需要使用机器上对应出水口的水去浇特定的花就可以了</div>
+</div><!-- fragment --><hr  />
+<p><span id="自定义接口"></span></p>
+<h1><a class="anchor" id="autotoc_md57"></a>
+自定义接口</h1>
+<p><em><b>此节描述如何自定义指令、数据流接口，icd、通道中间件</b></em></p>
+<h2><a class="anchor" id="autotoc_md58"></a>
+自定义指令接口</h2>
+<p><em><b>自定义指令接口需要重写以下方法</b></em> </p><div class="fragment"><div class="line"><span class="keyword">import</span> <a class="code hl_namespace" href="namespacensukit_1_1interface_1_1base.html">nsukit.interface.base</a> <span class="keyword">as</span> base</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">class </span>xxCmdUItf(base.BaseCmdUItf):</div>
+<div class="line">    <span class="keyword">def </span>__init__(self):</div>
+<div class="line">        <span class="comment">#初始化</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>accept(self, target: str, **kwargs):</div>
+<div class="line">        <span class="comment"># 建立指令链接</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>recv_bytes(self, size: int) -&gt; bytes:</div>
+<div class="line">        <span class="comment"># 接收数据返回接收的数据（bytes）</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>send_bytes(self, data: bytes) -&gt; int:</div>
+<div class="line">        <span class="comment"># 发送数据返回已发送的长度（int）</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>write(self, addr: int, value: bytes) -&gt; bytes:</div>
+<div class="line">        <span class="comment"># 寄存器写入返回返回数据（bytes）</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>read(self, addr: int) -&gt; bytes:</div>
+<div class="line">        <span class="comment"># 寄存器读取返回读取到的数据（bytes）</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>close(self):</div>
+<div class="line">        <span class="comment"># 关闭连接</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>set_timeout(self, s: int = 5):</div>
+<div class="line">        <span class="comment"># 设置连接超时时间</span></div>
+<div class="line">        ...</div>
+<div class="ttc" id="anamespacensukit_1_1interface_1_1base_html"><div class="ttname"><a href="namespacensukit_1_1interface_1_1base.html">nsukit.interface.base</a></div><div class="ttdef"><b>Definition:</b> <a href="interface_2base_8py_source.html#l00001">base.py:1</a></div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md59"></a>
+自定义数据流接口</h2>
+<p><em><b>自定义数据流接口需要重写以下方法</b></em> </p><div class="fragment"><div class="line"><span class="keyword">import</span> <a class="code hl_namespace" href="namespacensukit_1_1interface_1_1base.html">nsukit.interface.base</a> <span class="keyword">as</span> base</div>
+<div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> Union</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">class </span>xxChnlUItf(base.BaseChnlUItf):</div>
+<div class="line">    <span class="keyword">def </span>__init__(self):</div>
+<div class="line">        <span class="comment"># 初始化</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>accept(self, target: str, **kwargs):</div>
+<div class="line">        <span class="comment"># 建立链接前准备</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>set_timeout(self, s: int = 5):</div>
+<div class="line">        <span class="comment"># 设置连接超时时间</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>open_board(self):</div>
+<div class="line">        <span class="comment"># 连接设备</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>close_board(self):</div>
+<div class="line">        <span class="comment"># 关闭链接</span></div>
+<div class="line">        ...</div>
+<div class="line">    </div>
+<div class="line">    <span class="keyword">def </span>alloc_buffer(self, length: int, buf: Union[int, np.ndarray, <span class="keywordtype">None</span>] = <span class="keywordtype">None</span>) -&gt; int:</div>
+<div class="line">        <span class="comment"># 开辟一块缓存返回缓存地址号</span></div>
+<div class="line">        ...</div>
+<div class="line">    </div>
+<div class="line">    <span class="keyword">def </span>free_buffer(self, fd):</div>
+<div class="line">        <span class="comment"># 释放一块缓存传入缓存地址号</span></div>
+<div class="line">        ...</div>
+<div class="line">    </div>
+<div class="line">    <span class="keyword">def </span>get_buffer(self, fd, length):</div>
+<div class="line">        <span class="comment"># 获取一块缓存中的数据，传入缓存地址号，要获取多长的数据。返回同等长度的数据</span></div>
+<div class="line">        ...</div>
+<div class="line">    </div>
+<div class="line">    <span class="keyword">def </span>send_open(self, chnl, fd, length, offset=0):</div>
+<div class="line">        <span class="comment"># 开启一次数据流下行</span></div>
+<div class="line">        ...</div>
+<div class="line">    </div>
+<div class="line">    <span class="keyword">def </span>recv_open(self, chnl, fd, length, offset=0):</div>
+<div class="line">        <span class="comment"># 开启一次数据流上行，返回True/False</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>wait_dma(self, fd, timeout: int = 0):</div>
+<div class="line">        <span class="comment"># 等待完成一次dma操作，返回当前内存中的数据大小</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>break_dma(self, fd):</div>
+<div class="line">        <span class="comment"># 结束当前的dma操作，返回当前内存中的数据大小</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>stream_recv(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):</div>
+<div class="line">        <span class="comment"># 将完整的数据流上行封装好，返回True/False</span></div>
+<div class="line">        ...</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>stream_send(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):</div>
+<div class="line">        <span class="comment"># 将完整的数据流下行封装好</span></div>
+<div class="line">        ...</div>
+</div><!-- fragment --><hr  />
+<p><span id="工程详细结构结构"></span></p>
+<h1><a class="anchor" id="autotoc_md61"></a>
+工程详细结构结构</h1>
+<center><img src="professional_detail.png" alt="" class="inline"/>     </center><hr  />
+<p><span id="TCPCmdUItf"></span></p>
+<h1><a class="anchor" id="autotoc_md63"></a>
+TCPCmdUItf</h1>
+<p><em><b>TCPCmdUItf：网络指令类</b></em></p>
+<center><img src="professional_tcp_cmd.png" alt="" class="inline"/>     </center><hr  />
+<p><span id="SerialCmdUItf"></span></p>
+<h1><a class="anchor" id="autotoc_md65"></a>
+SerialCmdUItf</h1>
+<p><em><b>SerialCmdUItf：串口指令类</b></em></p>
+<center><img src="professional_serial_cmd.png" alt="" class="inline"/>     </center><hr  />
+<p><span id="PCIECmdUItf"></span></p>
+<h1><a class="anchor" id="autotoc_md67"></a>
+PCIECmdUItf</h1>
+<p><em><b>PCIECmdUItf：PCI-E指令类</b></em></p>
+<center><img src="professional_PCI-E_cmd.png" alt="" class="inline"/>     </center><hr  />
+<p><span id="TCPChnlUItf"></span></p>
+<h1><a class="anchor" id="autotoc_md69"></a>
+TCPChnlUItf</h1>
+<p><em><b>TCPChnlUItf：网络数据流类</b></em></p>
+<center><img src="professional_tcp_data.png" alt="" class="inline"/>     </center><hr  />
+<p><span id="PCIEChnlUItf"></span></p>
+<h1><a class="anchor" id="autotoc_md71"></a>
+PCIEChnlUItf</h1>
+<p><em><b>PCIEChnlUItf：PCI-E数据流类</b></em></p>
+<center><img src="professional_PCI-E_data.png" alt="" class="inline"/>     </center><hr  />
+<p><span id="名词解释"></span></p>
+<h1><a class="anchor" id="autotoc_md73"></a>
+名词解释</h1>
+<p><em>数据流上行</em> : 以设备的角度描述数据流的收发，数据流上行是指设备将数据发送给本机</p>
+<p><em>数据流下行</em> : 以设备的角度描述数据流的收发，数据流下行是指本机将数据发送给设备</p>
+<hr  />
+<center>Copyright © 2023 理工数字系统实验室 <a href="http://naishu.tech/" target="_blank">naishu.tech</a></center> <center>北京耐数电子有限公司</center> </div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+  </ul>
+</div>
+</body>
+</html>

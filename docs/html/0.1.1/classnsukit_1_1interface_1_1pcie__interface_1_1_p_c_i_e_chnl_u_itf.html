@@ -1,0 +1,1026 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NSUKit: nsukit.interface.pcie_interface.PCIEChnlUItf类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo切图-竖版.png"/></td>
+     <script type="text/javascript" src="../version.js"></script>
+  <td id="projectalign">
+   <div id="projectname">NSUKit
+        <span id="projectnumber">0.1.1</span>
+   </div>
+   <div id="projectbrief">板卡级统一交互接口</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part --><!-- 制作者 Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pub-attribs">Public 属性</a> &#124;
+<a href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf-members.html">所有成员列表</a>  </div>
+  <div class="headertitle"><div class="title">nsukit.interface.pcie_interface.PCIEChnlUItf类 参考</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>PCIE数据流接口  
+ <a href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#details">更多...</a></p>
+<div class="dynheader">
+类 nsukit.interface.pcie_interface.PCIEChnlUItf 继承关系图:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.png" usemap="#nsukit.interface.pcie_5Finterface.PCIEChnlUItf_map" alt=""/>
+  <map id="nsukit.interface.pcie_5Finterface.PCIEChnlUItf_map" name="nsukit.interface.pcie_5Finterface.PCIEChnlUItf_map">
+<area href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html" alt="nsukit.interface.base.BaseChnlUItf" shape="rect" coords="134,168,393,192"/>
+<area href="classnsukit_1_1interface_1_1base_1_1_reg_operation_mixin.html" alt="nsukit.interface.base.RegOperationMixin" shape="rect" coords="403,168,662,192"/>
+<area href="classnsukit_1_1interface_1_1base_1_1_u_interface.html" alt="nsukit.interface.base.UInterface" shape="rect" coords="134,112,393,136"/>
+<area href="classnsukit_1_1interface_1_1base_1_1_u_interface_meta.html" alt="nsukit.interface.base.UInterfaceMeta" shape="rect" coords="269,56,528,80"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:ac3d1574525aa2fb0e3679b5c1607f2ad"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#ac3d1574525aa2fb0e3679b5c1607f2ad">__init__</a> (self)</td></tr>
+<tr class="separator:ac3d1574525aa2fb0e3679b5c1607f2ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae09b804e289557639218e08ada652af1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#ae09b804e289557639218e08ada652af1">reg_write</a> (self, addr, value)</td></tr>
+<tr class="separator:ae09b804e289557639218e08ada652af1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae834abe57bcd9de8acfc57948a83e814"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#ae834abe57bcd9de8acfc57948a83e814">reg_read</a> (self, addr)</td></tr>
+<tr class="separator:ae834abe57bcd9de8acfc57948a83e814"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f4ff973b375835584dc532eb2934799"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#a9f4ff973b375835584dc532eb2934799">accept</a> (self, board, **kwargs)</td></tr>
+<tr class="memdesc:a9f4ff973b375835584dc532eb2934799"><td class="mdescLeft">&#160;</td><td class="mdescRight">连接  <br /></td></tr>
+<tr class="separator:a9f4ff973b375835584dc532eb2934799"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0678e04e77b4f14b538841b4dca0e805"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#a0678e04e77b4f14b538841b4dca0e805">open_board</a> (self)</td></tr>
+<tr class="memdesc:a0678e04e77b4f14b538841b4dca0e805"><td class="mdescLeft">&#160;</td><td class="mdescRight">开启板卡  <br /></td></tr>
+<tr class="separator:a0678e04e77b4f14b538841b4dca0e805"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f9121fc48e04c79bc45ee61085ac443"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#a5f9121fc48e04c79bc45ee61085ac443">close_board</a> (self)</td></tr>
+<tr class="memdesc:a5f9121fc48e04c79bc45ee61085ac443"><td class="mdescLeft">&#160;</td><td class="mdescRight">关闭板卡  <br /></td></tr>
+<tr class="separator:a5f9121fc48e04c79bc45ee61085ac443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a672c27fae7bb55f46f680c1c26fcf1fb"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#a672c27fae7bb55f46f680c1c26fcf1fb">alloc_buffer</a> (self, length, int buf=None)</td></tr>
+<tr class="memdesc:a672c27fae7bb55f46f680c1c26fcf1fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">申请一片内存  <br /></td></tr>
+<tr class="separator:a672c27fae7bb55f46f680c1c26fcf1fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1292f60889cb9f00f9f001325c6a3457"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#a1292f60889cb9f00f9f001325c6a3457">free_buffer</a> (self, fd)</td></tr>
+<tr class="memdesc:a1292f60889cb9f00f9f001325c6a3457"><td class="mdescLeft">&#160;</td><td class="mdescRight">释放一片内存  <br /></td></tr>
+<tr class="separator:a1292f60889cb9f00f9f001325c6a3457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac16b7a49819f5ad0c64b1334b70f2b4c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#ac16b7a49819f5ad0c64b1334b70f2b4c">get_buffer</a> (self, fd, length)</td></tr>
+<tr class="memdesc:ac16b7a49819f5ad0c64b1334b70f2b4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取内存中的值  <br /></td></tr>
+<tr class="separator:ac16b7a49819f5ad0c64b1334b70f2b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93bb23ad9e70ec58e30086de271ae2ea"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#a93bb23ad9e70ec58e30086de271ae2ea">send_open</a> (self, chnl, fd, length, offset=0)</td></tr>
+<tr class="memdesc:a93bb23ad9e70ec58e30086de271ae2ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">数据下行开启  <br /></td></tr>
+<tr class="separator:a93bb23ad9e70ec58e30086de271ae2ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b779d2fc5bed9f1c4805de164d26625"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#a7b779d2fc5bed9f1c4805de164d26625">recv_open</a> (self, chnl, fd, length, offset=0)</td></tr>
+<tr class="memdesc:a7b779d2fc5bed9f1c4805de164d26625"><td class="mdescLeft">&#160;</td><td class="mdescRight">数据上行开启  <br /></td></tr>
+<tr class="separator:a7b779d2fc5bed9f1c4805de164d26625"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7343551107742513daa1c0e235ca3ffb"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#a7343551107742513daa1c0e235ca3ffb">wait_dma</a> (self, fd, int timeout=0)</td></tr>
+<tr class="memdesc:a7343551107742513daa1c0e235ca3ffb"><td class="mdescLeft">&#160;</td><td class="mdescRight">等待完成一次dma操作  <br /></td></tr>
+<tr class="separator:a7343551107742513daa1c0e235ca3ffb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ae6870128d4978bafd03b479c9920ba"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#a7ae6870128d4978bafd03b479c9920ba">break_dma</a> (self, fd)</td></tr>
+<tr class="memdesc:a7ae6870128d4978bafd03b479c9920ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">终止本次dma操作  <br /></td></tr>
+<tr class="separator:a7ae6870128d4978bafd03b479c9920ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89e1745a7d3f400806efe788a0b8a547"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#a89e1745a7d3f400806efe788a0b8a547">stream_recv</a> (self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1)</td></tr>
+<tr class="memdesc:a89e1745a7d3f400806efe788a0b8a547"><td class="mdescLeft">&#160;</td><td class="mdescRight">数据流上行  <br /></td></tr>
+<tr class="separator:a89e1745a7d3f400806efe788a0b8a547"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae97457ebfecb8c0f00a57f8d67b34948"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#ae97457ebfecb8c0f00a57f8d67b34948">stream_send</a> (self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1)</td></tr>
+<tr class="memdesc:ae97457ebfecb8c0f00a57f8d67b34948"><td class="mdescLeft">&#160;</td><td class="mdescRight">数据流下行  <br /></td></tr>
+<tr class="separator:ae97457ebfecb8c0f00a57f8d67b34948"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad66206fe53ea4c9cb26f02c98e0dabce"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#ad66206fe53ea4c9cb26f02c98e0dabce">__exit__</a> (self, exc_type, exc_val, exc_tb)</td></tr>
+<tr class="separator:ad66206fe53ea4c9cb26f02c98e0dabce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afaedbdf84db8a85b4f3690f7c1e60d6b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html#afaedbdf84db8a85b4f3690f7c1e60d6b">open_board</a> (self)</td></tr>
+<tr class="separator:afaedbdf84db8a85b4f3690f7c1e60d6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf3a5148496d47d36bb85e0615076847"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html#acf3a5148496d47d36bb85e0615076847">close_board</a> (self)</td></tr>
+<tr class="separator:acf3a5148496d47d36bb85e0615076847"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77d03feb76bcf3f3faaf9659e9222656"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html#a77d03feb76bcf3f3faaf9659e9222656">alloc_buffer</a> (self, length, int buf=None)</td></tr>
+<tr class="separator:a77d03feb76bcf3f3faaf9659e9222656"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57a1c9a5a06ce94e8288d0f2da891418"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html#a57a1c9a5a06ce94e8288d0f2da891418">free_buffer</a> (self, fd)</td></tr>
+<tr class="separator:a57a1c9a5a06ce94e8288d0f2da891418"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae27aa886b9b3254c59267150cc206ea1"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html#ae27aa886b9b3254c59267150cc206ea1">get_buffer</a> (self, fd, length)</td></tr>
+<tr class="separator:ae27aa886b9b3254c59267150cc206ea1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22bc3d103586180d1aad8d36f3363790"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html#a22bc3d103586180d1aad8d36f3363790">send_open</a> (self, chnl, fd, length, offset=0)</td></tr>
+<tr class="separator:a22bc3d103586180d1aad8d36f3363790"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affe944fec03106ec8595f60a3e6655dd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html#affe944fec03106ec8595f60a3e6655dd">recv_open</a> (self, chnl, fd, length, offset=0)</td></tr>
+<tr class="separator:affe944fec03106ec8595f60a3e6655dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36ec8235cf13d1353691bd2b206f2b50"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html#a36ec8235cf13d1353691bd2b206f2b50">wait_dma</a> (self, fd, int timeout=0)</td></tr>
+<tr class="separator:a36ec8235cf13d1353691bd2b206f2b50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61b5fd546893241174bedec8c9bd390a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html#a61b5fd546893241174bedec8c9bd390a">break_dma</a> (self, fd)</td></tr>
+<tr class="separator:a61b5fd546893241174bedec8c9bd390a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdc24a7db255aa2e943cd542beda1ea9"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html#afdc24a7db255aa2e943cd542beda1ea9">stream_recv</a> (self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1)</td></tr>
+<tr class="separator:afdc24a7db255aa2e943cd542beda1ea9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5973efca4499b3bedc92ff2ac96498b7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html#a5973efca4499b3bedc92ff2ac96498b7">stream_send</a> (self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1)</td></tr>
+<tr class="separator:a5973efca4499b3bedc92ff2ac96498b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classnsukit_1_1interface_1_1base_1_1_u_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnsukit_1_1interface_1_1base_1_1_u_interface')"><img src="closed.png" alt="-"/>&#160;Public 成员函数 继承自 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html">nsukit.interface.base.UInterface</a></td></tr>
+<tr class="memitem:a5e2023d246a7eeeadc0bf8ff80ed8acb inherit pub_methods_classnsukit_1_1interface_1_1base_1_1_u_interface"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html#a5e2023d246a7eeeadc0bf8ff80ed8acb">accept</a> (self, *args, **kwargs)</td></tr>
+<tr class="separator:a5e2023d246a7eeeadc0bf8ff80ed8acb inherit pub_methods_classnsukit_1_1interface_1_1base_1_1_u_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab066b09e2568763db751a03089480c1f inherit pub_methods_classnsukit_1_1interface_1_1base_1_1_u_interface"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html#ab066b09e2568763db751a03089480c1f">close</a> (self)</td></tr>
+<tr class="separator:ab066b09e2568763db751a03089480c1f inherit pub_methods_classnsukit_1_1interface_1_1base_1_1_u_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c2126e6cc81c4c6ce1a0dfc6f732c97 inherit pub_methods_classnsukit_1_1interface_1_1base_1_1_u_interface"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html#a0c2126e6cc81c4c6ce1a0dfc6f732c97">set_timeout</a> (self, int s)</td></tr>
+<tr class="separator:a0c2126e6cc81c4c6ce1a0dfc6f732c97 inherit pub_methods_classnsukit_1_1interface_1_1base_1_1_u_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f14be37f29bf2121a3cb03551d80905"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_reg_operation_mixin.html#a6f14be37f29bf2121a3cb03551d80905">reg_write</a> (self, addr, value)</td></tr>
+<tr class="separator:a6f14be37f29bf2121a3cb03551d80905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bcd8ab8f228d8cd2fb6dbac83dd50a4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_reg_operation_mixin.html#a6bcd8ab8f228d8cd2fb6dbac83dd50a4">reg_read</a> (self, addr)</td></tr>
+<tr class="separator:a6bcd8ab8f228d8cd2fb6dbac83dd50a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public 属性</h2></td></tr>
+<tr class="memitem:ae8bcf3f89cbf634d35d8bedcece4930b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#ae8bcf3f89cbf634d35d8bedcece4930b">xdma</a></td></tr>
+<tr class="separator:ae8bcf3f89cbf634d35d8bedcece4930b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad049eec20df41e1a2fa16733a99e9da5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#ad049eec20df41e1a2fa16733a99e9da5">board</a></td></tr>
+<tr class="separator:ad049eec20df41e1a2fa16733a99e9da5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a056231bb6a506eba8badecc3e7991aeb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html#a056231bb6a506eba8badecc3e7991aeb">open_flag</a></td></tr>
+<tr class="separator:a056231bb6a506eba8badecc3e7991aeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock"><p>PCIE数据流接口 </p>
+<p>包括连接/断开、内存操作、接收/等待/终止等功能 </p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00267">267</a> 行定义.</p>
+</div><h2 class="groupheader">构造及析构函数说明</h2>
+<a id="ac3d1574525aa2fb0e3679b5c1607f2ad" name="ac3d1574525aa2fb0e3679b5c1607f2ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3d1574525aa2fb0e3679b5c1607f2ad">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.pcie_interface.PCIEChnlUItf.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00273">273</a> 行定义.</p>
+
+</div>
+</div>
+<h2 class="groupheader">成员函数说明</h2>
+<a id="ad66206fe53ea4c9cb26f02c98e0dabce" name="ad66206fe53ea4c9cb26f02c98e0dabce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad66206fe53ea4c9cb26f02c98e0dabce">&#9670;&#160;</a></span>__exit__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.pcie_interface.PCIEChnlUItf.__exit__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>exc_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>exc_val</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>exc_tb</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00424">424</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a9f4ff973b375835584dc532eb2934799" name="a9f4ff973b375835584dc532eb2934799"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f4ff973b375835584dc532eb2934799">&#9670;&#160;</a></span>accept()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.pcie_interface.PCIEChnlUItf.accept </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>board</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>连接 </p>
+<p>连接对应板卡 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">board</td><td>板卡逻辑id </td></tr>
+    <tr><td class="paramname">kwargs</td><td>其他参数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html">nsukit.interface.base.UInterface</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00286">286</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a672c27fae7bb55f46f680c1c26fcf1fb" name="a672c27fae7bb55f46f680c1c26fcf1fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a672c27fae7bb55f46f680c1c26fcf1fb">&#9670;&#160;</a></span>alloc_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.pcie_interface.PCIEChnlUItf.alloc_buffer </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>buf</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>申请一片内存 </p>
+<p>使用fpga_alloc_dma在pcie设备上申请一片内存，该内存与pcie设备绑定 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">length</td><td>申请长度 </td></tr>
+    <tr><td class="paramname">buf</td><td>内存类型 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>申请的内存的地址 </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html">nsukit.interface.base.BaseChnlUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00317">317</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a7ae6870128d4978bafd03b479c9920ba" name="a7ae6870128d4978bafd03b479c9920ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ae6870128d4978bafd03b479c9920ba">&#9670;&#160;</a></span>break_dma()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.pcie_interface.PCIEChnlUItf.break_dma </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fd</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>终止本次dma操作 </p>
+<p>停止向内存中写入数据 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>内存地址 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>已经写入内存中数据的大小 </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html">nsukit.interface.base.BaseChnlUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00383">383</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a5f9121fc48e04c79bc45ee61085ac443" name="a5f9121fc48e04c79bc45ee61085ac443"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f9121fc48e04c79bc45ee61085ac443">&#9670;&#160;</a></span>close_board()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.pcie_interface.PCIEChnlUItf.close_board </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>关闭板卡 </p>
+<p>使用fpga_close关闭对应pcie设备 </p><dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html">nsukit.interface.base.BaseChnlUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00307">307</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a1292f60889cb9f00f9f001325c6a3457" name="a1292f60889cb9f00f9f001325c6a3457"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1292f60889cb9f00f9f001325c6a3457">&#9670;&#160;</a></span>free_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.pcie_interface.PCIEChnlUItf.free_buffer </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fd</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>释放一片内存 </p>
+<p>使用fpga_free_dma在pcie设备上释放一片内存，该内存为输入的内存 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>要释放的内存地址 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>True/Flse </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html">nsukit.interface.base.BaseChnlUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00328">328</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ac16b7a49819f5ad0c64b1334b70f2b4c" name="ac16b7a49819f5ad0c64b1334b70f2b4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac16b7a49819f5ad0c64b1334b70f2b4c">&#9670;&#160;</a></span>get_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.pcie_interface.PCIEChnlUItf.get_buffer </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>获取内存中的值 </p>
+<p>使用fpga_get_dma_buffer在pcie设备上获取一片内存的数据 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>内存地址 </td></tr>
+    <tr><td class="paramname">length</td><td>获取长度 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>内存中存储的数据 </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html">nsukit.interface.base.BaseChnlUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00337">337</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a0678e04e77b4f14b538841b4dca0e805" name="a0678e04e77b4f14b538841b4dca0e805"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0678e04e77b4f14b538841b4dca0e805">&#9670;&#160;</a></span>open_board()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.pcie_interface.PCIEChnlUItf.open_board </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>开启板卡 </p>
+<p>使用fpga_open开启对应pcie设备 </p><dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html">nsukit.interface.base.BaseChnlUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00297">297</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a7b779d2fc5bed9f1c4805de164d26625" name="a7b779d2fc5bed9f1c4805de164d26625"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b779d2fc5bed9f1c4805de164d26625">&#9670;&#160;</a></span>recv_open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.pcie_interface.PCIEChnlUItf.recv_open </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>chnl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>数据上行开启 </p>
+<p>开启数据流上行 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chnl</td><td>通道号 </td></tr>
+    <tr><td class="paramname">fd</td><td>一片内存的地址 </td></tr>
+    <tr><td class="paramname">length</td><td>数据长度 </td></tr>
+    <tr><td class="paramname">offset</td><td>内存偏移量 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html">nsukit.interface.base.BaseChnlUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00360">360</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ae834abe57bcd9de8acfc57948a83e814" name="ae834abe57bcd9de8acfc57948a83e814"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae834abe57bcd9de8acfc57948a83e814">&#9670;&#160;</a></span>reg_read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> int nsukit.interface.pcie_interface.PCIEChnlUItf.reg_read </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_reg_operation_mixin.html">nsukit.interface.base.RegOperationMixin</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00282">282</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ae09b804e289557639218e08ada652af1" name="ae09b804e289557639218e08ada652af1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae09b804e289557639218e08ada652af1">&#9670;&#160;</a></span>reg_write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bool nsukit.interface.pcie_interface.PCIEChnlUItf.reg_write </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_reg_operation_mixin.html">nsukit.interface.base.RegOperationMixin</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00278">278</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a93bb23ad9e70ec58e30086de271ae2ea" name="a93bb23ad9e70ec58e30086de271ae2ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93bb23ad9e70ec58e30086de271ae2ea">&#9670;&#160;</a></span>send_open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.pcie_interface.PCIEChnlUItf.send_open </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>chnl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>数据下行开启 </p>
+<p>开启数据流下行 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chnl</td><td>通道号 </td></tr>
+    <tr><td class="paramname">fd</td><td>一片内存的地址 </td></tr>
+    <tr><td class="paramname">length</td><td>数据长度 </td></tr>
+    <tr><td class="paramname">offset</td><td>内存偏移量 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html">nsukit.interface.base.BaseChnlUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00347">347</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a89e1745a7d3f400806efe788a0b8a547" name="a89e1745a7d3f400806efe788a0b8a547"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89e1745a7d3f400806efe788a0b8a547">&#9670;&#160;</a></span>stream_recv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.pcie_interface.PCIEChnlUItf.stream_recv </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>chnl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>stop_event</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>time_out</em> = <code>5</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>flag</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>数据流上行 </p>
+<p>封装好的数据流上行函数 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chnl</td><td>通道号 </td></tr>
+    <tr><td class="paramname">fd</td><td>内存地址 </td></tr>
+    <tr><td class="paramname">length</td><td>数据长度 </td></tr>
+    <tr><td class="paramname">offset</td><td>内存偏移量 </td></tr>
+    <tr><td class="paramname">stop_event</td><td>外部停止信号 </td></tr>
+    <tr><td class="paramname">time_out</td><td>超时时间 </td></tr>
+    <tr><td class="paramname">flag</td><td>1 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>True/False </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html">nsukit.interface.base.BaseChnlUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00392">392</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ae97457ebfecb8c0f00a57f8d67b34948" name="ae97457ebfecb8c0f00a57f8d67b34948"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae97457ebfecb8c0f00a57f8d67b34948">&#9670;&#160;</a></span>stream_send()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.pcie_interface.PCIEChnlUItf.stream_send </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>chnl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>stop_event</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>time_out</em> = <code>5</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>flag</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>数据流下行 </p>
+<p>封装好的数据流下行函数 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chnl</td><td>通道号 </td></tr>
+    <tr><td class="paramname">fd</td><td>内存地址 </td></tr>
+    <tr><td class="paramname">length</td><td>数据长度 </td></tr>
+    <tr><td class="paramname">offset</td><td>内存偏移量 </td></tr>
+    <tr><td class="paramname">stop_event</td><td>外部停止信号 </td></tr>
+    <tr><td class="paramname">time_out</td><td>超时时间 </td></tr>
+    <tr><td class="paramname">flag</td><td>1 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>True/False </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html">nsukit.interface.base.BaseChnlUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00408">408</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a7343551107742513daa1c0e235ca3ffb" name="a7343551107742513daa1c0e235ca3ffb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7343551107742513daa1c0e235ca3ffb">&#9670;&#160;</a></span>wait_dma()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.pcie_interface.PCIEChnlUItf.wait_dma </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>timeout</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>等待完成一次dma操作 </p>
+<p>等待所有数据写入内存 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>内存地址 </td></tr>
+    <tr><td class="paramname">timeout</td><td>超时时间 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>已经写入内存中数据的大小 </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_chnl_u_itf.html">nsukit.interface.base.BaseChnlUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00373">373</a> 行定义.</p>
+
+</div>
+</div>
+<h2 class="groupheader">类成员变量说明</h2>
+<a id="ad049eec20df41e1a2fa16733a99e9da5" name="ad049eec20df41e1a2fa16733a99e9da5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad049eec20df41e1a2fa16733a99e9da5">&#9670;&#160;</a></span>board</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.interface.pcie_interface.PCIEChnlUItf.board</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00275">275</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a056231bb6a506eba8badecc3e7991aeb" name="a056231bb6a506eba8badecc3e7991aeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a056231bb6a506eba8badecc3e7991aeb">&#9670;&#160;</a></span>open_flag</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.interface.pcie_interface.PCIEChnlUItf.open_flag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00276">276</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ae8bcf3f89cbf634d35d8bedcece4930b" name="ae8bcf3f89cbf634d35d8bedcece4930b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8bcf3f89cbf634d35d8bedcece4930b">&#9670;&#160;</a></span>xdma</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.interface.pcie_interface.PCIEChnlUItf.xdma</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a> 第 <a class="el" href="pcie__interface_8py_source.html#l00274">274</a> 行定义.</p>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>D:/Work/PythonProject/NSUKit/nsukit/interface/<a class="el" href="pcie__interface_8py_source.html">pcie_interface.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><b>nsukit</b></li><li class="navelem"><b>interface</b></li><li class="navelem"><b>pcie_interface</b></li><li class="navelem"><a class="el" href="classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_chnl_u_itf.html">PCIEChnlUItf</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+  </ul>
+</div>
+</body>
+</html>
