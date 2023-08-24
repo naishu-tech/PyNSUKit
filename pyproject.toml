@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nsukit"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["jilianyi <jilianyi@naishu.tech>", "liuwen <liuwen@naishu.tech>"]
 license = "Mulan PSL2"
