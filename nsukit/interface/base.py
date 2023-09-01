@@ -9,6 +9,20 @@
 # See the Mulan PSL v2 for more details.
 
 import struct
+from dataclasses import dataclass
+
+
+@dataclass
+class InitParamSet:
+    ip: str = ''
+    tcp_port: int = 5001
+    board: int = -1
+    serial_port: str = ''
+    baud_rate: int = -1
+    sent_base: int = 0
+    recv_base: int = 0
+    irq_base: int = 0
+    sent_down_base: int = 0
 
 
 class UInterfaceMeta(type):

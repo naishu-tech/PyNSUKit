@@ -21,6 +21,7 @@ class PCIECmdUItf(BaseCmdUItf):
     """!
     @brief PCIE指令接口
     @details 包括连接/断开、发送、接收等功能
+    @image html professional_PCI-E_cmd.png
     """
     wait_irq = False
     _once_send_or_recv_timeout = 1  # _break_status状态改变间隔应超过该值
@@ -268,6 +269,7 @@ class PCIEChnlUItf(BaseChnlUItf, RegOperationMixin):
     """!
     @brief PCIE数据流接口
     @details 包括连接/断开、内存操作、接收/等待/终止等功能
+    @image html professional_PCI-E_data.png
     """
 
     def __init__(self):

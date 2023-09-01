@@ -40,6 +40,7 @@ class SerialCmdUItf(BaseCmdUItf):
     """!
     @brief 串口指令接口
     @details 包括连接/断开、发送、接收等功能
+    @image html professional_serial_cmd.png
     """
     _target = 'COM0'
     _target_baud_rate = 9600
