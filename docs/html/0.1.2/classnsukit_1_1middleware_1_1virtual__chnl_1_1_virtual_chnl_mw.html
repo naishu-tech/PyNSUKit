@@ -1,0 +1,1029 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NSUKit: nsukit.middleware.virtual_chnl.VirtualChnlMw类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo切图-竖版.png"/></td>
+     <script type="text/javascript" src="../version.js"></script>
+  <td id="projectalign">
+   <div id="projectname">NSUKit
+        <span id="projectnumber">0.1.2</span>
+   </div>
+   <div id="projectbrief">板卡级统一交互接口</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part --><!-- 制作者 Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">类</a> &#124;
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pub-attribs">Public 属性</a> &#124;
+<a href="#pub-static-attribs">静态 Public 属性</a> &#124;
+<a href="#pro-methods">Protected 成员函数</a> &#124;
+<a href="#pro-static-methods">静态 Protected 成员函数</a> &#124;
+<a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw-members.html">所有成员列表</a>  </div>
+  <div class="headertitle"><div class="title">nsukit.middleware.virtual_chnl.VirtualChnlMw类 参考</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>按一定规则，从一个物理通道虚拟出若干个虚拟数据通道进行上行  
+ <a href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#details">更多...</a></p>
+<div class="dynheader">
+类 nsukit.middleware.virtual_chnl.VirtualChnlMw 继承关系图:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.png" usemap="#nsukit.middleware.virtual_5Fchnl.VirtualChnlMw_map" alt=""/>
+  <map id="nsukit.middleware.virtual_5Fchnl.VirtualChnlMw_map" name="nsukit.middleware.virtual_5Fchnl.VirtualChnlMw_map">
+<area href="classnsukit_1_1middleware_1_1base_1_1_base_chnl_mw.html" alt="nsukit.middleware.base.BaseChnlMw" shape="rect" coords="139,168,408,192"/>
+<area href="classnsukit_1_1middleware_1_1base_1_1_u_middleware.html" alt="nsukit.middleware.base.UMiddleware" shape="rect" coords="139,112,408,136"/>
+<area href="classnsukit_1_1middleware_1_1base_1_1_u_middleware_meta.html" alt="nsukit.middleware.base.UMiddlewareMeta" shape="rect" coords="279,56,548,80"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+类</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_chnl_entry.html">ChnlEntry</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw_1_1_stream_mode.html">StreamMode</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:a81c68316162f983989c18c2921b3d74d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a81c68316162f983989c18c2921b3d74d">__init__</a> (self, &quot;NSUKit&quot; kit)</td></tr>
+<tr class="separator:a81c68316162f983989c18c2921b3d74d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0def14e6bc25913bc457daff2cebfe0c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a0def14e6bc25913bc457daff2cebfe0c">config</a> (self, *stream_mode='real', **kwargs)</td></tr>
+<tr class="memdesc:a0def14e6bc25913bc457daff2cebfe0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">配置中间件所使用的数据流模式，是直接转发给对应的Chnl  <br /></td></tr>
+<tr class="separator:a0def14e6bc25913bc457daff2cebfe0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac886c5b8b2c9c41591468de821d2f7dd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ac886c5b8b2c9c41591468de821d2f7dd">alloc_buffer</a> (self, length, int buf=None)</td></tr>
+<tr class="separator:ac886c5b8b2c9c41591468de821d2f7dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98e4c4d32194b590eae18b3047e1fbf9"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a98e4c4d32194b590eae18b3047e1fbf9">free_buffer</a> (self, fd)</td></tr>
+<tr class="separator:a98e4c4d32194b590eae18b3047e1fbf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbf8f533bbf6ea32cc53884786693447"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#acbf8f533bbf6ea32cc53884786693447">get_buffer</a> (self, fd, length)</td></tr>
+<tr class="separator:acbf8f533bbf6ea32cc53884786693447"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac069b5986bca8bb7d2833911abe789d5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ac069b5986bca8bb7d2833911abe789d5">priority_wheel</a> (self)</td></tr>
+<tr class="separator:ac069b5986bca8bb7d2833911abe789d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09e5027ec5e4eeecd833c9e1ecc165a5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a09e5027ec5e4eeecd833c9e1ecc165a5">register_chnl</a> (self, chnl)</td></tr>
+<tr class="separator:a09e5027ec5e4eeecd833c9e1ecc165a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07a1a586d0f07aa763756e84b867dfa7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a07a1a586d0f07aa763756e84b867dfa7">stream_read</a> (self, chnl, fd, length, offset=0, stop_event=None, flag=1, timeout=1)</td></tr>
+<tr class="memdesc:a07a1a586d0f07aa763756e84b867dfa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">使用虚拟通道上行，通道会遵循  <br /></td></tr>
+<tr class="separator:a07a1a586d0f07aa763756e84b867dfa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22320f37b0063bd5a3493c2f7ab456a4"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a22320f37b0063bd5a3493c2f7ab456a4">stream_send</a> (self, chnl, fd, length, offset=0, stop_event=None, flag=1)</td></tr>
+<tr class="separator:a22320f37b0063bd5a3493c2f7ab456a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1907b7812956b50831d097af1990152d"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a1907b7812956b50831d097af1990152d">v_param</a> (self)</td></tr>
+<tr class="memdesc:a1907b7812956b50831d097af1990152d"><td class="mdescLeft">&#160;</td><td class="mdescRight">status[26:0]: 当前传输剩余的字数（当前位宽的字数）； status[29:27]: 当前传输的源通道号，0-7；  <br /></td></tr>
+<tr class="separator:a1907b7812956b50831d097af1990152d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60db66536db7397c7af35d01ad24345f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a60db66536db7397c7af35d01ad24345f">v_param</a> (self, tuple value)</td></tr>
+<tr class="memdesc:a60db66536db7397c7af35d01ad24345f"><td class="mdescLeft">&#160;</td><td class="mdescRight">param[26:0]: 本次传输长度（当前位宽的字数）； param[29:27]:选通的axis-s端口号，0-7；  <br /></td></tr>
+<tr class="separator:a60db66536db7397c7af35d01ad24345f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a355aaced67296ccc0d797af1f5f428"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1base_1_1_base_chnl_mw.html#a9a355aaced67296ccc0d797af1f5f428">alloc_buffer</a> (self, length, int buf=None)</td></tr>
+<tr class="separator:a9a355aaced67296ccc0d797af1f5f428"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a671e92b154f99dbd3bb11b3f688e94d0"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1base_1_1_base_chnl_mw.html#a671e92b154f99dbd3bb11b3f688e94d0">free_buffer</a> (self, fd)</td></tr>
+<tr class="separator:a671e92b154f99dbd3bb11b3f688e94d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabc1eefc93c3447535842cab614ad7ac"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1base_1_1_base_chnl_mw.html#aabc1eefc93c3447535842cab614ad7ac">get_buffer</a> (self, fd, length)</td></tr>
+<tr class="separator:aabc1eefc93c3447535842cab614ad7ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9c2edb416dbea88cc9fd49ae07b4130"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1base_1_1_base_chnl_mw.html#af9c2edb416dbea88cc9fd49ae07b4130">stream_read</a> (self, chnl, fd, length, offset=0, stop_event=None, flag=1)</td></tr>
+<tr class="separator:af9c2edb416dbea88cc9fd49ae07b4130"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1646e2eb4d2759b5e58acb23fee97534"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1base_1_1_base_chnl_mw.html#a1646e2eb4d2759b5e58acb23fee97534">stream_send</a> (self, chnl, fd, length, offset=0, stop_event=None, flag=1)</td></tr>
+<tr class="separator:a1646e2eb4d2759b5e58acb23fee97534"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a039fbb84b1f83bed97bf6312304d2cd7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1base_1_1_u_middleware.html#a039fbb84b1f83bed97bf6312304d2cd7">__init__</a> (self, &quot;NSUKit&quot; kit, *args, **kwargs)</td></tr>
+<tr class="separator:a039fbb84b1f83bed97bf6312304d2cd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64a519c7f94e13be73a5a343cecaba48"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1base_1_1_u_middleware.html#a64a519c7f94e13be73a5a343cecaba48">config</a> (self, **kwargs)</td></tr>
+<tr class="memdesc:a64a519c7f94e13be73a5a343cecaba48"><td class="mdescLeft">&#160;</td><td class="mdescRight">可调用此方法配置Middleware里的各种参数， 会在NSUKit.start_command中调用  <br /></td></tr>
+<tr class="separator:a64a519c7f94e13be73a5a343cecaba48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public 属性</h2></td></tr>
+<tr class="memitem:a8650578c0e6df8567f28910c1cb244cb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a8650578c0e6df8567f28910c1cb244cb">stream_mode</a></td></tr>
+<tr class="separator:a8650578c0e6df8567f28910c1cb244cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade71d7b26bbc412874dcce16cb08b4e0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ade71d7b26bbc412874dcce16cb08b4e0">running_lock</a></td></tr>
+<tr class="separator:ade71d7b26bbc412874dcce16cb08b4e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af56de8558cc43ef619215d82b9923e0b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#af56de8558cc43ef619215d82b9923e0b">cancel_event</a></td></tr>
+<tr class="separator:af56de8558cc43ef619215d82b9923e0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82b1f4433f28eeb23bc43eac87d3062f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a82b1f4433f28eeb23bc43eac87d3062f">canceled</a></td></tr>
+<tr class="separator:a82b1f4433f28eeb23bc43eac87d3062f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2773246937dc8760402592772478aa5d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a2773246937dc8760402592772478aa5d">priority_lock</a></td></tr>
+<tr class="separator:a2773246937dc8760402592772478aa5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6582f8f1dab9e24c31b24c1c68a7d1f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a6582f8f1dab9e24c31b24c1c68a7d1f8">priority_thread</a></td></tr>
+<tr class="separator:a6582f8f1dab9e24c31b24c1c68a7d1f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad244377aa1d6455abc9b609ad6899b3d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ad244377aa1d6455abc9b609ad6899b3d">priority_queue</a></td></tr>
+<tr class="separator:ad244377aa1d6455abc9b609ad6899b3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70bdad6c7d2d74847bf4c12a6d95986b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a70bdad6c7d2d74847bf4c12a6d95986b">itf_chnl</a></td></tr>
+<tr class="separator:a70bdad6c7d2d74847bf4c12a6d95986b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2238b71c419ebd841561c789296e5162"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a2238b71c419ebd841561c789296e5162">v_param</a></td></tr>
+<tr class="separator:a2238b71c419ebd841561c789296e5162"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_attribs_classnsukit_1_1middleware_1_1base_1_1_u_middleware"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classnsukit_1_1middleware_1_1base_1_1_u_middleware')"><img src="closed.png" alt="-"/>&#160;Public 属性 继承自 <a class="el" href="classnsukit_1_1middleware_1_1base_1_1_u_middleware.html">nsukit.middleware.base.UMiddleware</a></td></tr>
+<tr class="memitem:a6c723c708199eed0a6aee78da72086f4 inherit pub_attribs_classnsukit_1_1middleware_1_1base_1_1_u_middleware"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1base_1_1_u_middleware.html#a6c723c708199eed0a6aee78da72086f4">kit</a></td></tr>
+<tr class="separator:a6c723c708199eed0a6aee78da72086f4 inherit pub_attribs_classnsukit_1_1middleware_1_1base_1_1_u_middleware"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+静态 Public 属性</h2></td></tr>
+<tr class="memitem:ac3b39d14fe720e2615f92d42959cd969"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ac3b39d14fe720e2615f92d42959cd969">VCHNL_NUM</a> = 8</td></tr>
+<tr class="separator:ac3b39d14fe720e2615f92d42959cd969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef9eca1648907153c384747fa578e59a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#aef9eca1648907153c384747fa578e59a">R2V_CHNL</a> = 0</td></tr>
+<tr class="separator:aef9eca1648907153c384747fa578e59a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5bf77f95b727874d11f17ea91b3d1af"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ac5bf77f95b727874d11f17ea91b3d1af">PARAM_ADDR</a> = 0x00000000</td></tr>
+<tr class="separator:ac5bf77f95b727874d11f17ea91b3d1af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af84fee8170a6c3e01ace117ceab379d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#af84fee8170a6c3e01ace117ceab379d4">PARAM_WR_ADDR</a> = 0x00000000</td></tr>
+<tr class="separator:af84fee8170a6c3e01ace117ceab379d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a535bd938a88a1ef0cde8f000ea6a7d08"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#a535bd938a88a1ef0cde8f000ea6a7d08">STATUS_ADDR</a> = 0x00000000</td></tr>
+<tr class="separator:a535bd938a88a1ef0cde8f000ea6a7d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected 成员函数</h2></td></tr>
+<tr class="memitem:ad0ee6e48457f9220db1d9f68945bc063"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ad0ee6e48457f9220db1d9f68945bc063">_priority_lock</a> (self, chnl, stop_event, timeout)</td></tr>
+<tr class="separator:ad0ee6e48457f9220db1d9f68945bc063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
+静态 Protected 成员函数</h2></td></tr>
+<tr class="memitem:ad6095421df8c4ba50c86e5bd801c1755"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html#ad6095421df8c4ba50c86e5bd801c1755">_stop_event</a> ()</td></tr>
+<tr class="separator:ad6095421df8c4ba50c86e5bd801c1755"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock"><p>按一定规则，从一个物理通道虚拟出若干个虚拟数据通道进行上行 </p>
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00048">48</a> 行定义.</p>
+</div><h2 class="groupheader">构造及析构函数说明</h2>
+<a id="a81c68316162f983989c18c2921b3d74d" name="a81c68316162f983989c18c2921b3d74d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81c68316162f983989c18c2921b3d74d">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.middleware.virtual_chnl.VirtualChnlMw.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&quot;NSUKit&quot;&#160;</td>
+          <td class="paramname"><em>kit</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>重载 <a class="el" href="classnsukit_1_1middleware_1_1base_1_1_u_middleware.html">nsukit.middleware.base.UMiddleware</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00070">70</a> 行定义.</p>
+
+</div>
+</div>
+<h2 class="groupheader">成员函数说明</h2>
+<a id="ad0ee6e48457f9220db1d9f68945bc063" name="ad0ee6e48457f9220db1d9f68945bc063"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0ee6e48457f9220db1d9f68945bc063">&#9670;&#160;</a></span>_priority_lock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.middleware.virtual_chnl.VirtualChnlMw._priority_lock </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>chnl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>stop_event</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>timeout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00138">138</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ad6095421df8c4ba50c86e5bd801c1755" name="ad6095421df8c4ba50c86e5bd801c1755"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6095421df8c4ba50c86e5bd801c1755">&#9670;&#160;</a></span>_stop_event()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.middleware.virtual_chnl.VirtualChnlMw._stop_event </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00220">220</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ac886c5b8b2c9c41591468de821d2f7dd" name="ac886c5b8b2c9c41591468de821d2f7dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac886c5b8b2c9c41591468de821d2f7dd">&#9670;&#160;</a></span>alloc_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.middleware.virtual_chnl.VirtualChnlMw.alloc_buffer </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>buf</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>重载 <a class="el" href="classnsukit_1_1middleware_1_1base_1_1_base_chnl_mw.html">nsukit.middleware.base.BaseChnlMw</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00107">107</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a0def14e6bc25913bc457daff2cebfe0c" name="a0def14e6bc25913bc457daff2cebfe0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0def14e6bc25913bc457daff2cebfe0c">&#9670;&#160;</a></span>config()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.middleware.virtual_chnl.VirtualChnlMw.config </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>stream_mode</em> = <code>'real'</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>配置中间件所使用的数据流模式，是直接转发给对应的Chnl </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream_mode</td><td>可选 </td></tr>
+    <tr><td class="paramname">kwargs</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>: </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1middleware_1_1base_1_1_u_middleware.html#a64a519c7f94e13be73a5a343cecaba48">nsukit.middleware.base.UMiddleware</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00083">83</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a98e4c4d32194b590eae18b3047e1fbf9" name="a98e4c4d32194b590eae18b3047e1fbf9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98e4c4d32194b590eae18b3047e1fbf9">&#9670;&#160;</a></span>free_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.middleware.virtual_chnl.VirtualChnlMw.free_buffer </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fd</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>重载 <a class="el" href="classnsukit_1_1middleware_1_1base_1_1_base_chnl_mw.html">nsukit.middleware.base.BaseChnlMw</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00111">111</a> 行定义.</p>
+
+</div>
+</div>
+<a id="acbf8f533bbf6ea32cc53884786693447" name="acbf8f533bbf6ea32cc53884786693447"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbf8f533bbf6ea32cc53884786693447">&#9670;&#160;</a></span>get_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.middleware.virtual_chnl.VirtualChnlMw.get_buffer </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>重载 <a class="el" href="classnsukit_1_1middleware_1_1base_1_1_base_chnl_mw.html">nsukit.middleware.base.BaseChnlMw</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00115">115</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ac069b5986bca8bb7d2833911abe789d5" name="ac069b5986bca8bb7d2833911abe789d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac069b5986bca8bb7d2833911abe789d5">&#9670;&#160;</a></span>priority_wheel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.middleware.virtual_chnl.VirtualChnlMw.priority_wheel </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00118">118</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a09e5027ec5e4eeecd833c9e1ecc165a5" name="a09e5027ec5e4eeecd833c9e1ecc165a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09e5027ec5e4eeecd833c9e1ecc165a5">&#9670;&#160;</a></span>register_chnl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.middleware.virtual_chnl.VirtualChnlMw.register_chnl </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>chnl</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00134">134</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a07a1a586d0f07aa763756e84b867dfa7" name="a07a1a586d0f07aa763756e84b867dfa7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07a1a586d0f07aa763756e84b867dfa7">&#9670;&#160;</a></span>stream_read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bool nsukit.middleware.virtual_chnl.VirtualChnlMw.stream_read </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>chnl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>stop_event</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>flag</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>timeout</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>使用虚拟通道上行，通道会遵循 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chnl</td><td></td></tr>
+    <tr><td class="paramname">fd</td><td></td></tr>
+    <tr><td class="paramname">length</td><td></td></tr>
+    <tr><td class="paramname">offset</td><td></td></tr>
+    <tr><td class="paramname">stop_event</td><td></td></tr>
+    <tr><td class="paramname">flag</td><td></td></tr>
+    <tr><td class="paramname">timeout</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>: </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1middleware_1_1base_1_1_base_chnl_mw.html">nsukit.middleware.base.BaseChnlMw</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00146">146</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a22320f37b0063bd5a3493c2f7ab456a4" name="a22320f37b0063bd5a3493c2f7ab456a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22320f37b0063bd5a3493c2f7ab456a4">&#9670;&#160;</a></span>stream_send()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.middleware.virtual_chnl.VirtualChnlMw.stream_send </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>chnl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>stop_event</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>flag</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>重载 <a class="el" href="classnsukit_1_1middleware_1_1base_1_1_base_chnl_mw.html">nsukit.middleware.base.BaseChnlMw</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00189">189</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a1907b7812956b50831d097af1990152d" name="a1907b7812956b50831d097af1990152d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1907b7812956b50831d097af1990152d">&#9670;&#160;</a></span>v_param() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> tuple nsukit.middleware.virtual_chnl.VirtualChnlMw.v_param </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>status[26:0]: 当前传输剩余的字数（当前位宽的字数）； status[29:27]: 当前传输的源通道号，0-7； </p>
+<dl class="section return"><dt>返回</dt><dd>: (当前传输剩余的字数, 当前传输的源通道号) </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00194">194</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a60db66536db7397c7af35d01ad24345f" name="a60db66536db7397c7af35d01ad24345f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60db66536db7397c7af35d01ad24345f">&#9670;&#160;</a></span>v_param() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.middleware.virtual_chnl.VirtualChnlMw.v_param </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tuple&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>param[26:0]: 本次传输长度（当前位宽的字数）； param[29:27]:选通的axis-s端口号，0-7； </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>(本次传输长度, 选通的axis-s端口号) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>: </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00205">205</a> 行定义.</p>
+
+</div>
+</div>
+<h2 class="groupheader">类成员变量说明</h2>
+<a id="af56de8558cc43ef619215d82b9923e0b" name="af56de8558cc43ef619215d82b9923e0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af56de8558cc43ef619215d82b9923e0b">&#9670;&#160;</a></span>cancel_event</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.middleware.virtual_chnl.VirtualChnlMw.cancel_event</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00075">75</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a82b1f4433f28eeb23bc43eac87d3062f" name="a82b1f4433f28eeb23bc43eac87d3062f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82b1f4433f28eeb23bc43eac87d3062f">&#9670;&#160;</a></span>canceled</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.middleware.virtual_chnl.VirtualChnlMw.canceled</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00076">76</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a70bdad6c7d2d74847bf4c12a6d95986b" name="a70bdad6c7d2d74847bf4c12a6d95986b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70bdad6c7d2d74847bf4c12a6d95986b">&#9670;&#160;</a></span>itf_chnl</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.middleware.virtual_chnl.VirtualChnlMw.itf_chnl</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00095">95</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ac5bf77f95b727874d11f17ea91b3d1af" name="ac5bf77f95b727874d11f17ea91b3d1af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5bf77f95b727874d11f17ea91b3d1af">&#9670;&#160;</a></span>PARAM_ADDR</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nsukit.middleware.virtual_chnl.VirtualChnlMw.PARAM_ADDR = 0x00000000</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00054">54</a> 行定义.</p>
+
+</div>
+</div>
+<a id="af84fee8170a6c3e01ace117ceab379d4" name="af84fee8170a6c3e01ace117ceab379d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af84fee8170a6c3e01ace117ceab379d4">&#9670;&#160;</a></span>PARAM_WR_ADDR</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nsukit.middleware.virtual_chnl.VirtualChnlMw.PARAM_WR_ADDR = 0x00000000</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00055">55</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a2773246937dc8760402592772478aa5d" name="a2773246937dc8760402592772478aa5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2773246937dc8760402592772478aa5d">&#9670;&#160;</a></span>priority_lock</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.middleware.virtual_chnl.VirtualChnlMw.priority_lock</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00077">77</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ad244377aa1d6455abc9b609ad6899b3d" name="ad244377aa1d6455abc9b609ad6899b3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad244377aa1d6455abc9b609ad6899b3d">&#9670;&#160;</a></span>priority_queue</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.middleware.virtual_chnl.VirtualChnlMw.priority_queue</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00079">79</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a6582f8f1dab9e24c31b24c1c68a7d1f8" name="a6582f8f1dab9e24c31b24c1c68a7d1f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6582f8f1dab9e24c31b24c1c68a7d1f8">&#9670;&#160;</a></span>priority_thread</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.middleware.virtual_chnl.VirtualChnlMw.priority_thread</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00078">78</a> 行定义.</p>
+
+</div>
+</div>
+<a id="aef9eca1648907153c384747fa578e59a" name="aef9eca1648907153c384747fa578e59a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef9eca1648907153c384747fa578e59a">&#9670;&#160;</a></span>R2V_CHNL</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nsukit.middleware.virtual_chnl.VirtualChnlMw.R2V_CHNL = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00053">53</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ade71d7b26bbc412874dcce16cb08b4e0" name="ade71d7b26bbc412874dcce16cb08b4e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade71d7b26bbc412874dcce16cb08b4e0">&#9670;&#160;</a></span>running_lock</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.middleware.virtual_chnl.VirtualChnlMw.running_lock</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00074">74</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a535bd938a88a1ef0cde8f000ea6a7d08" name="a535bd938a88a1ef0cde8f000ea6a7d08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a535bd938a88a1ef0cde8f000ea6a7d08">&#9670;&#160;</a></span>STATUS_ADDR</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nsukit.middleware.virtual_chnl.VirtualChnlMw.STATUS_ADDR = 0x00000000</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00056">56</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a8650578c0e6df8567f28910c1cb244cb" name="a8650578c0e6df8567f28910c1cb244cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8650578c0e6df8567f28910c1cb244cb">&#9670;&#160;</a></span>stream_mode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.middleware.virtual_chnl.VirtualChnlMw.stream_mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00073">73</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a2238b71c419ebd841561c789296e5162" name="a2238b71c419ebd841561c789296e5162"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2238b71c419ebd841561c789296e5162">&#9670;&#160;</a></span>v_param</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.middleware.virtual_chnl.VirtualChnlMw.v_param</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00173">173</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ac3b39d14fe720e2615f92d42959cd969" name="ac3b39d14fe720e2615f92d42959cd969"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3b39d14fe720e2615f92d42959cd969">&#9670;&#160;</a></span>VCHNL_NUM</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nsukit.middleware.virtual_chnl.VirtualChnlMw.VCHNL_NUM = 8</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a> 第 <a class="el" href="virtual__chnl_8py_source.html#l00052">52</a> 行定义.</p>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>D:/Work/PythonProject/NSUKit/nsukit/middleware/<a class="el" href="virtual__chnl_8py_source.html">virtual_chnl.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><b>nsukit</b></li><li class="navelem"><b>middleware</b></li><li class="navelem"><b>virtual_chnl</b></li><li class="navelem"><a class="el" href="classnsukit_1_1middleware_1_1virtual__chnl_1_1_virtual_chnl_mw.html">VirtualChnlMw</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+  </ul>
+</div>
+</body>
+</html>

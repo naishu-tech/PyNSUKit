@@ -1,0 +1,225 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NSUKit: 🚀快速开始</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo切图-竖版.png"/></td>
+     <script type="text/javascript" src="../version.js"></script>
+  <td id="projectalign">
+   <div id="projectname">NSUKit
+        <span id="projectnumber">0.1.2</span>
+   </div>
+   <div id="projectbrief">板卡级统一交互接口</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part --><!-- 制作者 Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md_markdown_02__quickstart.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">🚀快速开始 </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><div style="position: fixed; top: 90%; left: 90%"> <a href="#目录" style="text-decoration: none">返回目录</a> </div><p><span id="目录"></span></p>
+<h1><a class="anchor" id="autotoc_md4"></a>
+目录</h1>
+<ol type="1">
+<li><a href="#环境安装">环境安装</a></li>
+<li><a href="#指定协议接口">指定协议接口</a></li>
+<li><a href="#发起连接">发起连接</a></li>
+<li><a href="#寄存器交互">寄存器交互</a></li>
+<li><a href="#数据流交互">数据流交互</a></li>
+<li><a class="el" href="md_markdown_03__professional.html">进阶使用</a></li>
+</ol>
+<hr  />
+<p><span id="环境安装"></span></p>
+<h1><a class="anchor" id="autotoc_md6"></a>
+环境安装</h1>
+<h2><a class="anchor" id="autotoc_md7"></a>
+环境依赖</h2>
+<div class="fragment"><div class="line">python = &quot;&gt;=3.8,&lt;4.0&quot;</div>
+<div class="line">numpy = &quot;&gt;=1.24&quot;</div>
+<div class="line">pyserial = &quot;^3.5&quot;</div>
+<div class="line">pandas = &quot;^2.0.3&quot;</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
+安装</h2>
+<div class="fragment"><div class="line">使用虚拟环境进行安装</div>
+<div class="line">1. conda create -n NSUKit python=3.9</div>
+<div class="line">2. conda activate NSUKit</div>
+<div class="line">3. pip install NSUKit</div>
+<div class="line"> </div>
+<div class="line">本机环境直接安装</div>
+<div class="line">1. pip install NSUKit</div>
+</div><!-- fragment --><hr  />
+ <h1><a class="anchor" id="autotoc_md10"></a>
+使用接口</h1>
+<center><img src="Interactive_Classification.png" alt="" class="inline"/>     </center><p>与板卡常用的基本交互方式可抽象为寄存器交互(cmd)、指令交互(cmd)与数据流交互(stream)三种，不同的板卡会选用不同的物理接口和协议来承载这三种基本交互。</p>
+<p>在这三种交互之上，用户可实现基于板卡的不同功能，NSUKit基于这一模型，提出了如下独立于具体板卡的抽象交互接口。</p>
+<p><span id="指定协议接口"></span></p>
+<h2><a class="anchor" id="autotoc_md11"></a>
+指定协议接口</h2>
+<ol type="1">
+<li>三种交互方式都被划归到了NSUKit类中，只需要在实例化此类时，将对应的CmdItf、StreamItf协议类作为参数传入，再通过InitParamSet数据类指定协议类连接板卡所需的参数</li>
+<li>NSUKit初始化详情可查看文档<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_init">NSUKit.__init__</a> <div class="fragment"><div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> NSUKit, InitParamSet</div>
+<div class="line"><span class="keyword">from</span> <a class="code hl_namespace" href="namespacensukit_1_1interface.html">nsukit.interface</a> <span class="keyword">import</span> TCPCmdUItf, PCIEStreamUItf</div>
+<div class="line"> </div>
+<div class="line">cmd_param = InitParamSet(ip=<span class="stringliteral">&#39;127.0.0.1&#39;</span>)</div>
+<div class="line">stream_param = InitParamSet(board=0)</div>
+<div class="line"> </div>
+<div class="line">kit = NSUKit(</div>
+<div class="line">    cmd_itf_class=    TCPCmdUItf,</div>
+<div class="line">    stream_itf_class= PCIEStreamUItf,</div>
+<div class="line">    cmd_param=        cmd_param,</div>
+<div class="line">    stream_param=     stream_param</div>
+<div class="line">    )</div>
+<div class="ttc" id="anamespacensukit_1_1interface_html"><div class="ttname"><a href="namespacensukit_1_1interface.html">nsukit.interface</a></div><div class="ttdef"><b>Definition:</b> <a href="interface_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+</div><!-- fragment --></li>
+<li>这样就完成了对应某一具体形态板卡的软件对象实例化，对于三种抽象交互方式的各个接口调用，都不会再出现与具体物理协议相关的参数</li>
+</ol>
+<p><span id="发起连接"></span></p>
+<h2><a class="anchor" id="autotoc_md12"></a>
+发起连接</h2>
+<ol type="1">
+<li>在此接口被调用时，主机端会按指定的物理协议对板卡发起连接，cmd与stream可分开link，link完成后，相应的交互接口才可用</li>
+<li><div class="fragment"><div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> NSUKit</div>
+<div class="line">...</div>
+<div class="line">kit: NSUKit</div>
+<div class="line">kit.link_cmd()      <span class="comment"># 初始化指令</span></div>
+<div class="line">kit.link_stream()   <span class="comment"># 初始化数据流</span></div>
+</div><!-- fragment --></li>
+</ol>
+<p><span id="寄存器交互"></span></p>
+<h2><a class="anchor" id="autotoc_md13"></a>
+寄存器交互</h2>
+<ol type="1">
+<li><center><img src="RegisterInteractionInterface.png" alt="" class="inline"/>     </center></li>
+<li>寄存器交互指以(地址, 值)的形式与板卡进行交互，提供单地址值写入/读取接口，片写入/读取接口</li>
+<li><a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_write">单地址写入</a>/<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_read">单地址读出</a>接口以32bit为一个独立寄存器，<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_bulk_write">片写入</a>/<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_bulk_read">片读取</a>支持任意值长度 <div class="fragment"><div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> NSUKit</div>
+<div class="line"> </div>
+<div class="line">...</div>
+<div class="line">kit: NSUKit</div>
+<div class="line">kit.write(addr=0x10000021, value=b<span class="stringliteral">&#39;\x00\x00\x00\x00&#39;</span>)</div>
+<div class="line">value: bytes = kit.read(addr=0x00000031)</div>
+<div class="line">kit.bulk_write(base=0x10000030, value=b<span class="stringliteral">&#39;\x01\x02\x03\x04&#39;</span>*10, mode=<span class="stringliteral">&#39;loop&#39;</span>)   <span class="comment"># 从给定寄存器地址，将给定数据依次写入，地址不递增</span></div>
+<div class="line">value: bytes = kit.bulk_read(base=0x00000020, length=10, mode=<span class="stringliteral">&#39;inc&#39;</span>)        <span class="comment"># 从给定基地址开始，从寄存器中读取指定长度的值</span></div>
+</div><!-- fragment --></li>
+</ol>
+<p><span id="指令交互"></span></p>
+<h2><a class="anchor" id="autotoc_md14"></a>
+指令交互</h2>
+<ol type="1">
+<li><center><img src="CommandInteraction.png" alt="" class="inline"/>     </center></li>
+<li>指令交互指以固定的包格式将一系列需要协同配置的参数组织为一条指令下发给板卡，板卡在接收到指令并执行完成后，以约定的包格式进行回执</li>
+<li>提供三个指令交互接口，<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_set_param">NSUKit.set_param</a>、<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_get_param">NSUKit.get_param</a>、<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_execute">NSUKit.execute</a>，如下示例使用指令交互接口将板卡的DAC采样率配置为8Gsps <div class="fragment"><div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> NSUKit</div>
+<div class="line"> </div>
+<div class="line">...</div>
+<div class="line">kit: NSUKit</div>
+<div class="line">kit.set_param(name=<span class="stringliteral">&#39;DAC采样率&#39;</span>, value=8e9)   <span class="comment"># 配置指令参数</span></div>
+<div class="line">kit.execute(cmd=<span class="stringliteral">&#39;RF配置&#39;</span>)                   <span class="comment"># 下发配置指令</span></div>
+</div><!-- fragment --></li>
+</ol>
+<p><span id="数据流交互"></span></p>
+<h2><a class="anchor" id="autotoc_md15"></a>
+数据流交互</h2>
+<ol type="1">
+<li><center><img src="StreamInterface.png" alt="" class="inline"/>     </center></li>
+<li>数据流交互指板卡与主机间以流的方式进行数据传输，只用指定一个基地址，就可以将一片数据连续不断地从一端传输到另一端，常用于大批量、长时间、高带宽的数据传输场景，详细使用方式可参看<a class="el" href="md_markdown_03__professional.html">进阶使用</a></li>
+<li>数据流交互接口分为内存管理与数据收发两部分，内存管理(<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_alloc_buffer">NSUKit.alloc_buffer</a>、<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_free_buffer">NSUKit.free_buffer</a>、<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_get_buffer">NSUKit.get_buffer</a>)用于管理用于数据流交互的host端连续内存。如下示例展示用数据流交互接口阻塞式将16kB数据从板卡传输到主机内存 <div class="fragment"><div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> NSUKit</div>
+<div class="line"> </div>
+<div class="line">...</div>
+<div class="line">kit: NSUKit</div>
+<div class="line">fd = kit.alloc_buffer(16384)                             <span class="comment"># 申请一片16384Bytes的内存</span></div>
+<div class="line">kit.stream_recv(chnl=0, fd=fd, length=16384, offset=0)   <span class="comment"># 通过通道0将指定数据量存储到申请到的fd上</span></div>
+</div><!-- fragment --></li>
+</ol>
+<hr  />
+<center>Copyright © 2023 耐数 <a href="http://naishu.tech/" target="_blank">naishu.tech</a></center> <center>北京耐数电子有限公司</center> </div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NSUKit: 自定义处理层</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo切图-竖版.png"/></td>
+     <script type="text/javascript" src="../version.js"></script>
+  <td id="projectalign">
+   <div id="projectname">NSUKit
+        <span id="projectnumber">0.1.2</span>
+   </div>
+   <div id="projectbrief">板卡级统一交互接口</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part --><!-- 制作者 Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md_markdown_05__custom_processing_layer.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">自定义处理层 </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><span id="icd_paresr"></span></p>
+<h1><a class="anchor" id="autotoc_md33"></a>
+icd_paresr</h1>
+<p><em><b>icd_paresr：指令处理中间件，用来使用约定式的icd指令</b></em></p>
+<center><img src="professional_icd_parser.png" alt="" class="inline"/>     </center> <center>icd_parser结构</center><div class="fragment"><div class="line"><span class="comment"># 该类不用单独调用及初始化</span></div>
+<div class="line"><span class="comment"># 在NSUKit的nsukit.start_command()中会自动调用config()进行初始化，并使用nsukit文件夹下的icd.json</span></div>
+<div class="line"><span class="comment"># icd.json可根据实际情况按照规定格式进行更改</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md34"></a>
+icd.json</h2>
+<center><img src="professional_icd_parser_icd.json.png" alt="" class="inline"/>     </center> <center>icd.json文件格式</center><div class="fragment"><div class="line"><span class="comment"># icd.json是指令处理中间件的必要文件</span></div>
+<div class="line"><span class="comment"># 其文件格式可以大概描述为</span></div>
+</div><!-- fragment --><div class="fragment"><div class="line">{</div>
+<div class="line">    &quot;param&quot;: {</div>
+<div class="line">        &quot;参数1&quot;: [&quot;参数1&quot;, &quot;数据类型&quot;, &quot;数据值&quot;],</div>
+<div class="line">        &quot;参数2&quot;: [&quot;参数2&quot;, &quot;数据类型&quot;, &quot;数据值&quot;],</div>
+<div class="line">        &quot;参数3&quot;: [&quot;参数3&quot;, &quot;数据类型&quot;, &quot;数据值&quot;]</div>
+<div class="line">    },</div>
+<div class="line">    &quot;command&quot;:{</div>
+<div class="line">        &quot;指令1&quot;: {</div>
+<div class="line">            &quot;send&quot;: [</div>
+<div class="line">              &quot;参数1&quot;, </div>
+<div class="line">              &quot;参数2&quot;, </div>
+<div class="line">              [&quot;参数4&quot;, &quot;数据类型&quot;, &quot;数据值&quot;]</div>
+<div class="line">            ],</div>
+<div class="line">            &quot;recv&quot;: [</div>
+<div class="line">              &quot;参数3&quot;</div>
+<div class="line">            ]</div>
+<div class="line">        },</div>
+<div class="line">        &quot;指令2&quot;: {</div>
+<div class="line">            &quot;send&quot;: [</div>
+<div class="line">              &quot;参数1&quot;,</div>
+<div class="line">              &quot;参数2&quot;,</div>
+<div class="line">              [&quot;参数4&quot;, &quot;数据类型&quot;, &quot;数据值&quot;]</div>
+<div class="line">            ],</div>
+<div class="line">            &quot;recv&quot;: [</div>
+<div class="line">              &quot;参数3&quot;</div>
+<div class="line">            ]</div>
+<div class="line">        }</div>
+<div class="line">    },</div>
+<div class="line">    &quot;sequence&quot;: {</div>
+<div class="line">        &quot;指令3&quot;: [</div>
+<div class="line">            &quot;参数&quot;,</div>
+<div class="line">            [&quot;参数&quot;, &quot;数据类型&quot;, &quot;数据值&quot;]</div>
+<div class="line">        ]</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><div class="fragment"><div class="line"><span class="comment"># 暨以上三大类，由param、command、sequence组成</span></div>
+<div class="line"><span class="comment"># param中有多个参数</span></div>
+<div class="line"><span class="comment"># command中有两种指令类型 send、recv， 每种指令由多个参数拼接而成</span></div>
+<div class="line"><span class="comment"># sequence 指令的变长部分，每一项为一list，结构与command中的项相同，其可在command中被调用{{sequence1}}，程序自动根据excel文件中的内容重复一项</span></div>
+<div class="line"><span class="comment"># ！！注意！！ 参数中支持以下数据类型uint8、int8、uint16、int16、uint32、int32、float、double、file_data、file_length</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md35"></a>
+config(self, **kwargs):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 初始化指令处理中间件。该函数不用单独调用</span></div>
+<div class="line"><span class="comment"># 在NSUKit的start_command中会自动调用</span></div>
+<div class="line"><span class="comment"># 在调用时可附加参数以使用特定icd.json文件 例如：</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">param = {</div>
+<div class="line">    <span class="stringliteral">&#39;tcp_cmd&#39;</span>: {</div>
+<div class="line">        <span class="stringliteral">&quot;port&quot;</span>: 5001,</div>
+<div class="line">        <span class="stringliteral">&quot;check_recv_head&quot;</span>: <span class="keyword">False</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;icd_path&quot;</span>: <span class="stringliteral">&quot;icd文件路径&quot;</span></div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>, **param)</div>
+<div class="line"><span class="comment"># 其中icd_path为使用指定的icd.json路径（绝对路径）</span></div>
+<div class="line"><span class="comment"># check_recv_head为是否按照icd文件中指令的recv进行强验证</span></div>
+<div class="line"><span class="comment"># check_recv_head开启时：（返回指令）按照recv格式（包头，id，序号，长度，结果），进行强验证 即包头，id，序号必须为recv中所写的数值</span></div>
+<div class="line"><span class="comment"># check_recv_head关闭时：（返回指令）按照recv格式直接进行存储</span></div>
+<div class="line"><span class="comment"># check_recv_head默认关闭</span></div>
+</div><!-- fragment --><hr  />
+<center><img src="professional_icd_parser_getset_param.png" alt="" class="inline"/>     </center> <center>get_param/set_param调用流程</center><h2><a class="anchor" id="autotoc_md37"></a>
+get_param(self, param_name: str, default=0, fmt_type=int):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 获取icd中某个参数的的值。该函数不用单独调用</span></div>
+<div class="line"><span class="comment"># 在read函数中当add为字符型，且该字符是参数名时自动调用 例如：</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">param = {</div>
+<div class="line">    <span class="stringliteral">&#39;tcp_cmd&#39;</span>: {</div>
+<div class="line">        <span class="stringliteral">&quot;port&quot;</span>: 5001,</div>
+<div class="line">        <span class="stringliteral">&quot;check_recv_head&quot;</span>: <span class="keyword">False</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;icd_path&quot;</span>: <span class="stringliteral">&quot;icd文件路径&quot;</span></div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPStreamUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>, **param)</div>
+<div class="line">nsukit.read(<span class="stringliteral">&quot;参数1&quot;</span>)</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md38"></a>
+set_param(self, param_name: str, value, fmt_type=int):</h2>
+<div class="fragment"><div class="line"><span class="comment"># 设置icd中某个参数的的值。该函数不用单独调用</span></div>
+<div class="line"><span class="comment"># 在write函数中当add为字符型，且该字符是参数名时自动调用 例如：</span></div>
+<div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">param = {</div>
+<div class="line">    <span class="stringliteral">&#39;tcp_cmd&#39;</span>: {</div>
+<div class="line">        <span class="stringliteral">&quot;port&quot;</span>: 5001,</div>
+<div class="line">        <span class="stringliteral">&quot;check_recv_head&quot;</span>: <span class="keyword">False</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;icd_path&quot;</span>: <span class="stringliteral">&quot;icd文件路径&quot;</span></div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPStreamUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&#39;127.0.0.1&#39;</span>, **param)</div>
+<div class="line">nsukit.write(addr=<span class="stringliteral">&quot;参数1&quot;</span>, value=1)</div>
+<div class="line"><span class="comment">#！！注意！！ 在默认情况下write在更改完参数时会自动执行与之相关的指令，如不想直接执行请增加参数execute=False</span></div>
+<div class="line">nsukit.write(addr=<span class="stringliteral">&quot;参数1&quot;</span>, value=1, execute=<span class="keyword">False</span>)</div>
+<div class="line"><span class="comment"># 当addr为指令名时会直接发送对应指令，此时value可以填任何数</span></div>
+<div class="line">nsukit.write(addr=<span class="stringliteral">&quot;指令1&quot;</span>, value=123)</div>
+</div><!-- fragment --><hr  />
+<p><span id="virtual_chnl"></span></p>
+<h1><a class="anchor" id="autotoc_md40"></a>
+virtual_chnl</h1>
+<p><em><b>virtual_chnl：虚拟通道中间件</b></em> </p><div class="fragment"><div class="line">虚拟通道主要用于：当设备只有1个数传通道，但想分开传输多路数据时所使用</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md41"></a>
+virtual_chnl未开启时</h2>
+<center><img src="professional_virtual_chnl_stop.png" alt="" class="inline"/>     </center> <center>虚拟通道未开启时数据流的流程图</center><div class="fragment"><div class="line">举例说明：</div>
+<div class="line">花园需要浇水，每种花需要浇不同的水，且每种水不相容。现在只有一个水管（1个数传通道）</div>
+<div class="line">当我用水管进行浇水时，我需要一个挡板把水管中的不同的水分开进行使用</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md42"></a>
+virtual_chnl开启时</h2>
+<center><img src="professional_virtual_chnl_start.png" alt="" class="inline"/>     </center> <center>虚拟通道开启时数据流的流程图</center><div class="fragment"><div class="line">举例说明：(还是上边的例子)</div>
+<div class="line">花园需要浇水，每种花需要浇不同的水，且每种水不相容。现在只有一个水管（1个数传通道）</div>
+<div class="line">现在我买了一台机器，这台机器上有很多出水口，并且机器可以自动把每种水自动分开</div>
+<div class="line">这时我只需要使用机器上对应出水口的水去浇特定的花就可以了</div>
+</div><!-- fragment --><hr  />
+ </div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+  </ul>
+</div>
+</body>
+</html>
