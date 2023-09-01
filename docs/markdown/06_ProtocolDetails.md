@@ -1,56 +1,4 @@
-# 🚀快速开始
-
-<div style="position: fixed; top: 90%; left: 90%">
-<a href="#目录" style="text-decoration: none">返回目录</a>
-</div>
-
-
-<span id="目录"></span>
-
-## 目录
-* <a href="#环境安装">环境安装</a>
-* <a href="#网络指令">网络指令</a>
-* <a href="#串口指令">串口指令</a>
-* <a href="#PCI-E指令">PCI-E指令</a>
-* <a href="#网络数据流">网络数据流</a>
-* <a href="#PCI-E数据流">PCI-E数据流</a>
-* <a href="#名词解释">名词解释</a>
-* <a href="#工程基本结构">工程基本结构</a>
-* [进阶使用](3_Professional.md)
-
----
-
-_**NSUKit为一套用于控制设备的快速开发接口。该接口支持向设备发送网络、串口、PCI-E指令，并同时支持网络、PCI-E数据流的上下行。**_
-<center>![](introduction_frame_description.png)</center>
-<center>NSUKit基本框架</center>
-
----
-
-<span id="环境安装"></span>
-
-## 环境安装
-
-### 环境依赖
-```text
-python = ">=3.8,<4.0"
-numpy = ">=1.24"
-pyserial = "^3.5"
-pandas = "^2.0.3"
-```
-
-### 安装
-```shell
-使用虚拟环境进行安装
-1. conda create -n NSUKit python=3.9
-2. conda activate NSUKit
-3. pip install NSUKit
-
-本机环境直接安装
-1. pip install NSUKit
-```
-
----
-## 使用接口
+# 协议详解
 
 <span id="网络指令"></span>
 
@@ -175,17 +123,3 @@ _TCPChnlUItf_ : 网络数据流类
 _PCIEChnlUItf_ : PCI-E数据流类
 
 ---
-
-<span id="工程基本结构"></span>
-
-## 工程基本结构
-本快速开发工具基本结构如下所示，下图展示了NSUKit中的所有可调用功能
-
-<center>![](quick_start_basic.png)</center>
-<center>用户直接调用NSUKit类，使用NSUKit的功能</center>
-
----
-
-<center>Copyright © 2023 理工数字系统实验室 <a href="http://naishu.tech/" target="_blank">naishu.tech</a></center>
-<center>北京耐数电子有限公司</center>
-    

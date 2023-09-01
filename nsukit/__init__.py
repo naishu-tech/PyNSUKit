@@ -8,13 +8,10 @@
 # MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
 # See the Mulan PSL v2 for more details.
 
-from .base_kit import NSUKit
-from .interface.tcp_interface import TCPCmdUItf, TCPChnlUItf
-from .interface.serial_interface import SerialCmdUItf
-from .interface.pcie_interface import PCIECmdUItf, PCIEChnlUItf
+from .base_kit import NSUKit, InitParamSet
 
 
-__all__ = ['NSUKit', 'TCPChnlUItf', 'PCIEChnlUItf', 'TCPCmdUItf', 'SerialCmdUItf', 'PCIECmdUItf']
+__all__ = ['NSUKit', 'InitParamSet']
 
 __version_pack__ = (0, 1, 0)
 

@@ -47,6 +47,7 @@ class TCPCmdUItf(BaseCmdUItf):
     """!
     @brief 网络指令接口
     @details 包括连接/断开、发送、接收等功能
+    @image html professional_tcp_cmd.png
     """
     _timeout = 15
 
@@ -181,6 +182,7 @@ class TCPChnlUItf(BaseChnlUItf):
     """!
     @brief 网络数据流接口
     @details 包括连接/断开、内存操作、接收/等待/终止等功能
+    @image html professional_tcp_data.png
     """
     _local_port = 0
     _timeout = 15

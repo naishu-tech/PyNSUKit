@@ -5,7 +5,7 @@
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = NSUKit
-PROJECT_NUMBER         = 0.1.1
+PROJECT_NUMBER         = 0.1.2
 PROJECT_BRIEF          = 板卡级统一交互接口
 PROJECT_LOGO           = ./image/logo切图-竖版.png
 OUTPUT_DIRECTORY       = html
@@ -184,7 +184,7 @@ INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
 FILTER_SOURCE_PATTERNS =
-USE_MDFILE_AS_MAINPAGE = 1_Introduction.md
+USE_MDFILE_AS_MAINPAGE = 01_Introduction.md
 FORTRAN_COMMENT_AFTER  = 72
 #---------------------------------------------------------------------------
 # Configuration options related to source browsing
@@ -207,7 +207,7 @@ IGNORE_PREFIX          =
 # Configuration options related to the HTML output
 #---------------------------------------------------------------------------
 GENERATE_HTML          = YES
-HTML_OUTPUT            = 0.1.1
+HTML_OUTPUT            = 0.1.2
 HTML_FILE_EXTENSION    = .html
 HTML_HEADER            = header.html
 HTML_FOOTER            =
