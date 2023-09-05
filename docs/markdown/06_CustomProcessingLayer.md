@@ -3,7 +3,7 @@
 
 <span id="icd_paresr"></span>
 
-## icd_paresr
+## icd_paresr     {#md_icd_paresr}
 _**icd_paresr：指令处理中间件，用来使用约定式的icd指令**_
 
 <center>![](professional_icd_parser.png)</center>
