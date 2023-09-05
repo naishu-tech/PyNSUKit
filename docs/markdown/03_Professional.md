@@ -10,8 +10,6 @@
 * <a href="#基本结构">基本结构</a>
 * <a href="#自闭环仿真">自闭环仿真</a>
 * <a href="#数据流交互">数据流交互</a>
-* [自定义协议层](04_CustomProtocolLayer.md)
-* [自定义处理层](05_CustomProcessingLayer.md)
 
 ---
 <span id="基本结构"></span>

@@ -41,8 +41,9 @@ class KitMeta(type):
 
 class NSUKit(metaclass=KitMeta):
     """!
-    @brief 控制设备的快速开发接口
-    @details 该接口支持向设备发送TCP、Serial、PCIE指令，并同时支持TCP、PCIE数据流的上下行。
+    @anchor NSUKit_class
+    @brief 针对板卡级交互的开发接口
+    @details 采用面向对象的思想，对每个板卡可以实例化出一个本类的对象，对单张板卡的所有操作都可以通过本类实例化对象的方法实现
     """
     CmdMiddleware: "UMiddlewareMeta" = ICDRegMw
     ChnlMiddleware: "UMiddlewareMeta" = VirtualChnlMw
