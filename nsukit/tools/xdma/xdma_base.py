@@ -1,4 +1,4 @@
-# Copyright (c) [2023] [Mulan PSL v2]
+# Copyright (c) [2023] [Naishu]
 # [NSUKit] is licensed under Mulan PSL v2.
 # You can use this software according to the terms and conditions of the Mulan PSL v2.
 # You may obtain a copy of Mulan PSL v2 at:
@@ -17,20 +17,28 @@ TIMEOUT = 0xffffffff  # 无限等待
 isWindows = False
 libxdma = None
 
-if platform.system() == "Linux":
-    libxdma = ctypes.CDLL(f"{os.path.dirname(os.path.abspath(__file__))}/libxdma_api.so")
-elif platform.system() == "Windows":
+
+system = platform.system()
+machine = platform.machine()
+
+if system == "Linux":
+    if machine in ['x86_64', 'AMD64']:
+        lib_name = "libxdma_api.so"
+    else:
+        lib_name = "libxdma_api_aarch64.so"
+    libxdma = ctypes.CDLL(f"{os.path.dirname(os.path.abspath(__file__))}/{lib_name}")
+elif system == "Windows" and machine in ['x86_64', 'AMD64']:
     isWindows = True
-    libxdma = ctypes.WinDLL(f"{os.path.dirname(os.path.abspath(__file__))}/xdma_api.dll")
+    lib_name = "xdma_api.dll"
+    libxdma = ctypes.WinDLL(f"{os.path.dirname(os.path.abspath(__file__))}/{lib_name}")
     libxdma.fpga_recv_multiple.argtypes = [ctypes.c_uint, ctypes.c_uint, ctypes.c_void_p, ctypes.c_uint,
                                            ctypes.c_ulonglong,
                                            ctypes.c_ulonglong, ctypes.c_uint, ctypes.c_uint, ctypes.c_uint,
                                            ctypes.c_int]
     libxdma.fpga_recv_multiple.restype = ctypes.c_ulonglong
-else:
-    pass
 
-assert libxdma, "启动失败"
+if libxdma is None:
+    raise RuntimeError(f'xdma_api load Failed')
 
 libxdma.fpga_info_string.argtypes = [ctypes.c_uint]
 libxdma.fpga_open.argtypes = [ctypes.c_uint, ctypes.c_uint]

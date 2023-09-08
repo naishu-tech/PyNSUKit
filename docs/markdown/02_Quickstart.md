@@ -26,7 +26,23 @@ pyserial = "^3.5"
 pandas = "^2.0.3"
 ```
 
-### 1.2. 安装
+### 1.2. 支持的操作系统与平台
+```text
+Windows7 x64
+Windows10 x64
+Windows11 x64
+
+Ubuntu 18.04 aarch64
+Ubuntu 18.04 x64
+Ubuntu 20.04 aarch64
+Ubuntu 20.04 x64
+
+CentOS 8.x x64
+
+macOS 功能受限
+```
+
+### 1.3. 安装
 ```shell
 使用虚拟环境进行安装
 1. conda create -n NSUKit python=3.9
@@ -58,20 +74,19 @@ pandas = "^2.0.3"
 1. 采用面向对象的方式，可以对每个板卡都实例化一个此类的对象，对象包含了三种交互方式的所有控制接口
 2. 只需要在实例化此类时，将对应的CmdItf、StreamItf协议类作为参数传入，再通过InitParamSet数据类指定协议类连接板卡所需的参数
 3. NSUKit初始化详情可查看文档[NSUKit.__init__](#nsukit.base_kit.NSUKit.__init__)
-    ```python
+   ```python
     from nsukit import NSUKit, InitParamSet
     from nsukit.interface import TCPCmdUItf, PCIEStreamUItf
     
-    cmd_param = InitParamSet(ip='127.0.0.1')
-    stream_param = InitParamSet(board=0)
+    param = InitParamSet(
+       cmd_ip='127.0.0.1',
+       stream_board=0)
     
     kit = NSUKit(
-        cmd_itf_class=    TCPCmdUItf,
-        stream_itf_class= PCIEStreamUItf,
-        cmd_param=        cmd_param,
-        stream_param=     stream_param
-        )
-    ```
+       cmd_itf_class=    TCPCmdUItf,
+       stream_itf_class= PCIEStreamUItf,
+       link_param=       param)
+   ```
 4. 这样就完成了对应某一具体形态板卡的软件对象实例化，对于三种抽象交互方式的各个接口调用，都不会再出现与具体物理协议相关的参数
 
 <span id="发起连接"></span>

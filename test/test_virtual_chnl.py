@@ -11,8 +11,8 @@
 import pytest
 
 from nsukit.base_kit import KitMeta
-from nsukit.interface.base import BaseChnlUItf
-from nsukit.middleware.virtual_chnl import VirtualChnlMw
+from nsukit.interface.base import BaseStreamUItf
+from nsukit.middleware.virtual_chnl import VirtualStreamMw
 
 
 def test_dispenser():
@@ -21,8 +21,8 @@ def test_dispenser():
         ...
 
     kit = Kit()
-    kit.itf_chnl = BaseChnlUItf()
-    v_chnl = VirtualChnlMw(kit)
+    kit.itf_chnl = BaseStreamUItf()
+    v_chnl = VirtualStreamMw(kit)
     v_chnl.config(stream_mode='real')
     msg = pytest.raises(NotImplementedError, v_chnl.alloc_buffer, 1024)
     print(msg)

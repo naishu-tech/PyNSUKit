@@ -1,4 +1,4 @@
-# Copyright (c) [2023] [Mulan PSL v2]
+# Copyright (c) [2023] [NaiShu]
 # [NSUKit] is licensed under Mulan PSL v2.
 # You can use this software according to the terms and conditions of the Mulan PSL v2.
 # You may obtain a copy of Mulan PSL v2 at:
@@ -12,9 +12,13 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .. import NSUKit
+    from ..interface import InitParamSet
 
 
 class UMiddlewareMeta(type):
+    """!
+    @note 处理层接口的元类，当前做类型注解用，开发处理层接口时不用关心此类
+    """
     ...
 
 
@@ -22,12 +26,10 @@ class UMiddleware(metaclass=UMiddlewareMeta):
     def __init__(self, kit: "NSUKit", *args, **kwargs):
         self.kit = kit
 
-    def config(self, **kwargs):
+    def config(self, param: "InitParamSet") -> None:
         """!
         可调用此方法配置Middleware里的各种参数，
-        会在NSUKit.start_command中调用
-        @param args:
-        @param kwargs:
+        会在NSUKit.link_command中调用
         @return:
         """
         ...
@@ -40,27 +42,30 @@ class BaseRegMw(UMiddleware):
     def set_param(self, param_name: str, value, fmt_type=int):
         ...
 
+    def execute(self, cname: str) -> None:
+        ...
+
     def fmt_command(self, command_name, command_type: str = "send", file_name=None) -> bytes:
         ...
 
-    def execute_icd_command(self, parm_name: str) -> list:
-        ...
-
-    def param_is_command(self, parm_name: str) -> bool:
+    def execute_from_pname(self, parm_name: str) -> list:
         ...
 
 
-class BaseChnlMw(UMiddleware):
-    def alloc_buffer(self, length, buf: int = None):
+class BaseStreamMw(UMiddleware):
+    def open_send(self, chnl: int, fd: int, length: int, offset: int = 0):
         ...
 
-    def free_buffer(self, fd):
+    def open_recv(self, chnl: int, fd: int, length: int, offset: int = 0):
         ...
 
-    def get_buffer(self, fd, length):
+    def wait_stream(self, fd: int, timeout: float = 0):
         ...
 
-    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, flag=1) -> bool:
+    def break_stream(self, fd: int):
+        ...
+
+    def stream_recv(self, chnl, fd, length, offset=0, stop_event=None, flag=1) -> bool:
         ...
 
     def stream_send(self, chnl, fd, length, offset=0, stop_event=None, flag=1) -> bool:

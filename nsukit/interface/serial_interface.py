@@ -1,4 +1,4 @@
-# Copyright (c) [2023] [Mulan PSL v2]
+# Copyright (c) [2023] [NaiShu]
 # [NSUKit] is licensed under Mulan PSL v2.
 # You can use this software according to the terms and conditions of the Mulan PSL v2.
 # You may obtain a copy of Mulan PSL v2 at:
@@ -13,30 +13,12 @@ from threading import Lock
 
 import serial
 
-from .base import BaseCmdUItf
+from .base import BaseCmdUItf, VirtualRegCmdMixin, BaseStreamUItf, InitParamSet
 from ..tools.logging import logging
+from ..tools.check_func import head_check
 
 
-def head_check(send_cmd, recv_cmd):
-    """!
-    @brief 包头检查
-    @details 返回数据包头检查
-    @param send_cmd 发送的指令
-    @param recv_cmd 返回的指令
-    @return 返回指令的总长度
-    """
-    send_head = struct.unpack('=IIII', send_cmd[0:16])
-    recv_head = struct.unpack('=IIII', recv_cmd)
-    if recv_head[0] != 0xCFCFCFCF:
-        raise RuntimeError("返回包头错误")
-    if recv_head[1] != send_head[1]:
-        raise RuntimeError("返回ID错误")
-    if recv_head[2] != send_head[2]:
-        raise RuntimeError("返回序号错误")
-    return recv_head[3]
-
-
-class SerialCmdUItf(BaseCmdUItf):
+class SerialCmdUItf(VirtualRegCmdMixin, BaseCmdUItf):
     """!
     @brief 串口指令接口
     @details 包括连接/断开、发送、接收等功能
@@ -47,26 +29,28 @@ class SerialCmdUItf(BaseCmdUItf):
     _timeout = 15
 
     def __init__(self):
+        self.serial_port = self._target
+        self.baud_rate = self._target_baud_rate
         self._device_serial = None
         self.busy_lock = Lock()
 
-    def accept(self, target=None, target_baud_rate: int = None, **kwargs):
+    def accept(self, param: InitParamSet) -> None:
         """!
         @brief 初始化串口指令接口
         @details 初始化串口指令接口，获取串口id，波特率等参数
-        @param target 串口id
-        @param target_baud_rate 波特率
-        @param kwargs 其他参数
+        @param param InitParamSet或其子类的对象，需包含cmd_serial_port、cmd_baud_rate属性
         @return
         """
-        _target = self._target if target is None else target
-        _target_baud_rate = self._target_baud_rate if target_baud_rate is None else target_baud_rate
+        _target = self.serial_port if param.cmd_serial_port is None else param.cmd_serial_port
+        _target_baud_rate = self.baud_rate if param.cmd_baud_rate is None else param.cmd_baud_rate
         with self.busy_lock:
             if self._device_serial is not None:
                 self._device_serial.close()
             self._device_serial = serial.Serial(port=_target,
                                                 baudrate=int(_target_baud_rate),
                                                 timeout=self._timeout)
+            self.serial_port = _target
+            self.baud_rate = _target_baud_rate
 
     def recv_bytes(self, size) -> bytes:
         """!
@@ -87,12 +71,12 @@ class SerialCmdUItf(BaseCmdUItf):
                     break
             return recv_data
 
-    def send_bytes(self, data: bytes):
+    def send_bytes(self, data: bytes) -> int:
         """!
-        @brief 发送数据
-        @details 使用串口发送数据
-        @param data 要发送的数据
-        @return 发送完成的数据长度
+        @brief       发送数据
+        @details     使用串口发送数据
+        @param data  要发送的数据
+        @return      发送完成的数据长度
         """
         with self.busy_lock:
             total_len = len(data)
@@ -105,21 +89,14 @@ class SerialCmdUItf(BaseCmdUItf):
                 if send_len == 0:
                     raise RuntimeError("Connection interruption")
 
-    def write(self, addr: int, value: bytes) -> bytes:
+    def write(self, addr: int, value: bytes) -> None:
         """!
-        @brief 发送数据
-        @details 使用串口以地址值的方式发送一条约定好的特殊指令
+        @brief 以串口进行写寄存器
         @param addr 要修改的地址
         @param value 地址中要赋的值
-        @return 返回数据中的结果
+        @return 无
         """
-        cmd = self._fmt_reg_write(addr, value)
-        if len(cmd) != self.send_bytes(cmd):
-            raise RuntimeError(f"Fail in send")
-        recv = self.recv_bytes(16)
-        result_len = head_check(cmd, recv)
-        result = self.recv_bytes(result_len - 16)
-        return result
+        return self._common_write(addr, value, self.serial_port)
 
     def read(self, addr: int) -> bytes:
         """!
@@ -128,15 +105,9 @@ class SerialCmdUItf(BaseCmdUItf):
         @param addr 要读取的地址
         @return 返回读取到的结果
         """
-        cmd = self._fmt_reg_read(addr)
-        if len(cmd) != self.send_bytes(cmd):
-            raise RuntimeError(f"Fail in send")
-        recv = self.recv_bytes(16)
-        result_len = head_check(cmd, recv)
-        result = self.recv_bytes(result_len - 16)
-        return result
+        return self._common_read(addr, self.serial_port)
 
-    def close(self):
+    def close(self) -> None:
         """!
         @brief 关闭连接
         @details 关闭串口连接
@@ -147,11 +118,18 @@ class SerialCmdUItf(BaseCmdUItf):
         except Exception as e:
             logging.error(msg=e)
 
-    def set_timeout(self, value):
+    def set_timeout(self, s: float) -> None:
         """!
         @brief 设置超时时间
         @details 根据传入的数值设置串口的超时时间
-        @param value 秒
+        @param s 秒
         @return
         """
-        self._device_serial.timeout = value
+        self._device_serial.timeout = s
+
+
+class SerialStreamUItf(BaseStreamUItf):
+    """!
+    @todo SerialStreamUItf接口待开发，暂不支持串口数据流
+    """
+    ...
