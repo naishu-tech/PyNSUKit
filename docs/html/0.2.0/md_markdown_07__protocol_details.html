@@ -1,0 +1,190 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NSUKit: 协议详解</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo切图-竖版.png"/></td>
+     <script type="text/javascript" src="../version.js"></script>
+  <td id="projectalign">
+   <div id="projectname">NSUKit
+        <span id="projectnumber">0.2.0</span>
+   </div>
+   <div id="projectbrief">板卡级统一交互接口</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part --><!-- 制作者 Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md_markdown_07__protocol_details.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">协议详解 </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">待办事项:</a></b></dt><dd>协议类详解待完善，具体说明各个协议的通信过程</dd></dl>
+<p><span id="网络指令"></span></p>
+<h2><a class="anchor" id="autotoc_md69"></a>
+网络指令</h2>
+<p>在本工具中，网络指令是指使用TCP/IP通信协议，来实现主机与设备相互通信发送数据的一种方法</p>
+<center><img src="quick_start_tcp_cmd.png" alt="" class="inline"/>     </center><p> 设备作为Server端其5001端口常开用于接收指令，本机使用设备IP:5001连接并进行指令收发。</p>
+<p><em><b>网络指令代码示例</b></em> </p><div class="fragment"><div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&quot;x.x.x.x&quot;</span>, port=5001)</div>
+<div class="line">nsukit.write(0x1, b<span class="stringliteral">&#39;\x02\x00\x00\x00&#39;</span>)</div>
+<div class="line">nsukit.read(0x1)</div>
+<div class="line">nsukit.bulk_write({0x1: b<span class="stringliteral">&#39;\x02\x00\x00\x00&#39;</span>, 0x2: b<span class="stringliteral">&#39;\x03\x00\x00\x00&#39;</span>})</div>
+<div class="line">nsukit.bulk_read([0x1, 0x2])</div>
+</div><!-- fragment --><p><span id="串口指令"></span></p>
+<h2><a class="anchor" id="autotoc_md70"></a>
+串口指令</h2>
+<p>在本工具中，串口指令是指使用串口线将主机与设备连接，来实现主机与设备相互通信发送数据的一种方法</p>
+<center><img src="quick_start_serial_cmd.png" alt="" class="inline"/>     </center><p> 主机与设备使用串口线互联后，根据串口号连接并进行指令收发。</p>
+<p><em><b>串口指令代码示例</b></em> </p><div class="fragment"><div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">nsukit = NSUKit(SerialCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_command(target=<span class="stringliteral">&quot;COM1&quot;</span>, target_baud_rate=9600)</div>
+<div class="line">nsukit.write(0x1, b<span class="stringliteral">&#39;\x02\x00\x00\x00&#39;</span>)</div>
+<div class="line">nsukit.read(0x1)</div>
+<div class="line">nsukit.bulk_write({0x1: b<span class="stringliteral">&#39;\x02\x00\x00\x00&#39;</span>, 0x2: b<span class="stringliteral">&#39;\x03\x00\x00\x00&#39;</span>})</div>
+<div class="line">nsukit.bulk_read([0x1, 0x2])</div>
+</div><!-- fragment --><p><span id="PCI-E指令"></span></p>
+<h2><a class="anchor" id="autotoc_md71"></a>
+PCI-E指令</h2>
+<p>在本工具中，PCI-E指令是指使用PCI-E总线将主机与设备连接，来实现主机与设备相互通信发送数据的一种方法</p>
+<center><img src="quick_start_PCI-E_cmd.png" alt="" class="inline"/>     </center><p> 将设备插入主机后，根据设备号（0到本机所有插入的设备数量-1）连接并进行指令收发。</p>
+<p><em><b>PCI-E指令代码示例</b></em> </p><div class="fragment"><div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line">nsukit = NSUKit(PCIECmdUItf, PCIEChnlUItf)</div>
+<div class="line">nsukit.start_command(target=0, sent_base=0x10000000, recv_base=0x13000000, irq_base=0x00003000 + 44, sent_down_base=0x00003030)</div>
+<div class="line">nsukit.write(0x1, b<span class="stringliteral">&#39;\x02\x00\x00\x00&#39;</span>)</div>
+<div class="line">nsukit.read(0x1)</div>
+<div class="line">nsukit.bulk_write({0x1: b<span class="stringliteral">&#39;\x02\x00\x00\x00&#39;</span>, 0x2: b<span class="stringliteral">&#39;\x03\x00\x00\x00&#39;</span>})</div>
+<div class="line">nsukit.bulk_read([0x1, 0x2])</div>
+</div><!-- fragment --><p><span id="网络数据流"></span></p>
+<h2><a class="anchor" id="autotoc_md72"></a>
+网络数据流</h2>
+<p>在本工具中，网络数据流是指使用TCP/IP通信协议，来实现主机与设备相互发送流式数据的一种方法</p>
+<center><img src="quick_start_tcp_data.png" alt="" class="inline"/>     </center><p><em><b>端口号会根据设备的IP进行自动计算，用户自己指定端口</b></em></p>
+<p>本机作为Server开放端口后，设备自动连接并进行数据传输。</p>
+<p><em><b>网络数据流代码示例</b></em> </p><div class="fragment"><div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line"><span class="keyword">import</span> threading</div>
+<div class="line">event = threading.Event()</div>
+<div class="line">length = 1024</div>
+<div class="line">nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)</div>
+<div class="line">nsukit.start_stream(target=<span class="stringliteral">&quot;x.x.x.x&quot;</span>)</div>
+<div class="line">fd = nsukit.alloc_buffer(length)</div>
+<div class="line">nsukit.stream_recv(99, fd, length, 0, event.is_set)</div>
+<div class="line">print(nsukit.get_buffer(fd, length))</div>
+</div><!-- fragment --><p><span id="PCI-E数据流"></span></p>
+<h2><a class="anchor" id="autotoc_md73"></a>
+PCI-E数据流</h2>
+<p>在本开发工具中，PCI-E数据流是指使用PCI-E总线将主机与设备连接，来实现主机与设备相互发送流式数据的一种方法</p>
+<center><img src="quick_start_PCI-E_cmd.png" alt="" class="inline"/>     </center><p> 将设备插入主机后，根据设备号（0到本机所有插入的设备数量-1）连接并取出数据。</p>
+<p><em><b>PCI-E数据流代码示例</b></em> </p><div class="fragment"><div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> *</div>
+<div class="line"><span class="keyword">import</span> threading</div>
+<div class="line">event = threading.Event()</div>
+<div class="line">length = 1024</div>
+<div class="line">nsukit = NSUKit(PCIECmdUItf, PCIEChnlUItf)</div>
+<div class="line">nsukit.start_stream(target=0)</div>
+<div class="line">fd = nsukit.alloc_buffer(length)</div>
+<div class="line">nsukit.stream_recv(0, fd, length, 0, event.is_set)</div>
+<div class="line">print(nsukit.get_buffer(fd, length))</div>
+</div><!-- fragment --><hr  />
+<p><span id="名词解释"></span></p>
+<h1><a class="anchor" id="autotoc_md75"></a>
+名词解释</h1>
+<p><em>targrt</em> : 目标设备的地址。TCP/IP通信协议中为IP地址，PCI-E中为本机中的设备数量减1，串口为设备串口号</p>
+<p><em>NSUKit</em> : 统一调用工具类</p>
+<p><em>TCPCmdUItf</em> : 网络指令类</p>
+<p><em>SerialCmdUItf</em> : 串口指令类</p>
+<p><em>PCIECmdUItf</em> : PCI-E指令类</p>
+<p><em>TCPChnlUItf</em> : 网络数据流类</p>
+<p><em>PCIEChnlUItf</em> : PCI-E数据流类</p>
+<hr  />
+ </div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+  </ul>
+</div>
+</body>
+</html>

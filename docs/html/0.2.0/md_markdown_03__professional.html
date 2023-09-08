@@ -1,0 +1,191 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NSUKit: 进阶使用</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo切图-竖版.png"/></td>
+     <script type="text/javascript" src="../version.js"></script>
+  <td id="projectalign">
+   <div id="projectname">NSUKit
+        <span id="projectnumber">0.2.0</span>
+   </div>
+   <div id="projectbrief">板卡级统一交互接口</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part --><!-- 制作者 Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md_markdown_03__professional.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">进阶使用 </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><div style="position: fixed; top: 90%; left: 90%"> <a href="#目录" style="text-decoration: none">返回目录</a> </div><p><span id="目录"></span></p>
+<h1><a class="anchor" id="autotoc_md26"></a>
+目录</h1>
+<ul>
+<li><a href="#基本结构">基本结构</a></li>
+<li><a href="#自闭环仿真">自闭环仿真</a></li>
+<li><a href="#数据流交互">数据流交互</a></li>
+</ul>
+<hr  />
+<p> <span id="基本结构"></span></p>
+<h1><a class="anchor" id="autotoc_md28"></a>
+基本结构</h1>
+<center><img src="introduction_global.png" alt="" class="inline"/>     </center><ol type="1">
+<li>本SDK提供的接口主要针对射频/数字组件与cpu的交互，将整个交互流程划分为<code>请求层</code>、<code>处理层</code>、<code>协议层</code>三个部分<ol type="a">
+<li><b>请求层</b>:<ol type="i">
+<li>将组件提供的各种参数的读取和配置，看作对一个寄存器的读写，那么参数名即为<code>寄存器地址</code>，参数值为<code>寄存器值</code></li>
+<li>将与组件的数据流交互看作一次次DMA，可以指定使用的dma通道、内存地址、数据大小等进行一次dma</li>
+</ol>
+</li>
+<li><b>处理层</b>: 组件与cpu之间可能会约定各种各样的上层交互协议，那么可以在中间处理这一部分中实现上层协议，并将此协议的最终控制接口转为请求所需的读写寄存器和DMA格式</li>
+<li><b>协议层</b>: 对诸如TCP、串口、axi_lite、axi_stream等标准通信协议，进行封装。</li>
+</ol>
+</li>
+<li>基于这三个部分的划分，<code>协议层</code>、<code>处理层</code>的变更不会影响基于<code>请求层</code>开发的任何程序</li>
+</ol>
+<hr  />
+<p><span id="自闭环仿真"></span></p>
+<h1><a class="anchor" id="autotoc_md30"></a>
+自闭环仿真</h1>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">待办事项:</a></b></dt><dd>SimCmdUItf、SimStreamUItf类暂未实现</dd></dl>
+<ol type="1">
+<li>提供SimCmdUItf、SimStreamUItf两个虚拟协议类，可以模拟与板卡的通信过程，支持写入记忆、数据流仿真等一系列功能，方便 <b>在没有硬件条件时测试上层程序</b></li>
+<li><div class="fragment"><div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> NSUKit</div>
+<div class="line"><span class="keyword">from</span> <a class="code hl_namespace" href="namespacensukit_1_1interface.html">nsukit.interface</a> <span class="keyword">import</span> SimCmdUItf, SimStreamUItf</div>
+<div class="line"> </div>
+<div class="line">kit = NSUKit(SimCmdUItf, SimChnlUItf)</div>
+<div class="line">kit.link_cmd()</div>
+<div class="line">kit.link_stream()</div>
+<div class="line">kit.write(0x10, b<span class="stringliteral">&#39;\x01\x02\x03\x04&#39;</span>)</div>
+<div class="line">...</div>
+<div class="ttc" id="anamespacensukit_1_1interface_html"><div class="ttname"><a href="namespacensukit_1_1interface.html">nsukit.interface</a></div><div class="ttdef"><b>Definition:</b> <a href="interface_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+</div><!-- fragment --></li>
+</ol>
+<hr  />
+<p><span id="数据流交互"></span></p>
+<h1><a class="anchor" id="autotoc_md32"></a>
+数据流交互</h1>
+<h2><a class="anchor" id="autotoc_md33"></a>
+同步方式</h2>
+<center><img src="block_stream_show.png" alt="" class="inline"/>     </center><ol type="1">
+<li>同步方式数据流交互接口: <a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_stream_send">NSUKit.stream_send</a>、<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_stream_recv">NSUKit.stream_recv</a></li>
+<li>如下示例在host上申请了一片1G的内存，对前1kB写入数据20，将这1kB数据下发到板卡</li>
+</ol>
+<div class="fragment"><div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> NSUKit</div>
+<div class="line"> </div>
+<div class="line">...</div>
+<div class="line">kit: NSUKit</div>
+<div class="line">fd = kit.alloc_buffer(length=1024**3)</div>
+<div class="line">buf = kit.get_buffer(fd, 1024**3)</div>
+<div class="line">buf[:1024] = 20</div>
+<div class="line">kit.stream_send(chnl=0, fd=fd, length=1024, offset=0)</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md34"></a>
+异步方式</h2>
+<center><img src="async_stream_itf.png" alt="" class="inline"/>     </center><ol type="1">
+<li>提供异步数据流交互接口: <a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_open_send">NSUKit.open_send</a>、<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_open_recv">NSUKit.open_recv</a>、<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_wait_stream">NSUKit.wait_stream</a>、<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_kit.html#NSUKit_break_stream">NSUKit.break_stream</a></li>
+<li>接口在开启数据流后立即返回，不等待说有数据传输完成，用户可以在数据流传输过程中继续执行其它操作</li>
+</ol>
+<div class="fragment"><div class="line"><span class="keyword">from</span> nsukit <span class="keyword">import</span> NSUKit</div>
+<div class="line"> </div>
+<div class="line">...</div>
+<div class="line">kit: NSUKit</div>
+<div class="line">fd = kit.alloc_buffer(length=1024**3)</div>
+<div class="line">res = kit.open_send(chnl=0, fd=fd, length=1024**3, offset=0)</div>
+<div class="line">kit.execute(<span class="stringliteral">&#39;状态查询&#39;</span>)</div>
+<div class="line">print(kit.get_param(<span class="stringliteral">&#39;板卡温度&#39;</span>))</div>
+<div class="line"><span class="keywordflow">if</span> res != -1:</div>
+<div class="line">   <span class="keywordflow">while</span> res != 1024**3:</div>
+<div class="line">      res = kit.wait_stream(fd, timeout=0.05)</div>
+</div><!-- fragment --><hr  />
+<center>Copyright © 2023 耐数 <a href="http://naishu.tech/" target="_blank">naishu.tech</a></center> <center>北京耐数电子有限公司</center> </div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+  </ul>
+</div>
+</body>
+</html>

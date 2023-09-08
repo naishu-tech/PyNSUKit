@@ -1,0 +1,1156 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NSUKit: nsukit.interface.tcp_interface.TCPStreamUItf类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo切图-竖版.png"/></td>
+     <script type="text/javascript" src="../version.js"></script>
+  <td id="projectalign">
+   <div id="projectname">NSUKit
+        <span id="projectnumber">0.2.0</span>
+   </div>
+   <div id="projectbrief">板卡级统一交互接口</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part --><!-- 制作者 Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">类</a> &#124;
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pub-attribs">Public 属性</a> &#124;
+<a href="#pro-methods">Protected 成员函数</a> &#124;
+<a href="#pro-attribs">Protected 属性</a> &#124;
+<a href="#pro-static-attribs">静态 Protected 属性</a> &#124;
+<a href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf-members.html">所有成员列表</a>  </div>
+  <div class="headertitle"><div class="title">nsukit.interface.tcp_interface.TCPStreamUItf类 参考</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>网络数据流接口  
+ <a href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#details">更多...</a></p>
+<div class="dynheader">
+类 nsukit.interface.tcp_interface.TCPStreamUItf 继承关系图:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.png" usemap="#nsukit.interface.tcp_5Finterface.TCPStreamUItf_map" alt=""/>
+  <map id="nsukit.interface.tcp_5Finterface.TCPStreamUItf_map" name="nsukit.interface.tcp_5Finterface.TCPStreamUItf_map">
+<area href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html" alt="nsukit.interface.base.BaseStreamUItf" shape="rect" coords="135,168,396,192"/>
+<area href="classnsukit_1_1interface_1_1base_1_1_u_interface.html" alt="nsukit.interface.base.UInterface" shape="rect" coords="135,112,396,136"/>
+<area href="classnsukit_1_1interface_1_1base_1_1_u_interface_meta.html" alt="nsukit.interface.base.UInterfaceMeta" shape="rect" coords="271,56,532,80"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+类</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf_1_1_memory.html">Memory</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">内存类  <a href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf_1_1_memory.html#details">更多...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:a8a53e7b66919ad93f6ab2b7c5a5d555a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#a8a53e7b66919ad93f6ab2b7c5a5d555a">__init__</a> (self)</td></tr>
+<tr class="separator:a8a53e7b66919ad93f6ab2b7c5a5d555a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1aab65559971855c31cf65916f8a5c3"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#af1aab65559971855c31cf65916f8a5c3">accept</a> (self, <a class="el" href="classnsukit_1_1interface_1_1base_1_1_init_param_set.html">InitParamSet</a> param)</td></tr>
+<tr class="memdesc:af1aab65559971855c31cf65916f8a5c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">连接  <br /></td></tr>
+<tr class="separator:af1aab65559971855c31cf65916f8a5c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f4d8a733ddb9c8aba84a530e8198d59"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#a4f4d8a733ddb9c8aba84a530e8198d59">set_timeout</a> (self, float s=2)</td></tr>
+<tr class="memdesc:a4f4d8a733ddb9c8aba84a530e8198d59"><td class="mdescLeft">&#160;</td><td class="mdescRight">设置超时时间  <br /></td></tr>
+<tr class="separator:a4f4d8a733ddb9c8aba84a530e8198d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8c5febbc395908be7c38393d7ef18f7"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#ad8c5febbc395908be7c38393d7ef18f7">close</a> (self)</td></tr>
+<tr class="memdesc:ad8c5febbc395908be7c38393d7ef18f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">关闭连接  <br /></td></tr>
+<tr class="separator:ad8c5febbc395908be7c38393d7ef18f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a152e348bbeaf9e89da27bf0358b586d3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#a152e348bbeaf9e89da27bf0358b586d3">alloc_buffer</a> (self, int length, Union[int, np.ndarray, None] buf=None)</td></tr>
+<tr class="memdesc:a152e348bbeaf9e89da27bf0358b586d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">申请一片内存  <br /></td></tr>
+<tr class="separator:a152e348bbeaf9e89da27bf0358b586d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe726029b8bb7db50fc0bb8c718b7a9e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#afe726029b8bb7db50fc0bb8c718b7a9e">free_buffer</a> (self, int fd)</td></tr>
+<tr class="memdesc:afe726029b8bb7db50fc0bb8c718b7a9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">释放一片内存  <br /></td></tr>
+<tr class="separator:afe726029b8bb7db50fc0bb8c718b7a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ae22368ee978ed51485302dba8bbdf9"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#a2ae22368ee978ed51485302dba8bbdf9">get_buffer</a> (self, int fd, int length)</td></tr>
+<tr class="memdesc:a2ae22368ee978ed51485302dba8bbdf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取内存中的值  <br /></td></tr>
+<tr class="separator:a2ae22368ee978ed51485302dba8bbdf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa961d0ebcef5c00c3c9adae1985fac2b"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#aa961d0ebcef5c00c3c9adae1985fac2b">open_send</a> (self, int chnl, int fd, int length, int offset=0)</td></tr>
+<tr class="memdesc:aa961d0ebcef5c00c3c9adae1985fac2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">数据下行开启  <br /></td></tr>
+<tr class="separator:aa961d0ebcef5c00c3c9adae1985fac2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbdb723545b9d5d752fbe663639d1f4c"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#acbdb723545b9d5d752fbe663639d1f4c">open_recv</a> (self, int chnl, int fd, int length, int offset=0)</td></tr>
+<tr class="memdesc:acbdb723545b9d5d752fbe663639d1f4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">数据上行开启  <br /></td></tr>
+<tr class="separator:acbdb723545b9d5d752fbe663639d1f4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a069cc10fc105c9328c2cab61648eed23"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#a069cc10fc105c9328c2cab61648eed23">wait_stream</a> (self, int fd, float timeout=0.)</td></tr>
+<tr class="memdesc:a069cc10fc105c9328c2cab61648eed23"><td class="mdescLeft">&#160;</td><td class="mdescRight">等待完成一次dma操作  <br /></td></tr>
+<tr class="separator:a069cc10fc105c9328c2cab61648eed23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9612642f928bad55ed21ce64248a8586"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#a9612642f928bad55ed21ce64248a8586">break_stream</a> (self, int fd)</td></tr>
+<tr class="memdesc:a9612642f928bad55ed21ce64248a8586"><td class="mdescLeft">&#160;</td><td class="mdescRight">终止本次dma操作  <br /></td></tr>
+<tr class="separator:a9612642f928bad55ed21ce64248a8586"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d90067f96df1fafb014c4493f668d80"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#a4d90067f96df1fafb014c4493f668d80">stream_recv</a> (self, int chnl, int fd, int length, int offset=0, Callable stop_event=None, float time_out=0xFFFFFFFF, int flag=1)</td></tr>
+<tr class="memdesc:a4d90067f96df1fafb014c4493f668d80"><td class="mdescLeft">&#160;</td><td class="mdescRight">数据流上行  <br /></td></tr>
+<tr class="separator:a4d90067f96df1fafb014c4493f668d80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5a0cf6f43f82a2ccd8e0885bd0f7bc5"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#ab5a0cf6f43f82a2ccd8e0885bd0f7bc5">stream_send</a> (self, int chnl, int fd, int length, int offset=0, Callable stop_event=None, float time_out=0xFFFFFFFF, int flag=1)</td></tr>
+<tr class="memdesc:ab5a0cf6f43f82a2ccd8e0885bd0f7bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">数据流下行  <br /></td></tr>
+<tr class="separator:ab5a0cf6f43f82a2ccd8e0885bd0f7bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12aa4457ed829f18259fde5aec1c5a52"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html#a12aa4457ed829f18259fde5aec1c5a52">alloc_buffer</a> (self, int length, Union[int, np.ndarray, None] buf=None)</td></tr>
+<tr class="separator:a12aa4457ed829f18259fde5aec1c5a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72a9c61e153bcf080cb66c4109cca39f"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html#a72a9c61e153bcf080cb66c4109cca39f">free_buffer</a> (self, int fd)</td></tr>
+<tr class="separator:a72a9c61e153bcf080cb66c4109cca39f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa49a7255f7429395131a287fe978ba78"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html#aa49a7255f7429395131a287fe978ba78">get_buffer</a> (self, int fd, int length)</td></tr>
+<tr class="separator:aa49a7255f7429395131a287fe978ba78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adea94002d08c56c05b98116d6e8b0d08"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html#adea94002d08c56c05b98116d6e8b0d08">open_send</a> (self, int chnl, int fd, int length, int offset=0)</td></tr>
+<tr class="separator:adea94002d08c56c05b98116d6e8b0d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af29a8eb6861b5998d4ef3a6be37f80d0"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html#af29a8eb6861b5998d4ef3a6be37f80d0">open_recv</a> (self, int chnl, int fd, int length, int offset=0)</td></tr>
+<tr class="separator:af29a8eb6861b5998d4ef3a6be37f80d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52d67b016b4b65176586173dbc500b66"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html#a52d67b016b4b65176586173dbc500b66">wait_stream</a> (self, int fd, float timeout=0.)</td></tr>
+<tr class="separator:a52d67b016b4b65176586173dbc500b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7e514841affcb85a5d2d40df36be19c"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html#ab7e514841affcb85a5d2d40df36be19c">break_stream</a> (self, int fd)</td></tr>
+<tr class="separator:ab7e514841affcb85a5d2d40df36be19c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af26b8d8fd74c47e0ac67671af6ead2e8"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html#af26b8d8fd74c47e0ac67671af6ead2e8">stream_recv</a> (self, int chnl, int fd, int length, int offset=0, Callable stop_event=None, float time_out=0xFFFFFFFF, int flag=1)</td></tr>
+<tr class="separator:af26b8d8fd74c47e0ac67671af6ead2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a707934a0d784588e5f4bdeff1bd72a92"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html#a707934a0d784588e5f4bdeff1bd72a92">stream_send</a> (self, int chnl, int fd, int length, int offset=0, Callable stop_event=None, float time_out=0xFFFFFFFF, int flag=1)</td></tr>
+<tr class="separator:a707934a0d784588e5f4bdeff1bd72a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a201613f3dc2b972cc837986becbd587b"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html#a201613f3dc2b972cc837986becbd587b">accept</a> (self, <a class="el" href="classnsukit_1_1interface_1_1base_1_1_init_param_set.html">InitParamSet</a> param)</td></tr>
+<tr class="separator:a201613f3dc2b972cc837986becbd587b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d6ad7fcc222090fbf480c65097d80be"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html#a0d6ad7fcc222090fbf480c65097d80be">close</a> (self)</td></tr>
+<tr class="separator:a0d6ad7fcc222090fbf480c65097d80be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28a922e09880685e72730f6ac0417012"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html#a28a922e09880685e72730f6ac0417012">set_timeout</a> (self, float s)</td></tr>
+<tr class="separator:a28a922e09880685e72730f6ac0417012"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public 属性</h2></td></tr>
+<tr class="memitem:a62ce664d2b0171a9e80783f84097bd7f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#a62ce664d2b0171a9e80783f84097bd7f">fd</a></td></tr>
+<tr class="separator:a62ce664d2b0171a9e80783f84097bd7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a325eda790c3e85007fd8d2e001fd2315"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#a325eda790c3e85007fd8d2e001fd2315">memory_index</a></td></tr>
+<tr class="separator:a325eda790c3e85007fd8d2e001fd2315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8befa398efe77bd81c5e16e298c142a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#ad8befa398efe77bd81c5e16e298c142a">open_flag</a></td></tr>
+<tr class="separator:ad8befa398efe77bd81c5e16e298c142a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected 成员函数</h2></td></tr>
+<tr class="memitem:a0a1a4d9b94e09fe0c87e35f1b5127754"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#a0a1a4d9b94e09fe0c87e35f1b5127754">_recv</a> (self, fd, length, offset, event)</td></tr>
+<tr class="memdesc:a0a1a4d9b94e09fe0c87e35f1b5127754"><td class="mdescLeft">&#160;</td><td class="mdescRight">数据上行  <br /></td></tr>
+<tr class="separator:a0a1a4d9b94e09fe0c87e35f1b5127754"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected 属性</h2></td></tr>
+<tr class="memitem:aee2a79eea555411abe9324b35cddb85a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#aee2a79eea555411abe9324b35cddb85a">_tcp_server</a></td></tr>
+<tr class="separator:aee2a79eea555411abe9324b35cddb85a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a145e3a11dbe29d6a8543f087062b70db"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#a145e3a11dbe29d6a8543f087062b70db">_recv_server</a></td></tr>
+<tr class="separator:a145e3a11dbe29d6a8543f087062b70db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1307467471493819e2e0429230ff579"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#ab1307467471493819e2e0429230ff579">_recv_addr</a></td></tr>
+<tr class="separator:ab1307467471493819e2e0429230ff579"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf5bf5e25446867695317ceca9d10996"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#aaf5bf5e25446867695317ceca9d10996">_local_port</a></td></tr>
+<tr class="separator:aaf5bf5e25446867695317ceca9d10996"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04cba7cbf4bb4a72fd98007d62cc78a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#a04cba7cbf4bb4a72fd98007d62cc78a6">_recv_thread</a></td></tr>
+<tr class="separator:a04cba7cbf4bb4a72fd98007d62cc78a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
+静态 Protected 属性</h2></td></tr>
+<tr class="memitem:a3e7b932b6fa5f93d0db67246bd673f50"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#a3e7b932b6fa5f93d0db67246bd673f50">_timeout</a> = 15</td></tr>
+<tr class="separator:a3e7b932b6fa5f93d0db67246bd673f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock"><p>网络数据流接口 </p>
+<p>包括连接/断开、内存操作、接收/等待/终止等功能 </p><div class="image">
+<img src="professional_tcp_data.png" alt=""/>
+</div>
+ 
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00151">151</a> 行定义.</p>
+</div><h2 class="groupheader">构造及析构函数说明</h2>
+<a id="a8a53e7b66919ad93f6ab2b7c5a5d555a" name="a8a53e7b66919ad93f6ab2b7c5a5d555a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a53e7b66919ad93f6ab2b7c5a5d555a">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.tcp_interface.TCPStreamUItf.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00195">195</a> 行定义.</p>
+
+</div>
+</div>
+<h2 class="groupheader">成员函数说明</h2>
+<a id="a0a1a4d9b94e09fe0c87e35f1b5127754" name="a0a1a4d9b94e09fe0c87e35f1b5127754"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a1a4d9b94e09fe0c87e35f1b5127754">&#9670;&#160;</a></span>_recv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.tcp_interface.TCPStreamUItf._recv </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>event</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>数据上行 </p>
+<p>数据流上行的具体实现 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>内存标号(key) </td></tr>
+    <tr><td class="paramname">length</td><td>要接收数据的长度 </td></tr>
+    <tr><td class="paramname">offset</td><td>内存偏移量 </td></tr>
+    <tr><td class="paramname">event</td><td>外部停止信号量 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>已使用内存大小 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00336">336</a> 行定义.</p>
+
+</div>
+</div>
+<a id="af1aab65559971855c31cf65916f8a5c3" name="af1aab65559971855c31cf65916f8a5c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1aab65559971855c31cf65916f8a5c3">&#9670;&#160;</a></span>accept()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None nsukit.interface.tcp_interface.TCPStreamUItf.accept </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classnsukit_1_1interface_1_1base_1_1_init_param_set.html">InitParamSet</a>&#160;</td>
+          <td class="paramname"><em>param</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>连接 </p>
+<p>根据IP地址端口号建立连接 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">param</td><td>InitParamSet或其子类的对象，需包含stream_ip、stream_tcp_port属性 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html">nsukit.interface.base.UInterface</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00207">207</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a152e348bbeaf9e89da27bf0358b586d3" name="a152e348bbeaf9e89da27bf0358b586d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a152e348bbeaf9e89da27bf0358b586d3">&#9670;&#160;</a></span>alloc_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> int nsukit.interface.tcp_interface.TCPStreamUItf.alloc_buffer </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Union[int, np.ndarray, None] &#160;</td>
+          <td class="paramname"><em>buf</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>申请一片内存 </p>
+<p>根据传入参数实例化内存类，存入字典中 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">length</td><td>申请长度 </td></tr>
+    <tr><td class="paramname">buf</td><td>内存类型 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>申请的内存在字典中的key </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html">nsukit.interface.base.BaseStreamUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00249">249</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a9612642f928bad55ed21ce64248a8586" name="a9612642f928bad55ed21ce64248a8586"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9612642f928bad55ed21ce64248a8586">&#9670;&#160;</a></span>break_stream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None nsukit.interface.tcp_interface.TCPStreamUItf.break_stream </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fd</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>终止本次dma操作 </p>
+<p>停止向内存中写入数据 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>内存标号(key) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>已经写入内存中数据的大小 </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html">nsukit.interface.base.BaseStreamUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00419">419</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ad8c5febbc395908be7c38393d7ef18f7" name="ad8c5febbc395908be7c38393d7ef18f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8c5febbc395908be7c38393d7ef18f7">&#9670;&#160;</a></span>close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None nsukit.interface.tcp_interface.TCPStreamUItf.close </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>关闭连接 </p>
+<p>关闭server以及用于传输数据的子链接 </p><dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html">nsukit.interface.base.UInterface</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00233">233</a> 行定义.</p>
+
+</div>
+</div>
+<a id="afe726029b8bb7db50fc0bb8c718b7a9e" name="afe726029b8bb7db50fc0bb8c718b7a9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe726029b8bb7db50fc0bb8c718b7a9e">&#9670;&#160;</a></span>free_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nsukit.interface.tcp_interface.TCPStreamUItf.free_buffer </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fd</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>释放一片内存 </p>
+<p>使用fpga_free_dma在pcie设备上释放一片内存，该内存为输入的内存 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>要释放的内存地址 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>True/False </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html">nsukit.interface.base.BaseStreamUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00275">275</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a2ae22368ee978ed51485302dba8bbdf9" name="a2ae22368ee978ed51485302dba8bbdf9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ae22368ee978ed51485302dba8bbdf9">&#9670;&#160;</a></span>get_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> np.ndarray nsukit.interface.tcp_interface.TCPStreamUItf.get_buffer </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>获取内存中的值 </p>
+<p>根据内存的key获取内存中存储的数据 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>内存地址 </td></tr>
+    <tr><td class="paramname">length</td><td>获取长度 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>内存中存储的数据 </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html">nsukit.interface.base.BaseStreamUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00288">288</a> 行定义.</p>
+
+</div>
+</div>
+<a id="acbdb723545b9d5d752fbe663639d1f4c" name="acbdb723545b9d5d752fbe663639d1f4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbdb723545b9d5d752fbe663639d1f4c">&#9670;&#160;</a></span>open_recv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None nsukit.interface.tcp_interface.TCPStreamUItf.open_recv </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>chnl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>数据上行开启 </p>
+<p>开启数据流上行 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chnl</td><td></td></tr>
+    <tr><td class="paramname">fd</td><td>内存标号(key) </td></tr>
+    <tr><td class="paramname">length</td><td>要接收数据的长度 </td></tr>
+    <tr><td class="paramname">offset</td><td>内存偏移量 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>True/False </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html">nsukit.interface.base.BaseStreamUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00310">310</a> 行定义.</p>
+
+</div>
+</div>
+<a id="aa961d0ebcef5c00c3c9adae1985fac2b" name="aa961d0ebcef5c00c3c9adae1985fac2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa961d0ebcef5c00c3c9adae1985fac2b">&#9670;&#160;</a></span>open_send()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None nsukit.interface.tcp_interface.TCPStreamUItf.open_send </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>chnl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>数据下行开启 </p>
+<p>开启数据流下行 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chnl</td><td>未使用 </td></tr>
+    <tr><td class="paramname">fd</td><td>内存标号(key) </td></tr>
+    <tr><td class="paramname">length</td><td>要发送数据的长度 </td></tr>
+    <tr><td class="paramname">offset</td><td>内存偏移量 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html">nsukit.interface.base.BaseStreamUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00298">298</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a4f4d8a733ddb9c8aba84a530e8198d59" name="a4f4d8a733ddb9c8aba84a530e8198d59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f4d8a733ddb9c8aba84a530e8198d59">&#9670;&#160;</a></span>set_timeout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None nsukit.interface.tcp_interface.TCPStreamUItf.set_timeout </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &#160;</td>
+          <td class="paramname"><em>s</em> = <code>2</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>设置超时时间 </p>
+<p>根据传入的数值设置TCPServer的超时时间 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>秒 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_u_interface.html">nsukit.interface.base.UInterface</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00224">224</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a4d90067f96df1fafb014c4493f668d80" name="a4d90067f96df1fafb014c4493f668d80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d90067f96df1fafb014c4493f668d80">&#9670;&#160;</a></span>stream_recv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None nsukit.interface.tcp_interface.TCPStreamUItf.stream_recv </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>chnl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Callable &#160;</td>
+          <td class="paramname"><em>stop_event</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &#160;</td>
+          <td class="paramname"><em>time_out</em> = <code>0xFFFFFFFF</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>flag</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>数据流上行 </p>
+<p>封装好的数据流上行函数 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chnl</td><td>未使用 </td></tr>
+    <tr><td class="paramname">fd</td><td>内存标号(key) </td></tr>
+    <tr><td class="paramname">length</td><td>数据长度 </td></tr>
+    <tr><td class="paramname">offset</td><td>内存偏移量 </td></tr>
+    <tr><td class="paramname">stop_event</td><td>外部停止信号 </td></tr>
+    <tr><td class="paramname">time_out</td><td>超时时间 </td></tr>
+    <tr><td class="paramname">flag</td><td>1 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>True/False </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html">nsukit.interface.base.BaseStreamUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00434">434</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ab5a0cf6f43f82a2ccd8e0885bd0f7bc5" name="ab5a0cf6f43f82a2ccd8e0885bd0f7bc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5a0cf6f43f82a2ccd8e0885bd0f7bc5">&#9670;&#160;</a></span>stream_send()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None nsukit.interface.tcp_interface.TCPStreamUItf.stream_send </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>chnl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Callable &#160;</td>
+          <td class="paramname"><em>stop_event</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &#160;</td>
+          <td class="paramname"><em>time_out</em> = <code>0xFFFFFFFF</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>flag</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>数据流下行 </p>
+<p>封装好的数据流下行函数 </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">待办事项:</a></b></dt><dd>TCP下行数据流暂不支持 </dd></dl>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chnl</td><td></td></tr>
+    <tr><td class="paramname">fd</td><td>内存标号(key) </td></tr>
+    <tr><td class="paramname">length</td><td>数据长度 </td></tr>
+    <tr><td class="paramname">offset</td><td>内存偏移量 </td></tr>
+    <tr><td class="paramname">stop_event</td><td>外部停止信号 </td></tr>
+    <tr><td class="paramname">time_out</td><td>超时时间 </td></tr>
+    <tr><td class="paramname">flag</td><td>1 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>True/False </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html">nsukit.interface.base.BaseStreamUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00459">459</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a069cc10fc105c9328c2cab61648eed23" name="a069cc10fc105c9328c2cab61648eed23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a069cc10fc105c9328c2cab61648eed23">&#9670;&#160;</a></span>wait_stream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> int nsukit.interface.tcp_interface.TCPStreamUItf.wait_stream </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &#160;</td>
+          <td class="paramname"><em>timeout</em> = <code>0.</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>等待完成一次dma操作 </p>
+<p>等待所有数据写入内存 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>内存标号(key) </td></tr>
+    <tr><td class="paramname">timeout</td><td>超时时间 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>已经写入内存中数据的大小 </dd></dl>
+
+<p>重载 <a class="el" href="classnsukit_1_1interface_1_1base_1_1_base_stream_u_itf.html">nsukit.interface.base.BaseStreamUItf</a> .</p>
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00398">398</a> 行定义.</p>
+
+</div>
+</div>
+<h2 class="groupheader">类成员变量说明</h2>
+<a id="aaf5bf5e25446867695317ceca9d10996" name="aaf5bf5e25446867695317ceca9d10996"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf5bf5e25446867695317ceca9d10996">&#9670;&#160;</a></span>_local_port</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.interface.tcp_interface.TCPStreamUItf._local_port</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00201">201</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ab1307467471493819e2e0429230ff579" name="ab1307467471493819e2e0429230ff579"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1307467471493819e2e0429230ff579">&#9670;&#160;</a></span>_recv_addr</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.interface.tcp_interface.TCPStreamUItf._recv_addr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00200">200</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a145e3a11dbe29d6a8543f087062b70db" name="a145e3a11dbe29d6a8543f087062b70db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a145e3a11dbe29d6a8543f087062b70db">&#9670;&#160;</a></span>_recv_server</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.interface.tcp_interface.TCPStreamUItf._recv_server</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00199">199</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a04cba7cbf4bb4a72fd98007d62cc78a6" name="a04cba7cbf4bb4a72fd98007d62cc78a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04cba7cbf4bb4a72fd98007d62cc78a6">&#9670;&#160;</a></span>_recv_thread</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.interface.tcp_interface.TCPStreamUItf._recv_thread</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00329">329</a> 行定义.</p>
+
+</div>
+</div>
+<a id="aee2a79eea555411abe9324b35cddb85a" name="aee2a79eea555411abe9324b35cddb85a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee2a79eea555411abe9324b35cddb85a">&#9670;&#160;</a></span>_tcp_server</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.interface.tcp_interface.TCPStreamUItf._tcp_server</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00198">198</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a3e7b932b6fa5f93d0db67246bd673f50" name="a3e7b932b6fa5f93d0db67246bd673f50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e7b932b6fa5f93d0db67246bd673f50">&#9670;&#160;</a></span>_timeout</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nsukit.interface.tcp_interface.TCPStreamUItf._timeout = 15</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00157">157</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a62ce664d2b0171a9e80783f84097bd7f" name="a62ce664d2b0171a9e80783f84097bd7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62ce664d2b0171a9e80783f84097bd7f">&#9670;&#160;</a></span>fd</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.interface.tcp_interface.TCPStreamUItf.fd</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00196">196</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a325eda790c3e85007fd8d2e001fd2315" name="a325eda790c3e85007fd8d2e001fd2315"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a325eda790c3e85007fd8d2e001fd2315">&#9670;&#160;</a></span>memory_index</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.interface.tcp_interface.TCPStreamUItf.memory_index</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00203">203</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ad8befa398efe77bd81c5e16e298c142a" name="ad8befa398efe77bd81c5e16e298c142a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8befa398efe77bd81c5e16e298c142a">&#9670;&#160;</a></span>open_flag</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">nsukit.interface.tcp_interface.TCPStreamUItf.open_flag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a> 第 <a class="el" href="tcp__interface_8py_source.html#l00204">204</a> 行定义.</p>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>D:/Work/PythonProject/NSUKit/nsukit/interface/<a class="el" href="tcp__interface_8py_source.html">tcp_interface.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><b>nsukit</b></li><li class="navelem"><b>interface</b></li><li class="navelem"><b>tcp_interface</b></li><li class="navelem"><a class="el" href="classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html">TCPStreamUItf</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+  </ul>
+</div>
+</body>
+</html>

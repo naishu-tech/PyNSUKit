@@ -1,0 +1,5 @@
+var searchData=
+[
+  ['open_5frecv_0',['open_recv',['../classnsukit_1_1base__kit_1_1_n_s_u_kit.html#ad5d775e40368ae8d3dc0e47525f3377f',1,'nsukit.base_kit.NSUKit.open_recv()'],['../classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_stream_u_itf.html#a09d04b5d609b4ca09f89d13777560082',1,'nsukit.interface.pcie_interface.PCIEStreamUItf.open_recv()'],['../classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#acbdb723545b9d5d752fbe663639d1f4c',1,'nsukit.interface.tcp_interface.TCPStreamUItf.open_recv()']]],
+  ['open_5fsend_1',['open_send',['../classnsukit_1_1base__kit_1_1_n_s_u_kit.html#afd117d87f73a703116ba3eb88a850232',1,'nsukit.base_kit.NSUKit.open_send()'],['../classnsukit_1_1interface_1_1pcie__interface_1_1_p_c_i_e_stream_u_itf.html#a2c7d2836c68926683492884f43aa45d2',1,'nsukit.interface.pcie_interface.PCIEStreamUItf.open_send()'],['../classnsukit_1_1interface_1_1tcp__interface_1_1_t_c_p_stream_u_itf.html#aa961d0ebcef5c00c3c9adae1985fac2b',1,'nsukit.interface.tcp_interface.TCPStreamUItf.open_send()']]]
+];
