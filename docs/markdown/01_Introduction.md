@@ -20,6 +20,6 @@ _本文档为NSUKit的python语言版本的使用文档。_
 
 ---
 ## 应用示例
-1. [使用NSUKit与NSUFDK交互](app/nsu_fdk.md)：提供了对于NSUFDK套件的应用示例，NSUFDK用户可以从此文档开始阅读(待完善)
+1. [使用NSUKit与NRD FDK交互](app/nrd_fdk.md)：提供了对于NSUFDK套件的应用示例，NSUFDK用户可以从此文档开始阅读(待完善)
 
 ---

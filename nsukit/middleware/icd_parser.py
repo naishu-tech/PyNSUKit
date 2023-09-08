@@ -1,4 +1,4 @@
-# Copyright (c) [2023] [Mulan PSL v2]
+# Copyright (c) [2023] [NaiShu]
 # [NSUKit] is licensed under Mulan PSL v2.
 # You can use this software according to the terms and conditions of the Mulan PSL v2.
 # You may obtain a copy of Mulan PSL v2 at:
@@ -16,6 +16,7 @@ import pandas as pd
 
 import nsukit
 from .base import BaseRegMw
+from ..interface.base import InitParamSet
 from ..tools.logging import logging
 
 if TYPE_CHECKING:
@@ -45,7 +46,7 @@ value_python = {
     "int32": int,
     "float": float,
     "double": float,
-    "file_data": str,
+    "file": str,
     "file_length": str
 }
 
@@ -75,7 +76,8 @@ feedback_value_fmt = {
 class ICDRegMw(BaseRegMw):
     """!
     @brief ICD控制
-    @details 用于使用icd进行指令收发
+    @details 用于使用icd进行指令收发，关于ICD的定义可查看 @ref md_ICD文件格式
+    @image html icd_sch_packinfo.png
     """
     fmt_mode = "="  # pack/unpack 大小端模式
 
@@ -88,20 +90,20 @@ class ICDRegMw(BaseRegMw):
         self.sequence = {}
         self.check_recv_head = False
 
-    def config(self, *, icd_path=None, check_recv_head=False, **kwargs):
+    def config(self, param: InitParamSet) -> None:
         """!
         @brief 配置icd路径
         @details 指定icd配置文件的路径，并加载icd
-        @param icd_path: icd文件路径
-        @param check_recv_head: 自动检查指令返回包头默认不检查
-        @param kwargs: 其他参数
+        @param param:
         @return:
         """
-        if icd_path is None:
+        if param.icd_path is None:
             icd_path = nsukit.__file__
             icd_path = icd_path.replace('__init__.py', 'icd.json')
+        else:
+            icd_path = param.icd_path
         self._file_name = icd_path
-        self.check_recv_head = check_recv_head
+        self.check_recv_head = param.check_recv_head
         self.load()
 
     def load(self):
@@ -141,10 +143,10 @@ class ICDRegMw(BaseRegMw):
         """!
         @brief 保存icd
         @details 将当前运行icd参数以另一个名称进行保存
+        @todo ICD的保存怎么在nsukit中引出待开发
         @param path: 文件路径
         @return: True
         """
-        # todo: ICD的保存怎么在nsukit中引出
         path = path + '\\' if path else path
         with open(path + self._file_name.split('.')[0] + '_run.json', 'w', encoding='utf-8') as fp:
             # 按utf-8的格式格式化并写入文件
@@ -162,13 +164,13 @@ class ICDRegMw(BaseRegMw):
         @return: 格式化后的参数值
         """
         param = self.param.get(param_name, None)
-        if param[1] == "file_data" or param[1] == "file_length":
-            return param[2]
+        if param[0] == "file" or param[0] == "file_length":
+            return param[1]
         if param is None:
             logging.warning(msg=f'未找到参数：{param_name}')
-            self.param.update({param_name: [param_name, 'uint32', default]})
+            self.param.update({param_name: ['uint32', default]})
             return fmt_type(default)
-        return fmt_type(param[2])
+        return fmt_type(param[1])
 
     def set_param(self, param_name: str, value, fmt_type=int):
         """!
@@ -179,17 +181,17 @@ class ICDRegMw(BaseRegMw):
         @param fmt_type: 参数值格式化类型
         @return:
         """
-        param = self.param.get(param_name, [param_name, 'uint32', value])
+        param = self.param.get(param_name, ['uint32', value])
         if isinstance(value, str) and value.startswith('0x'):
-            param[2] = int(value, 16)
+            param[1] = int(value, 16)
         elif isinstance(value, str) and value.startswith('0b'):
-            param[2] = int(value, 2)
-        elif param[1] == "file_data" or param[1] == "file_length":
-            param[2] = value
-        elif isinstance(value, str) and '.' in value and param[1] != 'file':
-            param[2] = float(value)
+            param[1] = int(value, 2)
+        elif param[0] == "file" or param[0] == "file_length":
+            param[1] = value
+        elif isinstance(value, str) and '.' in value and param[0] != 'file':
+            param[1] = float(value)
         else:
-            param[2] = value_python[param[1]](value)
+            param[1] = value_python[param[0]](value)
         self.param.update({param_name: param})
 
     def fmt_command(self, command_name, command_type: str = "send", file_name=None) -> bytes:
@@ -219,17 +221,17 @@ class ICDRegMw(BaseRegMw):
                             if register in sequence_data:
                                 value = sequence_data[register][row]
                             else:
-                                value = _reg[2]
+                                value = _reg[1]
                         else:
                             _reg = register
-                            value = _reg[2]
+                            value = _reg[1]
                         value, _fmt = self.__fmt_register(_reg, value)
                         target_bytes.append(struct.pack(self.fmt_mode + _fmt, value))
 
             for register in self.command[command_name][command_type]:
                 if isinstance(register, list):
-                    value, _fmt = self.__fmt_register(register, register[2])
-                    if _fmt == 'file_data':
+                    value, _fmt = self.__fmt_register(register, register[1])
+                    if _fmt == 'file':
                         command.append(value)
                     else:
                         command.append(struct.pack(self.fmt_mode + _fmt, value))
@@ -239,8 +241,8 @@ class ICDRegMw(BaseRegMw):
                     elif register == file_length_flag:
                         command.append(struct.pack(self.fmt_mode + 'I', file_length))
                     elif register in self.param:
-                        value, _fmt = self.__fmt_register(self.param[register], self.param[register][2])
-                        if _fmt == 'file_data':
+                        value, _fmt = self.__fmt_register(self.param[register], self.param[register][1])
+                        if _fmt == 'file':
                             command.append(value)
                         else:
                             command.append(struct.pack(self.fmt_mode + _fmt, value))
@@ -255,28 +257,27 @@ class ICDRegMw(BaseRegMw):
 
         command = b''.join(command)
         assert len(command) >= 16, f'指令({command_name})不正确'
-        # self.kit.interface.send_bytes(command[0: 12] + struct.pack(self.fmt_mode + 'I', len(command)) + command[16:])
-        return command[0: 12] + struct.pack(self.fmt_mode + 'I', len(command)) + command[16:]
+        return b''.join((command[0: 12], struct.pack(self.fmt_mode + 'I', len(command)), command[16:]))
 
     def __fmt_register(self, register: list, value):
         try:
 
-            if register[1] == "file_data":
+            if register[0] == "file":
                 file_data, file_length = self.__get_file(value)
                 return file_data, "file_data"
-            if register[1] == "file_length":
+            if register[0] == "file_length":
                 file_data, file_length = self.__get_file(value)
                 return file_length, 'I'
             if isinstance(value, str) and value.startswith('0x'):
                 value = int(value, 16)
             if isinstance(value, str) and value.startswith('0b'):
                 value = int(value, 2)
-            if len(register) > 3:
+            if len(register) > 2:
                 # 发送时做参数计算
                 x = value
                 value = eval(register[-1])
-            fmt_str = value_type[register[1]]
-            return value_python[register[1]](value), fmt_str
+            fmt_str = value_type[register[0]]
+            return value_python[register[0]](value), fmt_str
         except Exception as e:
             logging.error(msg=f'{e},寄存器({register[0]})有误')
         return 0, 'I'
@@ -291,7 +292,21 @@ class ICDRegMw(BaseRegMw):
             logging.error(msg=f'{e},文件读取失败')
         return b'', 0
 
-    def execute_icd_command(self, parm_name: str) -> list:
+    def execute(self, cname: str) -> None:
+        """!
+        执行指令
+        @param cname: 指令名称
+        @return None
+        """
+        if cname not in self.command:
+            raise ValueError(
+                f'Unsupported command {cname}. The current list of available commands includes: {self.command.keys()}')
+        if self.check_recv_head:
+            return self.send_and_check(cname)
+        else:
+            return self.send_and_not_check(cname)
+
+    def execute_from_pname(self, parm_name: str):
         """!
         @brief 查找指令并执行
         @details 根据参数名查找指令并执行指令
@@ -306,74 +321,55 @@ class ICDRegMw(BaseRegMw):
             for command in self.command:
                 if parm_name in self.command[command]["send"]:
                     command_list.append(command)
+        for cmd in command_list:
+            self.execute(cmd)
 
-        # 发送
-        if self.check_recv_head:
-            return self.send_and_check(command_list)
+    def send_and_check(self, cname):
+        if len(self.command[cname]["recv"]) < 5:
+            # 接收包头, id, 序号, 指令长度, 结果参数
+            raise RuntimeError(f"The {cname} recv register is not define, or recv register<5.")
         else:
-            return self.send_and_not_check(command_list)
-
-    def send_and_check(self, command_list):
-        result_list = []
-        for command in command_list:
-            if len(self.command[command]["recv"]) < 5:
-                # 接收包头, id, 序号, 指令长度, 结果参数
-                raise RuntimeError(f"The {command} recv register is not define, or recv register<5.")
-            else:
-                send_cmd = self.fmt_command(command_name=command, command_type="send")
-                recv_cmd = self.fmt_command(command_name=command, command_type="recv")
-                total_len = len(send_cmd)
-                send_len = self.kit.itf_cmd.send_bytes(send_cmd)
-                if total_len != send_len:
-                    raise RuntimeError(f"{command} total_len is {total_len}, but just send {send_len}!")
-                recv = self.kit.itf_cmd.recv_bytes(struct.unpack("=I", recv_cmd[12:16])[0])
-                self.check_recv(recv_cmd, recv, command)
-                result_list.append(recv)
-
-                # 写入到参数中
-                length = 16
-                for index, data in enumerate(self.command[command]["recv"]):
-                    if index >= 4:
-                        if isinstance(data, list):
-                            length += type_size[data[1]]
-                        elif isinstance(data, str):
-                            data_size = type_size[self.param[data][1]]
-                            data_type = value_type[self.param[data][1]]
-                            self.set_param(data, struct.unpack(f"={data_type}", recv[length:length+data_size])[0])
-                            length += data_size
-        return result_list
-
-    def send_and_not_check(self, command_list):
-        result_list = []
-        for command in command_list:
-            send_cmd = self.fmt_command(command_name=command, command_type="send")
-
-            recv_length = 0
-            for index, data in enumerate(self.command[command]["recv"]):
-                if isinstance(data, list):
-                    recv_length += type_size[data[1]]
-                elif isinstance(data, str):
-                    recv_length += type_size[self.param[data][1]]
-
+            send_cmd = self.fmt_command(command_name=cname, command_type="send")
+            recv_cmd = self.fmt_command(command_name=cname, command_type="recv")
             total_len = len(send_cmd)
             send_len = self.kit.itf_cmd.send_bytes(send_cmd)
             if total_len != send_len:
-                raise RuntimeError(f"{command} total_len is {total_len}, but just send {send_len}!")
+                raise RuntimeError(f"{cname} total_len is {total_len}, but just send {send_len}!")
+            recv = self.kit.itf_cmd.recv_bytes(struct.unpack("=I", recv_cmd[12:16])[0])
+            self.check_recv(recv_cmd, recv, cname)
+            self.enable_param(cname, recv)
 
-            recv = self.kit.itf_cmd.recv_bytes(recv_length)
-            result_list.append(recv)
+    def send_and_not_check(self, cname):
+        send_cmd = self.fmt_command(command_name=cname, command_type="send")
+        recv_length = 0
+        for index, fpack in enumerate(self.command[cname]["recv"]):
+            if isinstance(fpack, list):
+                recv_length += type_size[fpack[0]]
+            elif isinstance(fpack, str):
+                recv_length += type_size[self.param[fpack][0]]
+        total_len = len(send_cmd)
+        send_len = self.kit.itf_cmd.send_bytes(send_cmd)
+        if total_len != send_len:
+            raise RuntimeError(f"{cname} total_len is {total_len}, but just send {send_len}!")
+        recv = self.kit.itf_cmd.recv_bytes(recv_length)
+        self.enable_param(cname, recv)
 
-            length = 0
-            for index, data in enumerate(self.command[command]["recv"]):
-                if isinstance(data, list):
-                    length += type_size[data[1]]
-                elif isinstance(data, str):
-                    data_size = type_size[self.param[data][1]]
-                    data_type = value_type[self.param[data][1]]
-                    self.set_param(data, struct.unpack(f"={data_type}", recv[length:length + data_size])[0])
-                    length += data_size
-
-        return result_list
+    def enable_param(self, cname: str, recv: bytes):
+        """!
+        将接收到的反馈，按recv字段解析并将解析值填入参数
+        @param cname: 指令名
+        @param recv: 接收到的反馈数据
+        @return 无
+        """
+        length = 0
+        for index, fpack in enumerate(self.command[cname]["recv"]):
+            if isinstance(fpack, list):
+                length += type_size[fpack[0]]
+            elif isinstance(fpack, str):
+                data_size = type_size[self.param[fpack][0]]
+                data_type = value_type[self.param[fpack][0]]
+                self.set_param(fpack, struct.unpack(f"={data_type}", recv[length:length + data_size])[0])
+                length += data_size
 
     @staticmethod
     def check_recv(recv_cmd, recv, command):
@@ -391,15 +387,3 @@ class ICDRegMw(BaseRegMw):
             raise RuntimeError(f"The {command} Recv id should be {recv_cmd[4:8].hex()}, recv is {recv[4:8].hex()}")
         if recv_cmd[8:12] != recv[8:12]:
             raise RuntimeError(f"The {command} Recv num should be {recv_cmd[8:12].hex()}, recv is {recv[8:12].hex()}")
-
-    def param_is_command(self, parm_name: str) -> bool:
-        """!
-        @brief 参数是不是指令
-        @details 判断给出的addr是不是icd指令名
-        @param parm_name: 参数名
-        @return True/False
-        """
-        if parm_name in self.command:
-            return True
-        return False
-

@@ -1,4 +1,4 @@
-# Copyright (c) [2023] [Mulan PSL v2]
+# Copyright (c) [2023] [NaiShu]
 # [NSUKit] is licensed under Mulan PSL v2.
 # You can use this software according to the terms and conditions of the Mulan PSL v2.
 # You may obtain a copy of Mulan PSL v2 at:
@@ -9,17 +9,17 @@
 # See the Mulan PSL v2 for more details.
 
 import enum
-from typing import TYPE_CHECKING, Any
+import collections.abc as abc
+from typing import TYPE_CHECKING, Any, Union, Iterable, Callable
 
 import numpy as np
 
 from .middleware.icd_parser import ICDRegMw
-from .middleware.virtual_chnl import VirtualChnlMw
-
-if TYPE_CHECKING:
-    from .interface import InitParamSet
-    from .interface.base import UInterfaceMeta, UInterface, BaseChnlUItf, BaseCmdUItf
-    from .middleware.base import UMiddlewareMeta, BaseRegMw, BaseChnlMw
+from .middleware.virtual_chnl import VirtualStreamMw
+from .middleware.base import UMiddlewareMeta, BaseRegMw, BaseStreamMw
+from .interface import InitParamSet
+from .interface.base import UInterfaceMeta, UInterface, BaseStreamUItf, BaseCmdUItf
+from .tools.check_func import check_reg_schema
 
 
 class BulkMode(str, enum.Enum):
@@ -45,14 +45,13 @@ class NSUKit(metaclass=KitMeta):
     @brief 针对板卡级交互的开发接口
     @details 采用面向对象的思想，对每个板卡可以实例化出一个本类的对象，对单张板卡的所有操作都可以通过本类实例化对象的方法实现
     """
-    CmdMiddleware: "UMiddlewareMeta" = ICDRegMw
-    ChnlMiddleware: "UMiddlewareMeta" = VirtualChnlMw
+    CmdMiddleware: UMiddlewareMeta = ICDRegMw
+    ChnlMiddleware: UMiddlewareMeta = VirtualStreamMw
 
     def __init__(self,
-                 cmd_itf_class: "UInterfaceMeta" = None,
-                 stream_itf_class: "UInterfaceMeta" = None,
-                 cmd_param: "InitParamSet" = None,
-                 stream_param: "InitParamSet" = None):
+                 cmd_itf_class: UInterfaceMeta = None,
+                 stream_itf_class: UInterfaceMeta = None,
+                 link_param: InitParamSet = None):
         """!
         @brief 初始化接口
         @details 根据传入的指令接口和数据流接口进行初始化
@@ -72,10 +71,11 @@ class NSUKit(metaclass=KitMeta):
         """
         if cmd_itf_class is None or stream_itf_class is None:
             raise RuntimeError(f'Please pass in a subclass of the {UInterface}')
-        self.itf_cmd: "BaseCmdUItf" = cmd_itf_class()
-        self.itf_chnl: "BaseChnlUItf" = stream_itf_class()
-        self.mw_cmd: "BaseRegMw" = self.CmdMiddleware(self)
-        self.mw_chnl: "BaseChnlMw" = self.ChnlMiddleware(self)
+        self.itf_cmd: BaseCmdUItf = cmd_itf_class()
+        self.itf_stream: BaseStreamUItf = stream_itf_class()
+        self.mw_cmd: BaseRegMw = self.CmdMiddleware(self)
+        self.mw_stream: BaseStreamMw = self.ChnlMiddleware(self)
+        self.link_param: InitParamSet = link_param
 
     def link_cmd(self) -> None:
         """!
@@ -83,9 +83,10 @@ class NSUKit(metaclass=KitMeta):
         @brief 建立cmd连接
         @details 根据初始化时传入的协议类参数，对板卡发起连接，会调用协议类的accept方法
         @anchor NSUKit_link_cmd
-        @return: 枚举值NSUKitStatusT中表示的状态
+        @return: None
         """
-        ...
+        self.itf_cmd.accept(self.link_param)
+        self.mw_cmd.config(self.link_param)
 
     def link_stream(self) -> None:
         """!
@@ -95,7 +96,8 @@ class NSUKit(metaclass=KitMeta):
         @anchor NSUKit_link_stream
         @return:
         """
-        ...
+        self.itf_stream.accept(self.link_param)
+        self.mw_stream.config(self.link_param)
 
     def unlink_cmd(self):
         """!
@@ -103,7 +105,7 @@ class NSUKit(metaclass=KitMeta):
         @details 断开当前cmd协议类的链接
         @return:
         """
-        ...
+        self.itf_cmd.close()
 
     def unlink_stream(self):
         """!
@@ -111,9 +113,9 @@ class NSUKit(metaclass=KitMeta):
         @details 断开当前stream协议类的链接
         @return:
         """
-        ...
+        self.itf_stream.close()
 
-    def write(self, addr: int, value: bytes) -> None:
+    def write(self, addr: Union[int, Iterable[int]], value: Union[bytes, Iterable[bytes]]) -> None:
         """!
         @brief 写寄存器
         @details 按照输入的地址、值进行写寄存器
@@ -137,9 +139,13 @@ class NSUKit(metaclass=KitMeta):
         >>>     print(f'Failed')
         @endcode
         """
-        ...
+        check_reg_schema(addr, value)
+        if isinstance(addr, int) and isinstance(value, bytes):
+            self.itf_cmd.write(addr, value)
+        elif isinstance(addr, abc.Iterable) and isinstance(value, abc.Iterable):
+            self.itf_cmd.multi_write(addr, value)
 
-    def read(self, addr: int) -> bytes:
+    def read(self, addr: Union[int, Iterable[int]]) -> Union[bytes, Iterable[bytes]]:
         """!
         @brief 读寄存器
         @details 按照输入的地址进行读寄存器
@@ -155,9 +161,13 @@ class NSUKit(metaclass=KitMeta):
         >>> len(value) == 4
         @endcode
         """
-        ...
+        check_reg_schema(addr)
+        if isinstance(addr, int):
+            return self.itf_cmd.read(addr)
+        elif isinstance(addr, abc.Iterable):
+            return self.itf_cmd.multi_read(addr)
 
-    def bulk_write(self, base: int, value: bytes, mode: BulkMode = BulkMode.INCREMENT) -> None:
+    def bulk_write(self, base: int, value: bytes, mode: Union[str, BulkMode] = BulkMode.INCREMENT) -> None:
         """!
 
         @brief 片写寄存器
@@ -181,9 +191,14 @@ class NSUKit(metaclass=KitMeta):
         >>> kit.bulk_write(0x10, b'\x00\x01'*51, mode='inc')
         @endcode
         """
-        ...
+        check_reg_schema(addr=base)
+        e_mode = BulkMode(mode)
+        if e_mode is BulkMode.INCREMENT:
+            self.itf_cmd.increment_write(base, value)
+        elif e_mode is BulkMode.LOOP:
+            self.itf_cmd.loop_write(base, value)
 
-    def bulk_read(self, base: int, length: int, mode: BulkMode = BulkMode.INCREMENT) -> bytes:
+    def bulk_read(self, base: int, length: int, mode: Union[str, BulkMode] = BulkMode.INCREMENT) -> bytes:
         """!
         @brief 片读寄存器
         @details 按照输入的基地址和指定模式，从寄存器中读出数据
@@ -201,7 +216,12 @@ class NSUKit(metaclass=KitMeta):
         >>> len(value) == 51
         @endcode
         """
-        ...
+        check_reg_schema(addr=base)
+        e_mode = BulkMode(mode)
+        if e_mode is BulkMode.INCREMENT:
+            return self.itf_cmd.increment_read(base, length)
+        elif e_mode is BulkMode.LOOP:
+            return self.itf_cmd.loop_read(base, length)
 
     def set_param(self, name: str, value: Any) -> None:
         """!
@@ -222,7 +242,7 @@ class NSUKit(metaclass=KitMeta):
         >>> kit.execute('波形预置')
         @endcode
         """
-        ...
+        self.mw_cmd.set_param(name, value)
 
     def get_param(self, name: str) -> Any:
         """!
@@ -247,7 +267,7 @@ class NSUKit(metaclass=KitMeta):
         >>> core_temp = kit.get_param('核心温度')
         @endcode
         """
-        ...
+        return self.mw_cmd.get_param(name)
 
     def execute(self, cmd: str) -> None:
         """!
@@ -265,20 +285,20 @@ class NSUKit(metaclass=KitMeta):
         >>> kit.execute('RF配置')
         @endcode
         """
-        ...
+        self.mw_cmd.execute(cmd)
 
-    def alloc_buffer(self, length, buf: int = None) -> int:
+    def alloc_buffer(self, length: int, buf: int = None) -> int:
         """!
         @brief 申请一块内存
         @details 根据传入参数开辟一块内存
         @anchor NSUKit_alloc_buffer
         @param length: 要申请的内存大小
         @param buf: 外部指定的内存指针
-        @return: 经过nsukit修饰过后可用于数据流传输的 **内存标识符fd**
+        @return 经过nsukit修饰过后可用于数据流传输的 **内存标识符fd**
         """
-        return self.itf_chnl.alloc_buffer(length, buf)
+        return self.itf_stream.alloc_buffer(length, buf)
 
-    def free_buffer(self, fd) -> None:
+    def free_buffer(self, fd: int) -> None:
         """!
         @brief 释放内存
         @details 根据 **内存标识符** 释放内存
@@ -286,9 +306,9 @@ class NSUKit(metaclass=KitMeta):
         @param fd: 内存标识符
         @return: None
         """
-        return self.itf_chnl.free_buffer(fd)
+        return self.itf_stream.free_buffer(fd)
 
-    def get_buffer(self, fd, length) -> np.ndarray:
+    def get_buffer(self, fd: int, length: int) -> np.ndarray:
         """!
         @brief 获取内存中的值
         @details 根据内存标识符获取对应内存中存储的数据
@@ -297,9 +317,9 @@ class NSUKit(metaclass=KitMeta):
         @param length: 要获取的数据长度
         @return: 内存中存储的数据，以numpy.ndarray的形式返回
         """
-        return self.itf_chnl.get_buffer(fd, length)
+        return self.itf_stream.get_buffer(fd, length)
 
-    def stream_recv(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+    def stream_recv(self, chnl: int, fd: int, length: int, offset: int = 0, stop_event: Callable = None, flag: int = 1):
         """!
         @brief 封装好的数据流上行函数
         @details 预封装好的上行函数，将数据写入内存中
@@ -312,9 +332,9 @@ class NSUKit(metaclass=KitMeta):
         @param flag:
         @return: True/False
         """
-        return self.itf_chnl.stream_recv(chnl, fd, length, offset, stop_event, flag=flag)
+        return self.mw_stream.stream_recv(chnl, fd, length, offset, stop_event, flag=flag)
 
-    def stream_send(self, chnl, fd, length, offset=0, stop_event=None, flag=1):
+    def stream_send(self, chnl: int, fd: int, length: int, offset: int = 0, stop_event: Callable = None, flag: int = 1):
         """!
         @brief 封装好的数据流下行函数
         @details 预封装好的下行函数
@@ -327,7 +347,7 @@ class NSUKit(metaclass=KitMeta):
         @param flag:
         @return: True/False
         """
-        return self.itf_chnl.stream_send(chnl, fd, length, offset, stop_event, flag)
+        return self.mw_stream.stream_send(chnl, fd, length, offset, stop_event, flag)
 
     def open_send(self, chnl, fd, length, offset=0):
         """!
@@ -340,7 +360,7 @@ class NSUKit(metaclass=KitMeta):
         @param offset 内存偏移量
         @return
         """
-        return self.itf_chnl.send_open(chnl, fd, length, offset)
+        return self.mw_stream.open_send(chnl, fd, length, offset)
 
     def open_recv(self, chnl, fd, length, offset=0):
         """!
@@ -353,7 +373,7 @@ class NSUKit(metaclass=KitMeta):
         @param offset 内存偏移量
         @return True/False
         """
-        return self.itf_chnl.recv_open(chnl, fd, length, offset)
+        return self.mw_stream.open_recv(chnl, fd, length, offset)
 
     def wait_stream(self, fd, timeout: float = 0):
         """!
@@ -364,7 +384,7 @@ class NSUKit(metaclass=KitMeta):
         @param timeout 超时时间
         @return 已经写入内存中数据的大小
         """
-        return self.itf_chnl.wait_dma(fd, timeout)
+        return self.mw_stream.wait_stream(fd, timeout)
 
     def break_stream(self, fd):
         """!
@@ -374,4 +394,4 @@ class NSUKit(metaclass=KitMeta):
         @param fd 内存标号(key)
         @return 已经写入内存中数据的大小
         """
-        return self.itf_chnl.break_dma(fd)
+        return self.mw_stream.break_stream(fd)

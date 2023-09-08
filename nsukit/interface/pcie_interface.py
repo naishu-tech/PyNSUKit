@@ -1,4 +1,4 @@
-# Copyright (c) [2023] [Mulan PSL v2]
+# Copyright (c) [2023] [NaiShu]
 # [NSUKit] is licensed under Mulan PSL v2.
 # You can use this software according to the terms and conditions of the Mulan PSL v2.
 # You may obtain a copy of Mulan PSL v2 at:
@@ -7,13 +7,14 @@
 # EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
 # MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
 # See the Mulan PSL v2 for more details.
-
+import struct
 import time
 from threading import Lock, Event
+from typing import Callable
 
 import numpy as np
 
-from .base import BaseCmdUItf, BaseChnlUItf, RegOperationMixin
+from .base import BaseCmdUItf, BaseStreamUItf, RegOperationMixin, InitParamSet
 from ..tools.xdma import Xdma
 
 
@@ -27,15 +28,14 @@ class PCIECmdUItf(BaseCmdUItf):
     _once_send_or_recv_timeout = 1  # _break_status状态改变间隔应超过该值
     _timeout = 30
     _block_size = 4096
-    _break_status = bool
     ADDR_SENT_DOWN = 48 * (1024 ** 2) // 4 - 1
-    lock = Lock()
     irq_num = 15
 
     def __init__(self):
         self.board = 0
-        self.xdma = Xdma()
+        self.xdma: Xdma = Xdma()
         self.timeout = self._timeout
+        self.once_timeout = self.timeout
         self.sent_base = 0
         self.recv_base = 0
         self.sent_ptr = 0
@@ -43,58 +43,40 @@ class PCIECmdUItf(BaseCmdUItf):
         self.irq_base = 0
         self.sent_down_base = 0
         self.recv_event = Event()
-        self.open_flag = False
+        self.open_flag = True
 
-    def open_board(self):
+    def accept(self, param: InitParamSet) -> None:
         """!
-        @brief 开启板卡
-        @details 使用fpga_open开启板卡
-        @return
+        @brief 初始化pcie指令接口
+        @details 初始化pcie指令接口，获取发送基地址，返回基地址
+        @param param:
+            - InitParamSet或其子类的对象，需包含cmd_board、cmd_sent_base、cmd_recv_base、cmd_irq_base、cmd_sent_down_base属性
+            - board: 板卡号
+            - sent_base: 发送基地址
+            - recv_base: 返回基地址
+            - irq_base: 中断地址
+            - sent_down_base: 写入完成标识地址
+        @return None
         """
-        if not self.open_flag:
-            self.xdma.open_board(self.board)
-            self.open_flag = True
+        self.board = param.cmd_board
+        self.sent_base = param.cmd_sent_base
+        self.recv_base = param.cmd_recv_base
+        self.irq_base = param.cmd_irq_base
+        self.sent_down_base = param.cmd_sent_down_base
+        self.xdma.open_board(self.board)
+        self.open_flag = True
 
-    def close_board(self):
+    def close(self) -> None:
         """!
-        @brief 关闭板卡
-        @details 使用fpga_close关闭板卡
-        @return
+        @brief 关闭连接
+        @details 关闭板卡，释放锁
+        @return None
         """
         if self.open_flag:
             self.xdma.close_board(self.board)
             self.open_flag = False
 
-    def accept(self, board, sent_base, recv_base, irq_base, sent_down_base, **kwargs):
-        """!
-        @brief 初始化pcie指令接口
-        @details 初始化pcie指令接口，获取发送基地址，返回基地址
-        @param board: 板卡号
-        @param sent_base: 发送基地址
-        @param recv_base: 返回基地址
-        @param irq_base: 中断地址
-        @param sent_down_base: 写入完成标识地址
-        @param kwargs: 其他参数
-        @return
-        """
-        self.board = board
-        self.sent_base = sent_base
-        self.recv_base = recv_base
-        self.irq_base = irq_base
-        self.sent_down_base = sent_down_base
-        self.open_board()
-
-    def close(self):
-        """!
-        @brief 关闭连接
-        @details 关闭板卡，释放锁
-        @return
-        """
-        self.close_board()
-        if self.lock.locked():
-            self.lock.release()
-
-    def set_timeout(self, s: int):
+    def set_timeout(self, s: float) -> None:
         """!
         @brief 设置超时时间
         @details 设置pcie指令的超时时间
@@ -111,65 +93,82 @@ class PCIECmdUItf(BaseCmdUItf):
         @param value 要写入的值
         @return True/False
         """
-        if self.open_flag:
-            return self.xdma.alite_write(addr, value, self.board)
+        if not self.open_flag:
+            raise RuntimeError(f'{self.__class__.__name__}.{self.write.__name__}: '
+                               f'Not connected to the board {self.board}.')
+        if not self.xdma.alite_write(addr, value, self.board):
+            self.open_flag = False
+            raise RuntimeError(f'{self.__class__.__name__}.{self.write.__name__}: '
+                               f'Failed to write to register {hex(addr)} on board {self.board}')
 
-    def read(self, addr: int):
+    def read(self, addr: int) -> bytes:
         """!
         @brief pcie读寄存器
         @details 按照输入的地址，使用fpga_rd_lite查询该地址的值并返回
         @param addr 寄存器地址
         @return 该寄存的值
         """
-        return self.xdma.alite_read(addr, self.board)[1]
+        if not self.open_flag:
+            raise RuntimeError(f'{self.__class__.__name__}.{self.read.__name__}: '
+                               f'Not connected to the board {self.board}.')
+        res = self.xdma.alite_read(addr, self.board)
+        if not res[0]:
+            raise RuntimeError(f'{self.__class__.__name__}.{self.read.__name__}: '
+                               f'Failed to read from register {hex(addr)} on board {self.board}')
+        return struct.pack('=I', res[1])
 
-    def send_bytes(self, data: bytes):
+    def send_bytes(self, data: bytes) -> int:
         """!
-        @brief icd指令使用pcie发送
-        @details 只有在使用icd_parser发送指令时会用
+        @brief      icd指令使用pcie发送
+        @details    只有在使用icd_parser发送指令时会用
         @param data 要发送的数据
-        @return 已发送的数据长度
+        @return     已发送的数据长度
         """
+        if not self.open_flag:
+            raise RuntimeError(f'{self.__class__.__name__}.{self.send_bytes.__name__}: '
+                               f'Not connected to the board {self.board}.')
         try:
+            self.once_timeout = self.timeout
             self.sent_ptr = 0
             total_length, sent_length = len(data), 0
             st = time.time()
             while total_length != sent_length:
-                assert not self._break_status(), "Interrupt command reception"
                 sent_length += self._send(data[sent_length: self._block_size + sent_length])
-                assert time.time() - st < self.timeout, f"send timeout, sent {sent_length}"
-            self.sent_down = True
-            self.timeout -= (time.time() - st)
+                assert time.time() - st < self.once_timeout, f"send timeout, sent {sent_length}"
+            self._sent_down = True
+            self.once_timeout -= (time.time() - st)
             return sent_length
         except AssertionError as e:
-            assert 0, f"[toaxi] {e}"
+            assert 0, f"[ioaxi] {e}"
 
-    def recv_bytes(self, bufsize: int):
+    def recv_bytes(self, size: int) -> bytes:
         """!
         @brief icd指令使用pcie接收
         @details 只有在使用icd_parser接收指令时会用
-        @param bufsize 要接收数据的长度
+        @param size 要接收数据的长度
         @return 接收到的数据
         """
+        if not self.open_flag:
+            raise RuntimeError(f'{self.__class__.__name__}.{self.recv_bytes.__name__}: '
+                               f'Not connected to the board {self.board}.')
         try:
             self.recv_ptr = 0
-            if bufsize != 0:
+            if size != 0:
                 if self.wait_irq:
                     self.per_recv()
                 else:
                     self.per_recv_polled()
             block_size, bytes_data, bytes_data_length = self._block_size, b"", 0
             st = time.time()
-            while bytes_data_length != bufsize:
-                assert not self._break_status(), "Interrupt command reception"
-                if not (bufsize - bytes_data_length) // self._block_size:
-                    block_size = (bufsize - bytes_data_length) % self._block_size
+            while bytes_data_length != size:
+                if not (size - bytes_data_length) // self._block_size:
+                    block_size = (size - bytes_data_length) % self._block_size
                 cur_recv_data = self._recv(block_size)
                 bytes_data += cur_recv_data
                 bytes_data_length += len(cur_recv_data)
-                assert time.time() - st < self.timeout, f"recv timeout, rcvd {bytes_data_length}"
+                assert time.time() - st < self.once_timeout, f"recv timeout, rcvd {bytes_data_length}"
         except (AssertionError, TimeoutError) as e:
-            assert 0, f"[toaxi] {e}"
+            assert 0, f"[ioaxi] {e}"
         return bytes_data
 
     def _send(self, data):
@@ -202,11 +201,11 @@ class PCIECmdUItf(BaseCmdUItf):
         return res.tobytes()[:size]
 
     @property
-    def sent_down(self):
+    def _sent_down(self):
         return self.xdma.alite_read(self.sent_base + self.ADDR_SENT_DOWN * 4, self.board)[1]
 
-    @sent_down.setter
-    def sent_down(self, value):
+    @_sent_down.setter
+    def _sent_down(self, value):
         """!
         @brief 标识
         @details 数据写入完成标识
@@ -234,38 +233,30 @@ class PCIECmdUItf(BaseCmdUItf):
         @param callback 回调函数
         @return
         """
-        res = self.xdma.wait_irq(self.irq_num, self.board, self.timeout * 1000)
+        res = self.xdma.wait_irq(self.irq_num, self.board, self.once_timeout * 1000)
         if not res:
-            raise TimeoutError(f'toaxi timeout')
+            raise TimeoutError(f'ioaxi timeout')
         if callable(callback):
             callback()
         self.reset_irq()
         self.recv_event.set()
 
     def per_recv_polled(self):
-        timeout = self.timeout
+        timeout = self.once_timeout
         while True:
             if self.xdma.alite_read(self.irq_base, self.board)[1] != 0x8000:
-                time.sleep(1)
+                time.sleep(0.005)
                 if timeout > 0:
                     timeout -= 1
                 else:
-                    raise TimeoutError(f'toaxi timeout')
+                    raise TimeoutError(f'ioaxi timeout')
             else:
                 self.reset_irq()
                 self.recv_event.set()
                 break
 
-    def __enter__(self):
-        self.lock.acquire(timeout=self.timeout)
-        return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        if self.open_flag:
-            self.close()
-
-
-class PCIEChnlUItf(BaseChnlUItf, RegOperationMixin):
+class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
     """!
     @brief PCIE数据流接口
     @details 包括连接/断开、内存操作、接收/等待/终止等功能
@@ -285,28 +276,20 @@ class PCIEChnlUItf(BaseChnlUItf, RegOperationMixin):
         if self.open_flag:
             return self.xdma.alite_read(addr, self.board)[1]
 
-    def accept(self, board, **kwargs):
+    def accept(self, param: InitParamSet) -> None:
         """!
         @brief 连接
         @details 连接对应板卡
-        @param board 板卡逻辑id
-        @param kwargs 其他参数
+        @param param InitParamSet或其子类的对象，需包含stream_board属性
         @return
         """
-        if not self.open_flag:
-            self.board = board
-
-    def open_board(self):
-        """!
-        @brief 开启板卡
-        @details 使用fpga_open开启对应pcie设备
-        @return
-        """
-        if not self.open_flag and self.board != None:
+        if not self.open_flag and self.board is not None:
             self.xdma.open_board(self.board)
             self.open_flag = True
+        if not self.open_flag:
+            self.board = param.stream_board
 
-    def close_board(self):
+    def close(self) -> None:
         """!
         @brief 关闭板卡
         @details 使用fpga_close关闭对应pcie设备
@@ -327,7 +310,7 @@ class PCIEChnlUItf(BaseChnlUItf, RegOperationMixin):
         if self.open_flag:
             return self.xdma.alloc_buffer(self.board, length, buf)
 
-    def free_buffer(self, fd):
+    def free_buffer(self, fd: int):
         """!
         @brief 释放一片内存
         @details 使用fpga_free_dma在pcie设备上释放一片内存，该内存为输入的内存
@@ -336,7 +319,7 @@ class PCIEChnlUItf(BaseChnlUItf, RegOperationMixin):
         """
         return self.xdma.free_buffer(fd)
 
-    def get_buffer(self, fd, length):
+    def get_buffer(self, fd: int, length: int) -> np.ndarray:
         """!
         @brief 获取内存中的值
         @details 使用fpga_get_dma_buffer在pcie设备上获取一片内存的数据
@@ -346,7 +329,7 @@ class PCIEChnlUItf(BaseChnlUItf, RegOperationMixin):
         """
         return self.xdma.get_buffer(fd, length)
 
-    def send_open(self, chnl, fd, length, offset=0):
+    def open_send(self, chnl: int, fd: int, length: int, offset: int = 0) -> None:
         """!
         @brief 数据下行开启
         @details 开启数据流下行
@@ -359,7 +342,7 @@ class PCIEChnlUItf(BaseChnlUItf, RegOperationMixin):
         if self.open_flag:
             return self.xdma.fpga_send(self.board, chnl, fd, length, offset=offset)
 
-    def recv_open(self, chnl, fd, length, offset=0):
+    def open_recv(self, chnl: int, fd: int, length: int, offset: int = 0) -> None:
         """!
         @brief 数据上行开启
         @details 开启数据流上行
@@ -372,7 +355,7 @@ class PCIEChnlUItf(BaseChnlUItf, RegOperationMixin):
         if self.open_flag:
             return self.xdma.fpga_recv(self.board, chnl, fd, length, offset=offset)
 
-    def wait_dma(self, fd, timeout: int = 0):
+    def wait_stream(self, fd: int, timeout: float = 0.) -> int:
         """!
         @brief 等待完成一次dma操作
         @details 等待所有数据写入内存
@@ -380,18 +363,19 @@ class PCIEChnlUItf(BaseChnlUItf, RegOperationMixin):
         @param timeout 超时时间
         @return 已经写入内存中数据的大小
         """
-        return self.xdma.wait_dma(fd, timeout)
+        return self.xdma.wait_dma(fd, int(timeout*1000))
 
-    def break_dma(self, fd):
+    def break_stream(self, fd):
         """!
         @brief 终止本次dma操作
         @details 停止向内存中写入数据
         @param fd 内存地址
         @return 已经写入内存中数据的大小
         """
-        return self.xdma.break_dma(fd=fd)
+        self.xdma.break_dma(fd=fd)
 
-    def stream_recv(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
+    def stream_recv(self, chnl: int, fd: int, length: int, offset: int = 0,
+                    stop_event: Callable = None, time_out: float = 0xFFFFFFFF, flag: int = 1) -> None:
         """!
         @brief 数据流上行
         @details 封装好的数据流上行函数
@@ -402,12 +386,13 @@ class PCIEChnlUItf(BaseChnlUItf, RegOperationMixin):
         @param stop_event 外部停止信号
         @param time_out 超时时间
         @param flag 1
-        @return True/False
+        @return
         """
         if self.open_flag:
             return self.xdma.stream_read(self.board, chnl, fd, length, offset, stop_event, time_out, flag)
 
-    def stream_send(self, chnl, fd, length, offset=0, stop_event=None, time_out=5, flag=1):
+    def stream_send(self, chnl: int, fd: int, length: int, offset: int = 0,
+                    stop_event: Callable = None, time_out: float = 0xFFFFFFFF, flag: int = 1) -> None:
         """!
         @brief 数据流下行
         @details 封装好的数据流下行函数
@@ -418,11 +403,7 @@ class PCIEChnlUItf(BaseChnlUItf, RegOperationMixin):
         @param stop_event 外部停止信号
         @param time_out 超时时间
         @param flag 1
-        @return True/False
+        @return
         """
         if self.open_flag:
             return self.xdma.stream_write(self.board, chnl, fd, length, offset, stop_event, time_out, flag)
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        if self.open_flag:
-            self.close_board()

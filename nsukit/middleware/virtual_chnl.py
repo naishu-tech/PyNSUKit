@@ -1,4 +1,4 @@
-# Copyright (c) [2023] [Mulan PSL v2]
+# Copyright (c) [2023] [NaiShu]
 # [NSUKit] is licensed under Mulan PSL v2.
 # You can use this software according to the terms and conditions of the Mulan PSL v2.
 # You may obtain a copy of Mulan PSL v2 at:
@@ -7,6 +7,9 @@
 # EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
 # MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
 # See the Mulan PSL v2 for more details.
+"""!
+@brief ...
+"""
 
 import threading
 import time
@@ -16,36 +19,35 @@ from queue import PriorityQueue, Empty
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Union, Optional, Dict
 
-from .base import BaseChnlMw
-from ..interface.base import RegOperationMixin
+from .base import BaseStreamMw
+from ..interface.base import RegOperationMixin, InitParamSet
 from ..tools.logging import logging
 from ..tools.xdma.xdma import FAIL
 
 if TYPE_CHECKING:
     from .. import NSUKit
-    from ..interface.base import BaseChnlUItf
+    from ..interface.base import BaseStreamUItf
 
 
 def dispenser(func):
     """!
     装饰器，让被装饰的函数根据stream_mode将调用分到指定的实现上
-    @param func:
+    @param func: 被装饰的UMiddleware方法
     @return:
     """
-
     @wraps(func)
     def wrapper(*args, **kwargs):
-        self: "VirtualChnlMw" = args[0]
+        self: "VirtualStreamMw" = args[0]
         if self.stream_mode == self.StreamMode.VIRTUAL:
             _func = func
         else:
-            _func = getattr(self.kit.itf_chnl, func.__name__)
+            _func = getattr(self.kit.itf_stream, func.__name__)
         return _func(*args, **kwargs)
 
     return wrapper
 
 
-class VirtualChnlMw(BaseChnlMw):
+class VirtualStreamMw(BaseStreamMw):
     """!
     按一定规则，从一个物理通道虚拟出若干个虚拟数据通道进行上行
     """
@@ -68,8 +70,8 @@ class VirtualChnlMw(BaseChnlMw):
             return self.priority < other.priority
 
     def __init__(self, kit: "NSUKit"):
-        super(VirtualChnlMw, self).__init__(kit)
-        self.itf_chnl: "Union[BaseChnlUItf, RegOperationMixin, None]" = None
+        super(VirtualStreamMw, self).__init__(kit)
+        self.itf_chnl: "Union[BaseStreamUItf, RegOperationMixin, None]" = None
         self.stream_mode = self.StreamMode.REAL
         self.running_lock = threading.Lock()
         self.cancel_event = threading.Event()
@@ -80,14 +82,13 @@ class VirtualChnlMw(BaseChnlMw):
         self.priority_chnl: "Dict[int, int]" = {ch: 0 for ch in range(self.VCHNL_NUM)}
         self.priority_events: "Dict[int, threading.Event]" = {ch: threading.Event() for ch in range(self.VCHNL_NUM)}
 
-    def config(self, *, stream_mode='real', **kwargs):
+    def config(self, param: InitParamSet) -> None:
         """!
         配置中间件所使用的数据流模式，是直接转发给对应的Chnl
-        @param stream_mode: 可选
-        @param kwargs:
+        @param param:
         @return:
         """
-        self.stream_mode = self.StreamMode(stream_mode)
+        self.stream_mode = self.StreamMode(param.stream_mode)
         self.cancel_event.set()
         if not self.canceled.wait(timeout=10):
             raise RuntimeError(f'stream_mode switch failed')
@@ -97,30 +98,38 @@ class VirtualChnlMw(BaseChnlMw):
         if self.stream_mode == self.StreamMode.REAL:
             ...
         elif self.stream_mode == self.StreamMode.VIRTUAL:
-            if not isinstance(self.kit.itf_chnl, RegOperationMixin):
-                raise ValueError(f'When {stream_mode=} is virtual, '
+            if not isinstance(self.kit.itf_stream, RegOperationMixin):
+                raise ValueError(f'When {param.stream_mode=} is virtual, '
                                  f'{self.kit.__class__}.itf_chnl should be a subclass of {RegOperationMixin}')
             self.priority_thread = threading.Thread(target=self.priority_wheel, name=f'virtual_chnl', daemon=True)
             self.priority_thread.start()
 
     @dispenser
-    def alloc_buffer(self, length, buf: int = None):
-        return self.kit.itf_chnl.alloc_buffer(length, buf)
+    def open_recv(self, chnl, fd, length, offset=0):
+        stream_mode = self.stream_mode
+        raise RuntimeError(f'This interface cannot be called when the {stream_mode=}')
 
     @dispenser
-    def free_buffer(self, fd):
-        return self.kit.itf_chnl.free_buffer(fd)
+    def wait_stream(self, fd, timeout: float = 0):
+        stream_mode = self.stream_mode
+        raise RuntimeError(f'This interface cannot be called when the {stream_mode=}')
 
     @dispenser
-    def get_buffer(self, fd, length):
-        return self.kit.itf_chnl.get_buffer(fd, length)
+    def break_stream(self, fd: int):
+        stream_mode = self.stream_mode
+        raise RuntimeError(f'This interface cannot be called when the {stream_mode=}')
+
+    @dispenser
+    def open_send(self, chnl, fd, length, offset=0):
+        stream_mode = self.stream_mode
+        raise RuntimeError(f'This interface cannot be called when the {stream_mode=}')
 
     def priority_wheel(self):
         self.canceled.clear()
         while not self.cancel_event.is_set():
             try:
                 with self.running_lock:
-                    entry: "VirtualChnlMw.ChnlEntry" = self.priority_queue.get(timeout=1)
+                    entry: "VirtualStreamMw.ChnlEntry" = self.priority_queue.get(timeout=1)
             except Empty as e:
                 continue
             for ch in range(self.VCHNL_NUM):
@@ -143,7 +152,7 @@ class VirtualChnlMw(BaseChnlMw):
         self.priority_chnl[chnl] += 1
 
     @dispenser
-    def stream_read(self, chnl, fd, length, offset=0, stop_event=None, flag=1, timeout=1) -> bool:
+    def stream_recv(self, chnl, fd, length, offset=0, stop_event=None, flag=1, timeout=1) -> bool:
         """!
         使用虚拟通道上行，通道会遵循
         @param chnl:
@@ -164,9 +173,9 @@ class VirtualChnlMw(BaseChnlMw):
         self._priority_lock(chnl, stop_event, timeout)
 
         with self.running_lock:
-            self.itf_chnl = itf = self.kit.itf_chnl
+            self.itf_chnl = itf = self.kit.itf_stream
             try:
-                flag = itf.recv_open(self.R2V_CHNL, fd, length=length, offset=offset)
+                flag = itf.open_recv(self.R2V_CHNL, fd, length=length, offset=offset)
                 if flag == FAIL:
                     logging.error(msg=f'VChnl start Fail')
                     return False
@@ -174,9 +183,9 @@ class VirtualChnlMw(BaseChnlMw):
                 recv_total = 0
                 while length != recv_total:
                     if stop_event():
-                        itf.break_dma(fd)
+                        itf.break_stream(fd)
                         break
-                    recv_total = itf.wait_dma(fd, timeout=timeout)
+                    recv_total = itf.wait_stream(fd, timeout=timeout)
                 residue, valid_ch = self.v_param
                 if residue:
                     raise RuntimeError(f'The current virtual channel {chnl}:{valid_ch} still has residual data')

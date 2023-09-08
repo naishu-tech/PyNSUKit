@@ -32,6 +32,8 @@
 
 ## 自闭环仿真
 
+@todo SimCmdUItf、SimStreamUItf类暂未实现
+
 1. 提供SimCmdUItf、SimStreamUItf两个虚拟协议类，可以模拟与板卡的通信过程，支持写入记忆、数据流仿真等一系列功能，方便 **在没有硬件条件时测试上层程序** 
 2. 
    ```python

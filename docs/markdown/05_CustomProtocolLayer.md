@@ -1,5 +1,6 @@
 # 自定义协议层
 
+@todo 自定义协议层未完成，协议类为对一个具体物理接口的封装，后续以TCPCmdUItf类为例，介绍Base类、mixin类的用法
 
 <span id="自定义接口"></span>
 
@@ -47,12 +48,14 @@ class xxCmdUItf(base.BaseCmdUItf):
 
 ### 自定义数据流接口
 _**自定义数据流接口需要重写以下方法**_
+
 ```python
 import nsukit.interface.base as base
 import numpy as np
 from typing import Union
 
-class xxChnlUItf(base.BaseChnlUItf):
+
+class xxChnlUItf(base.BaseStreamUItf):
     def __init__(self):
         # 初始化
         ...
@@ -72,23 +75,23 @@ class xxChnlUItf(base.BaseChnlUItf):
     def close_board(self):
         # 关闭链接
         ...
-    
+
     def alloc_buffer(self, length: int, buf: Union[int, np.ndarray, None] = None) -> int:
         # 开辟一块缓存返回缓存地址号
         ...
-    
+
     def free_buffer(self, fd):
         # 释放一块缓存传入缓存地址号
         ...
-    
+
     def get_buffer(self, fd, length):
         # 获取一块缓存中的数据，传入缓存地址号，要获取多长的数据。返回同等长度的数据
         ...
-    
+
     def send_open(self, chnl, fd, length, offset=0):
         # 开启一次数据流下行
         ...
-    
+
     def recv_open(self, chnl, fd, length, offset=0):
         # 开启一次数据流上行，返回True/False
         ...
