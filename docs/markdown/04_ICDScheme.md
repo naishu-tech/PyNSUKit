@@ -131,7 +131,7 @@
    ```
 3. **解释**: 
    1. `pmap`中的`pname`部分，可在`cmap`中被引用，从而代表指令中此字段的值可变，是一个 **参数**
-   2. 各个`pmap`中的`cname`都可作为[NSUKit.set_param](#nsukit.base_kit.NSUKit.set_param)方法和[NSUKit.get_param](#nsukit.base_kit.NSUKit.get_param)方法的name参数使用
+   2. 各个`pmap`中的`cname`都可作为[NSUSoc.set_param](#nsukit.base_kit.NSUSoc.set_param)方法和[NSUSoc.get_param](#nsukit.base_kit.NSUSoc.get_param)方法的name参数使用
    ```json
    {
        "param": {
@@ -155,7 +155,7 @@
    }
    ```
 3. **解释**: 
-   1. 各个`cmap`中的`cname`都可作为[NSUKit.execute](#nsukit.base_kit.NSUKit.execute)方法的cmd参数使用，调用此方法时主机会按约定的ICD格式与板卡进行指令交互
+   1. 各个`cmap`中的`cname`都可作为[NSUSoc.execute](#nsukit.base_kit.NSUSoc.execute)方法的cmd参数使用，调用此方法时主机会按约定的ICD格式与板卡进行指令交互
 ### 2.8. sequence 组
 
 _**此组预留，支持边长指令的实现**_

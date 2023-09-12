@@ -39,7 +39,7 @@ class KitMeta(type):
     ...
 
 
-class NSUKit(metaclass=KitMeta):
+class NSUSoc(metaclass=KitMeta):
     """!
     @anchor NSUKit_class
     @brief 针对板卡级交互的开发接口
@@ -49,33 +49,45 @@ class NSUKit(metaclass=KitMeta):
     ChnlMiddleware: UMiddlewareMeta = VirtualStreamMw
 
     def __init__(self,
-                 cmd_itf_class: UInterfaceMeta = None,
-                 stream_itf_class: UInterfaceMeta = None,
+                 cs_itf_class: UInterfaceMeta = None,
+                 cr_itf_class: UInterfaceMeta = None,
+                 ds_itf_class: UInterfaceMeta = None,
                  link_param: InitParamSet = None):
         """!
         @brief 初始化接口
         @details 根据传入的指令接口和数据流接口进行初始化
         @anchor NSUKit_init
-        @param cmd_itf_class: 指令类
-        @param stream_itf_class: 通道类
+        @param cs_itf_class: 指令类
+        @param ds_itf_class: 通道类
 
         ---
         示例代码如下
         @code
-        >>> from nsukit import NSUKit
+        >>> from nsukit import NSUSoc
         >>> from nsukit.interface import TCPCmdUItf, PCIEStreamUItf
-        >>> nsukit = NSUKit(TCPCmdUItf, PCIEStreamUItf)
+        >>> nsukit = NSUSoc(TCPCmdUItf, PCIEStreamUItf)
         >>> ...
         @endcode
 
         """
-        if cmd_itf_class is None or stream_itf_class is None:
+        if cs_itf_class is None or ds_itf_class is None:
             raise RuntimeError(f'Please pass in a subclass of the {UInterface}')
-        self.itf_cmd: BaseCmdUItf = cmd_itf_class()
-        self.itf_stream: BaseStreamUItf = stream_itf_class()
+        self.itf_cs: BaseCmdUItf = cs_itf_class()
+        self.itf_cr: BaseCmdUItf = (self.itf_cs
+                                    if (cr_itf_class is None) or (cr_itf_class is cs_itf_class)
+                                    else cr_itf_class())
+        self.itf_ds: BaseStreamUItf = ds_itf_class()
         self.mw_cmd: BaseRegMw = self.CmdMiddleware(self)
         self.mw_stream: BaseStreamMw = self.ChnlMiddleware(self)
         self.link_param: InitParamSet = link_param
+
+    @property
+    def combined_cmd_itf(self) -> bool:
+        """!
+        判断cr_itf 是否复用了 cs_itf
+        @return:
+        """
+        return self.itf_cr is self.itf_cs
 
     def link_cmd(self) -> None:
         """!
@@ -85,7 +97,9 @@ class NSUKit(metaclass=KitMeta):
         @anchor NSUKit_link_cmd
         @return: None
         """
-        self.itf_cmd.accept(self.link_param)
+        if not self.combined_cmd_itf:
+            self.itf_cr.accept(self.link_param)
+        self.itf_cs.accept(self.link_param)
         self.mw_cmd.config(self.link_param)
 
     def link_stream(self) -> None:
@@ -96,7 +110,7 @@ class NSUKit(metaclass=KitMeta):
         @anchor NSUKit_link_stream
         @return:
         """
-        self.itf_stream.accept(self.link_param)
+        self.itf_ds.accept(self.link_param)
         self.mw_stream.config(self.link_param)
 
     def unlink_cmd(self):
@@ -105,7 +119,9 @@ class NSUKit(metaclass=KitMeta):
         @details 断开当前cmd协议类的链接
         @return:
         """
-        self.itf_cmd.close()
+        if not self.combined_cmd_itf:
+            self.itf_cr.close()
+        self.itf_cs.close()
 
     def unlink_stream(self):
         """!
@@ -113,7 +129,7 @@ class NSUKit(metaclass=KitMeta):
         @details 断开当前stream协议类的链接
         @return:
         """
-        self.itf_stream.close()
+        self.itf_ds.close()
 
     def write(self, addr: Union[int, Iterable[int]], value: Union[bytes, Iterable[bytes]]) -> None:
         """!
@@ -127,12 +143,12 @@ class NSUKit(metaclass=KitMeta):
         ---
         调用示例
         @code
-        >>> kit: NSUKit
+        >>> kit: NSUSoc
         >>> kit.write(0x10, b'\x00\x00\x00\x00')
         @endcode
 
         @code
-        >>> kit: NSUKit
+        >>> kit: NSUSoc
         >>> try:
         >>>     kit.write(0x10, b'\x00'*5)
         >>> except Exception as e:
@@ -141,9 +157,9 @@ class NSUKit(metaclass=KitMeta):
         """
         check_reg_schema(addr, value)
         if isinstance(addr, int) and isinstance(value, bytes):
-            self.itf_cmd.write(addr, value)
+            self.itf_cr.write(addr, value)
         elif isinstance(addr, abc.Iterable) and isinstance(value, abc.Iterable):
-            self.itf_cmd.multi_write(addr, value)
+            self.itf_cr.multi_write(addr, value)
 
     def read(self, addr: Union[int, Iterable[int]]) -> Union[bytes, Iterable[bytes]]:
         """!
@@ -156,16 +172,16 @@ class NSUKit(metaclass=KitMeta):
         ---
         调用示例
         @code
-        >>> kit: NSUKit
+        >>> kit: NSUSoc
         >>> value = kit.read(0x10)
         >>> len(value) == 4
         @endcode
         """
         check_reg_schema(addr)
         if isinstance(addr, int):
-            return self.itf_cmd.read(addr)
+            return self.itf_cr.read(addr)
         elif isinstance(addr, abc.Iterable):
-            return self.itf_cmd.multi_read(addr)
+            return self.itf_cr.multi_read(addr)
 
     def bulk_write(self, base: int, value: bytes, mode: Union[str, BulkMode] = BulkMode.INCREMENT) -> None:
         """!
@@ -181,22 +197,22 @@ class NSUKit(metaclass=KitMeta):
         ---
         将基地址0x10的寄存器片，重置为0
         @code
-        >>> kit: NSUKit
+        >>> kit: NSUSoc
         >>> kit.bulk_write(0x10, b'\x00'*51)
         @endcode
 
         通过地址为0x10的寄存器，传输一段周期数据
         @code
-        >>> kit: NSUKit
+        >>> kit: NSUSoc
         >>> kit.bulk_write(0x10, b'\x00\x01'*51, mode='inc')
         @endcode
         """
         check_reg_schema(addr=base)
         e_mode = BulkMode(mode)
         if e_mode is BulkMode.INCREMENT:
-            self.itf_cmd.increment_write(base, value)
+            self.itf_cr.increment_write(base, value)
         elif e_mode is BulkMode.LOOP:
-            self.itf_cmd.loop_write(base, value)
+            self.itf_cr.loop_write(base, value)
 
     def bulk_read(self, base: int, length: int, mode: Union[str, BulkMode] = BulkMode.INCREMENT) -> bytes:
         """!
@@ -211,7 +227,7 @@ class NSUKit(metaclass=KitMeta):
         ---
         从基地址0x10的寄存器开始，依次读回片内寄存器的值
         @code
-        >>> kit: NSUKit
+        >>> kit: NSUSoc
         >>> value = kit.bulk_read(0x10, 51)
         >>> len(value) == 51
         @endcode
@@ -219,16 +235,16 @@ class NSUKit(metaclass=KitMeta):
         check_reg_schema(addr=base)
         e_mode = BulkMode(mode)
         if e_mode is BulkMode.INCREMENT:
-            return self.itf_cmd.increment_read(base, length)
+            return self.itf_cr.increment_read(base, length)
         elif e_mode is BulkMode.LOOP:
-            return self.itf_cmd.loop_read(base, length)
+            return self.itf_cr.loop_read(base, length)
 
     def set_param(self, name: str, value: Any) -> None:
         """!
         设置指令参数值
 
         **并不会真的下发到设备中，只是把相应的参数值写入到主机内存中**
-        @anchor NSUKit_set_param
+
         @param name: 所有指令中包含的参数名，具体支持的参数可以查阅板卡配套的说明文档
         @param value: 要配置的参数值，支持int、float等值类型，文件路径，numpy.ndarray
         @return: None,执行失败则报错
@@ -236,7 +252,7 @@ class NSUKit(metaclass=KitMeta):
         ---
         向板卡DAC1中预置一段波形
         @code
-        >>> kit: NSUKit
+        >>> kit: NSUSoc
         >>> kit.set_param('DAC预置波形选通', 1)
         >>> kit.set_param('DAC预置波形文件', './freq_1e6_8Gsps_2us.dat')
         >>> kit.execute('波形预置')
@@ -255,14 +271,14 @@ class NSUKit(metaclass=KitMeta):
 
         示例:
         @code
-        >>> kit: NSUKit
+        >>> kit: NSUSoc
         >>> ref_src = kit.get_param('参考时钟来源')
         @endcode
 
         ---
         获取板卡核心温度:
         @code
-        >>> kit: NSUKit
+        >>> kit: NSUSoc
         >>> kit.execute('状态查询')
         >>> core_temp = kit.get_param('核心温度')
         @endcode
@@ -281,7 +297,7 @@ class NSUKit(metaclass=KitMeta):
         ---
         示例:
         @code
-        >>> kit: NSUKit
+        >>> kit: NSUSoc
         >>> kit.execute('RF配置')
         @endcode
         """
@@ -296,7 +312,7 @@ class NSUKit(metaclass=KitMeta):
         @param buf: 外部指定的内存指针
         @return 经过nsukit修饰过后可用于数据流传输的 **内存标识符fd**
         """
-        return self.itf_stream.alloc_buffer(length, buf)
+        return self.itf_ds.alloc_buffer(length, buf)
 
     def free_buffer(self, fd: int) -> None:
         """!
@@ -306,7 +322,7 @@ class NSUKit(metaclass=KitMeta):
         @param fd: 内存标识符
         @return: None
         """
-        return self.itf_stream.free_buffer(fd)
+        return self.itf_ds.free_buffer(fd)
 
     def get_buffer(self, fd: int, length: int) -> np.ndarray:
         """!
@@ -317,7 +333,7 @@ class NSUKit(metaclass=KitMeta):
         @param length: 要获取的数据长度
         @return: 内存中存储的数据，以numpy.ndarray的形式返回
         """
-        return self.itf_stream.get_buffer(fd, length)
+        return self.itf_ds.get_buffer(fd, length)
 
     def stream_recv(self, chnl: int, fd: int, length: int, offset: int = 0, stop_event: Callable = None, flag: int = 1):
         """!
