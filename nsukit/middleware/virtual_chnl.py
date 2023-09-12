@@ -25,7 +25,7 @@ from ..tools.logging import logging
 from ..tools.xdma.xdma import FAIL
 
 if TYPE_CHECKING:
-    from .. import NSUKit
+    from .. import NSUSoc
     from ..interface.base import BaseStreamUItf
 
 
@@ -41,7 +41,7 @@ def dispenser(func):
         if self.stream_mode == self.StreamMode.VIRTUAL:
             _func = func
         else:
-            _func = getattr(self.kit.itf_stream, func.__name__)
+            _func = getattr(self.kit.itf_ds, func.__name__)
         return _func(*args, **kwargs)
 
     return wrapper
@@ -69,7 +69,7 @@ class VirtualStreamMw(BaseStreamMw):
         def __lt__(self, other):
             return self.priority < other.priority
 
-    def __init__(self, kit: "NSUKit"):
+    def __init__(self, kit: "NSUSoc"):
         super(VirtualStreamMw, self).__init__(kit)
         self.itf_chnl: "Union[BaseStreamUItf, RegOperationMixin, None]" = None
         self.stream_mode = self.StreamMode.REAL
@@ -98,7 +98,7 @@ class VirtualStreamMw(BaseStreamMw):
         if self.stream_mode == self.StreamMode.REAL:
             ...
         elif self.stream_mode == self.StreamMode.VIRTUAL:
-            if not isinstance(self.kit.itf_stream, RegOperationMixin):
+            if not isinstance(self.kit.itf_ds, RegOperationMixin):
                 raise ValueError(f'When {param.stream_mode=} is virtual, '
                                  f'{self.kit.__class__}.itf_chnl should be a subclass of {RegOperationMixin}')
             self.priority_thread = threading.Thread(target=self.priority_wheel, name=f'virtual_chnl', daemon=True)
@@ -173,7 +173,7 @@ class VirtualStreamMw(BaseStreamMw):
         self._priority_lock(chnl, stop_event, timeout)
 
         with self.running_lock:
-            self.itf_chnl = itf = self.kit.itf_stream
+            self.itf_chnl = itf = self.kit.itf_ds
             try:
                 flag = itf.open_recv(self.R2V_CHNL, fd, length=length, offset=offset)
                 if flag == FAIL:

@@ -11,7 +11,7 @@
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from .. import NSUKit
+    from .. import NSUSoc
     from ..interface import InitParamSet
 
 
@@ -23,7 +23,7 @@ class UMiddlewareMeta(type):
 
 
 class UMiddleware(metaclass=UMiddlewareMeta):
-    def __init__(self, kit: "NSUKit", *args, **kwargs):
+    def __init__(self, kit: "NSUSoc", *args, **kwargs):
         self.kit = kit
 
     def config(self, param: "InitParamSet") -> None:

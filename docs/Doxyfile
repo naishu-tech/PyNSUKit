@@ -5,7 +5,7 @@
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = NSUKit
-PROJECT_NUMBER         = 0.2.0
+PROJECT_NUMBER         = 0.3.0
 PROJECT_BRIEF          = 板卡级统一交互接口
 PROJECT_LOGO           = ./image/logo切图-竖版.png
 OUTPUT_DIRECTORY       = html
@@ -172,7 +172,7 @@ FILE_PATTERNS          = *.c \
                          *.qsf \
                          *.ice
 RECURSIVE              = YES
-EXCLUDE                =
+EXCLUDE                = ../__init__.py
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = */venv/*, */nsukit/tools/xdma/*
 EXCLUDE_SYMBOLS        =
@@ -207,7 +207,7 @@ IGNORE_PREFIX          =
 # Configuration options related to the HTML output
 #---------------------------------------------------------------------------
 GENERATE_HTML          = YES
-HTML_OUTPUT            = 0.2.0
+HTML_OUTPUT            = 0.3.0
 HTML_FILE_EXTENSION    = .html
 HTML_HEADER            = header.html
 HTML_FOOTER            =

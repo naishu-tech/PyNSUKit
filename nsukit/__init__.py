@@ -8,10 +8,10 @@
 # MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
 # See the Mulan PSL v2 for more details.
 
-from .base_kit import NSUKit, InitParamSet
+from .base_kit import NSUSoc, InitParamSet
 
 
-__all__ = ['NSUKit', 'InitParamSet']
+__all__ = ['NSUSoc', 'InitParamSet']
 
 __version_pack__ = (0, 2, 0)
 

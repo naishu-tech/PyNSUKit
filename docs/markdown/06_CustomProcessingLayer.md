@@ -73,12 +73,14 @@ _**icd_paresr：指令处理中间件，用来使用约定式的icd指令**_
 # ！！注意！！ 参数中支持以下数据类型uint8、int8、uint16、int16、uint32、int32、float、double、file_data、file_length
 ```
 
-### config(self, **kwargs): 
+### config(self, **kwargs):
+
 ```python
 # 初始化指令处理中间件。该函数不用单独调用
 # 在NSUKit的start_command中会自动调用
 # 在调用时可附加参数以使用特定icd.json文件 例如：
 from nsukit import *
+
 param = {
     'tcp_cmd': {
         "port": 5001,
@@ -86,7 +88,7 @@ param = {
         "icd_path": "icd文件路径"
     }
 }
-nsukit = NSUKit(TCPCmdUItf, TCPChnlUItf)
+nsukit = NSUSoc(TCPCmdUItf, TCPChnlUItf)
 nsukit.start_command(target='127.0.0.1', **param)
 # 其中icd_path为使用指定的icd.json路径（绝对路径）
 # check_recv_head为是否按照icd文件中指令的recv进行强验证
@@ -101,10 +103,12 @@ nsukit.start_command(target='127.0.0.1', **param)
 <center>get_param/set_param调用流程</center>
 
 ### get_param(self, param_name: str, default=0, fmt_type=int):
+
 ```python
 # 获取icd中某个参数的的值。该函数不用单独调用
 # 在read函数中当add为字符型，且该字符是参数名时自动调用 例如：
 from nsukit import *
+
 param = {
     'tcp_cmd': {
         "port": 5001,
@@ -112,16 +116,18 @@ param = {
         "icd_path": "icd文件路径"
     }
 }
-nsukit = NSUKit(TCPCmdUItf, TCPStreamUItf)
+nsukit = NSUSoc(TCPCmdUItf, TCPStreamUItf)
 nsukit.start_command(target='127.0.0.1', **param)
 nsukit.read("参数1")
 ```
 
 ### set_param(self, param_name: str, value, fmt_type=int):
+
 ```python
 # 设置icd中某个参数的的值。该函数不用单独调用
 # 在write函数中当add为字符型，且该字符是参数名时自动调用 例如：
 from nsukit import *
+
 param = {
     'tcp_cmd': {
         "port": 5001,
@@ -129,10 +135,10 @@ param = {
         "icd_path": "icd文件路径"
     }
 }
-nsukit = NSUKit(TCPCmdUItf, TCPStreamUItf)
+nsukit = NSUSoc(TCPCmdUItf, TCPStreamUItf)
 nsukit.start_command(target='127.0.0.1', **param)
 nsukit.write(addr="参数1", value=1)
-#！！注意！！ 在默认情况下write在更改完参数时会自动执行与之相关的指令，如不想直接执行请增加参数execute=False
+# ！！注意！！ 在默认情况下write在更改完参数时会自动执行与之相关的指令，如不想直接执行请增加参数execute=False
 nsukit.write(addr="参数1", value=1, execute=False)
 # 当addr为指令名时会直接发送对应指令，此时value可以填任何数
 nsukit.write(addr="指令1", value=123)

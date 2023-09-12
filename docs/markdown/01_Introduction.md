@@ -16,7 +16,7 @@ _本文档为NSUKit的python语言版本的使用文档。_
 1. [快速开始](02_Quickstart.md)：接口功能详细介绍、安装与基本使用
 2. [进阶使用](03_Professional.md)：板卡模拟功能与异步数据流上行接口
 3. [ICD指令](04_ICDScheme.md)：介绍了一种主机与板上/片上处理核间的指令协议，nsukit内置支持
-4. [NSUKit类](#nsukit.base_kit.NSUKit)：nsukit对外提供的接口类NSUKit的文档
+4. [NSUSoc类](#nsukit.base_kit.NSUSoc)：nsukit对外提供的接口类NSUBoard的文档
 
 ---
 ## 应用示例

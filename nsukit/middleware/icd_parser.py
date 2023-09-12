@@ -20,7 +20,7 @@ from ..interface.base import InitParamSet
 from ..tools.logging import logging
 
 if TYPE_CHECKING:
-    from .. import NSUKit
+    from .. import NSUSoc
 
 file_context_flag = '__file__'
 file_length_flag = '__filelength__'
@@ -81,7 +81,7 @@ class ICDRegMw(BaseRegMw):
     """
     fmt_mode = "="  # pack/unpack 大小端模式
 
-    def __init__(self, kit: "NSUKit", file_name='icd.json'):
+    def __init__(self, kit: "NSUSoc", file_name='icd.json'):
         super(ICDRegMw, self).__init__(kit)
         self._file_name = file_name
         self.icd_data = {}
@@ -332,10 +332,10 @@ class ICDRegMw(BaseRegMw):
             send_cmd = self.fmt_command(command_name=cname, command_type="send")
             recv_cmd = self.fmt_command(command_name=cname, command_type="recv")
             total_len = len(send_cmd)
-            send_len = self.kit.itf_cmd.send_bytes(send_cmd)
+            send_len = self.kit.itf_cs.send_bytes(send_cmd)
             if total_len != send_len:
                 raise RuntimeError(f"{cname} total_len is {total_len}, but just send {send_len}!")
-            recv = self.kit.itf_cmd.recv_bytes(struct.unpack("=I", recv_cmd[12:16])[0])
+            recv = self.kit.itf_cs.recv_bytes(struct.unpack("=I", recv_cmd[12:16])[0])
             self.check_recv(recv_cmd, recv, cname)
             self.enable_param(cname, recv)
 
@@ -348,10 +348,10 @@ class ICDRegMw(BaseRegMw):
             elif isinstance(fpack, str):
                 recv_length += type_size[self.param[fpack][0]]
         total_len = len(send_cmd)
-        send_len = self.kit.itf_cmd.send_bytes(send_cmd)
+        send_len = self.kit.itf_cs.send_bytes(send_cmd)
         if total_len != send_len:
             raise RuntimeError(f"{cname} total_len is {total_len}, but just send {send_len}!")
-        recv = self.kit.itf_cmd.recv_bytes(recv_length)
+        recv = self.kit.itf_cs.recv_bytes(recv_length)
         self.enable_param(cname, recv)
 
     def enable_param(self, cname: str, recv: bytes):

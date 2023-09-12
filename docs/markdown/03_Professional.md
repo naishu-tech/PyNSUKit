@@ -35,17 +35,18 @@
 @todo SimCmdUItf、SimStreamUItf类暂未实现
 
 1. 提供SimCmdUItf、SimStreamUItf两个虚拟协议类，可以模拟与板卡的通信过程，支持写入记忆、数据流仿真等一系列功能，方便 **在没有硬件条件时测试上层程序** 
-2. 
-   ```python
-   from nsukit import NSUKit
-   from nsukit.interface import SimCmdUItf, SimStreamUItf
-   
-   kit = NSUKit(SimCmdUItf, SimChnlUItf)
-   kit.link_cmd()
-   kit.link_stream()
-   kit.write(0x10, b'\x01\x02\x03\x04')
-   ...
-   ```
+2.
+
+```python
+from nsukit import NSUSoc
+from nsukit.interface import SimCmdUItf, SimStreamUItf
+
+kit = NSUSoc(SimCmdUItf, SimChnlUItf)
+kit.link_cmd()
+kit.link_stream()
+kit.write(0x10, b'\x01\x02\x03\x04')
+...
+```
 
 ---
 
@@ -56,16 +57,16 @@
 ### 同步方式
 <center>![](block_stream_show.png)</center>
 
-1. 同步方式数据流交互接口: [NSUKit.stream_send](@ref NSUKit_stream_send)、[NSUKit.stream_recv](@ref NSUKit_stream_recv)
+1. 同步方式数据流交互接口: [NSUSoc.stream_send](@ref nsukit.base_kit.NSUSoc.stream_send)、[NSUSoc.stream_recv](@ref nsukit.base_kit.NSUSoc.stream_recv)
 2. 如下示例在host上申请了一片1G的内存，对前1kB写入数据20，将这1kB数据下发到板卡
 
 ```python
-from nsukit import NSUKit
+from nsukit import NSUSoc
 
 ...
-kit: NSUKit
-fd = kit.alloc_buffer(length=1024**3)
-buf = kit.get_buffer(fd, 1024**3)
+kit: NSUSoc
+fd = kit.alloc_buffer(length=1024 ** 3)
+buf = kit.get_buffer(fd, 1024 ** 3)
 buf[:1024] = 20
 kit.stream_send(chnl=0, fd=fd, length=1024, offset=0)
 ```
@@ -73,21 +74,21 @@ kit.stream_send(chnl=0, fd=fd, length=1024, offset=0)
 ### 异步方式
 <center>![](async_stream_itf.png)</center>
 
-1. 提供异步数据流交互接口: [NSUKit.open_send](@ref NSUKit_open_send)、[NSUKit.open_recv](@ref NSUKit_open_recv)、[NSUKit.wait_stream](@ref NSUKit_wait_stream)、[NSUKit.break_stream](@ref NSUKit_break_stream)
+1. 提供异步数据流交互接口: [NSUSoc.open_send](@ref nsukit.base_kit.NSUSoc.open_send)、[NSUSoc.open_recv](@ref nsukit.base_kit.NSUSoc.open_recv)、[NSUSoc.wait_stream](@ref nsukit.base_kit.NSUSoc.wait_stream)、[NSUSoc.break_stream](@ref nsukit.base_kit.NSUSoc.break_stream)
 2. 接口在开启数据流后立即返回，不等待说有数据传输完成，用户可以在数据流传输过程中继续执行其它操作
 
 ```python
-from nsukit import NSUKit
+from nsukit import NSUSoc
 
 ...
-kit: NSUKit
-fd = kit.alloc_buffer(length=1024**3)
-res = kit.open_send(chnl=0, fd=fd, length=1024**3, offset=0)
+kit: NSUSoc
+fd = kit.alloc_buffer(length=1024 ** 3)
+res = kit.open_send(chnl=0, fd=fd, length=1024 ** 3, offset=0)
 kit.execute('状态查询')
 print(kit.get_param('板卡温度'))
 if res != -1:
-   while res != 1024**3:
-      res = kit.wait_stream(fd, timeout=0.05)
+    while res != 1024 ** 3:
+        res = kit.wait_stream(fd, timeout=0.05)
 ```
 
 ---
