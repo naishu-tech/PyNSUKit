@@ -1,0 +1,332 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<html xmlns="http://www.w3.org/1999/xhtml" class="light-mode">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NSUKit: ICD文件格式</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo切图-竖版.png"/></td>
+     <script type="text/javascript" src="../version.js"></script>
+  <td id="projectalign">
+   <div id="projectname">NSUKit
+        <span id="projectnumber">0.3.0</span>
+   </div>
+   <div id="projectbrief">板卡级统一交互接口</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part --><!-- 制作者 Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md__i_c_d_xE6_x96_x87_xE4_xBB_xB6_xE6_xA0_xBC_xE5_xBC_x8F.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">ICD文件格式 </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="md_markdown_04_ICDScheme"></a> 此处所说的ICD为指令交互方式下，主机端与板上/片上处理核约定的一套参数传输约定；约定规范了板卡与主机端传输参数的包头格式、发送方式与反馈方式</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md32"></a>
+1. ICD指令交互流程</h1>
+<center><img src="icd_sch_packinfo.png" alt="" class="inline"/>     </center> <center>指令包发送与反馈方式</center><ol type="1">
+<li>一次交互过程为由主机对板卡发起请求，板卡发送反馈给主机的过程。请求和反馈为一串任意个字节组成的一段数据，在这串数据的开头，用一个特定字节长度的包头字段来标识此段数据所代表的含义。</li>
+<li>以下是请求和反馈要求的包头格式，表格中各列的含义如下：<ol type="a">
+<li><b>字段长度</b>: 数据字段在请求/反馈数据中的位置</li>
+<li><b>数据类型</b>: 数据字段的解读所需的IEEE-754数据类型</li>
+<li><b>值</b>: 数据字段的默认值</li>
+<li><b>含义</b>: 数据字段所表示的含义</li>
+</ol>
+</li>
+<li>表中每一行代表一个各独立意义的**字段**，**字段**在描述指令数据中包含的一定数量字节的含义</li>
+<li>请求/反馈包头后边都可以跟随任意数据类型/任意数量的数据，相应的改变<code>指令长度</code>字段的值即可</li>
+<li>指令ID字段为一条指令的唯一标识，所以一个ID固定的请求，其指令长度与指令中各参数的含义都是固定的 </li>
+</ol>
+<h2><a class="anchor" id="autotoc_md33"></a>
+1.1. 请求包头</h2>
+<center></center><center><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadCenter">字段长度   </th><th class="markdownTableHeadCenter">数据类型   </th><th class="markdownTableHeadCenter">值   </th><th class="markdownTableHeadCenter">含义    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">0~3   </td><td class="markdownTableBodyCenter">uint32   </td><td class="markdownTableBodyCenter">0x5F5F5F5F   </td><td class="markdownTableBodyCenter">包头    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">4~7   </td><td class="markdownTableBodyCenter">uint32   </td><td class="markdownTableBodyCenter"><code>对每条指令唯一的ID</code>   </td><td class="markdownTableBodyCenter">指令ID    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">8~11   </td><td class="markdownTableBodyCenter">uint32   </td><td class="markdownTableBodyCenter">0   </td><td class="markdownTableBodyCenter">指令序号    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">12~15   </td><td class="markdownTableBodyCenter">uint32   </td><td class="markdownTableBodyCenter"><code>整条请求的字节数量</code>   </td><td class="markdownTableBodyCenter">指令长度   </td></tr>
+</table>
+</center><center></center><h2><a class="anchor" id="autotoc_md34"></a>
+1.2. 反馈包头</h2>
+<center></center><center><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadCenter">字节位   </th><th class="markdownTableHeadCenter">数据类型   </th><th class="markdownTableHeadCenter">值   </th><th class="markdownTableHeadCenter">含义    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">0~3   </td><td class="markdownTableBodyCenter">uint32   </td><td class="markdownTableBodyCenter">0xCFCFCFCF   </td><td class="markdownTableBodyCenter">包头    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">4~7   </td><td class="markdownTableBodyCenter">uint32   </td><td class="markdownTableBodyCenter"><code>请求包头中的ID</code>   </td><td class="markdownTableBodyCenter">指令ID    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">8~11   </td><td class="markdownTableBodyCenter">uint32   </td><td class="markdownTableBodyCenter">0   </td><td class="markdownTableBodyCenter">指令序号    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">12~15   </td><td class="markdownTableBodyCenter">uint32   </td><td class="markdownTableBodyCenter"><code>整条反馈的字节数量</code>   </td><td class="markdownTableBodyCenter">指令长度   </td></tr>
+</table>
+</center><center></center><hr  />
+ <h1><a class="anchor" id="autotoc_md36"></a>
+2. icd.json格式</h1>
+<ol type="1">
+<li>基于上述对ICD指令交互方式的定义，提出一个软件与人类都可读的icd指令描述格式icd.json</li>
+<li>JSON（JavaScript Object Notation）是一种轻量级的数据交换格式，通常用于在不同应用程序之间传输数据，且其具有很好的人类可读性；JSON并不与任何特定编程语言相关联，因此可以在多种编程语言中轻松解析和生成</li>
+<li>icd.json基于JSON格式定义了基本描述结构<code>fpack</code>、<code>pname</code>、<code>cname</code>、<code>pmap</code>、<code>cmap</code>，并提出了由这些基本结构提出了icd描述字段<code>param</code>、<code>command</code>、<code>sequence</code> </li>
+</ol>
+<h2><a class="anchor" id="autotoc_md37"></a>
+2.1. fpack 参数描述</h2>
+<ol type="1">
+<li><b>含义</b>: 表述一个基本的指令字段，其数据类型是什么，默认值是什么</li>
+<li><b>格式</b>: <div class="fragment"><div class="line">[&quot;field type&quot;, &quot;default value&quot;]</div>
+</div><!-- fragment --></li>
+<li><b>解释</b>:<ol type="a">
+<li>field type为此字段的类型，当前有如下可选项<ol type="i">
+<li><code>uint32</code>、<code>int32</code>、<code>uint16</code>、<code>int16</code>、<code>uint8</code>、<code>int8</code>、 <code>float</code>、 <code>double</code>：IEEE-754中定义的标准数据类型</li>
+<li><code>file</code>：文件类型，值可为一个字符串类型的文件路径</li>
+</ol>
+</li>
+<li>default value为这个字段的默认值，支持以数值描述、0x开头的字符串描述 </li>
+</ol>
+</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md38"></a>
+2.2. pname 参数名</h2>
+<ol type="1">
+<li><b>含义</b>: 表述一个参数的名称，不单独出现，配合<code>pmap</code>与<code>cmap</code>出现，并具有不同的含义</li>
+<li><b>格式</b>: <div class="fragment"><div class="line">&quot;param name&quot;</div>
+</div><!-- fragment --> </li>
+</ol>
+<h2><a class="anchor" id="autotoc_md39"></a>
+2.3. cname 指令名</h2>
+<ol type="1">
+<li><b>含义</b>: 表述一个指令的名称，不单独出现，配合<code>cmap</code>出现</li>
+<li><b>格式</b>: <div class="fragment"><div class="line">&quot;command name&quot;</div>
+</div><!-- fragment --> </li>
+</ol>
+<h2><a class="anchor" id="autotoc_md40"></a>
+2.4. pmap 参数映射</h2>
+<ol type="1">
+<li><b>含义</b>: 表述一个参数名与字段的映射关系，是<code>param</code>组的基本组成部分</li>
+<li><b>格式</b>: <div class="fragment"><div class="line">pname: fpack</div>
+</div><!-- fragment --></li>
+<li><b>解释</b>:<ol type="a">
+<li>示例如<code>"DAC采样率": ["uint32", 6000000000]</code> </li>
+</ol>
+</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md41"></a>
+2.5. cmap 指令映射</h2>
+<ol type="1">
+<li><b>含义</b>: 表述一个指令名称与它对应的结构，是<code>param</code>组的基本组成部分</li>
+<li><b>格式</b>: <div class="fragment"><div class="line">cname: {</div>
+<div class="line">&quot;send&quot;: [fpack/pname, ...],</div>
+<div class="line">&quot;recv&quot;: [fpack/pname, ...]</div>
+<div class="line">}</div>
+</div><!-- fragment --></li>
+<li><b>解释</b>:<ol type="a">
+<li><code>send</code>列表代表着一条指令的请求包格式，<code>recv</code>列表代表一条指令的反馈包格式</li>
+<li>每个列表中，从前到后指定了这一段字节数据的各个字段的含义和值，可以填入一个<code>fpack</code>代表一个预定的不可变字段，填入一个<code>param</code>组中的<code>pname</code>来指定一个可变的字段，即为一个 <b>参数</b></li>
+<li>示例如下： <div class="fragment"><div class="line">&quot;指令1&quot;: {</div>
+<div class="line">  &quot;send&quot;: [</div>
+<div class="line">      [&quot;uint32&quot;, &quot;0x5F5F5F5F&quot;],</div>
+<div class="line">      [&quot;uint32&quot;, &quot;0x31000001&quot;],</div>
+<div class="line">      [&quot;uint32&quot;, &quot;0x00000000&quot;],</div>
+<div class="line">      [&quot;uint32&quot;,           24],</div>
+<div class="line">      &quot;参数2&quot;,</div>
+<div class="line">      &quot;参数1&quot;</div>
+<div class="line">  ],</div>
+<div class="line">  &quot;recv&quot;: [</div>
+<div class="line">      [&quot;uint32&quot;, &quot;0xCFCFCFCF&quot;],</div>
+<div class="line">      [&quot;uint32&quot;, &quot;0x31000001&quot;],</div>
+<div class="line">      [&quot;uint32&quot;, &quot;0x00000000&quot;],</div>
+<div class="line">      [&quot;uint32&quot;,           20],</div>
+<div class="line">      &quot;参数3&quot;</div>
+<div class="line">  ]</div>
+<div class="line">},</div>
+</div><!-- fragment --> </li>
+</ol>
+</li>
+</ol>
+<h2><a class="anchor" id="md_ICDScheme_param_group"></a>
+2.6. param 组</h2>
+<ol type="1">
+<li><b>含义</b>: pmap组成的组，是主机与板卡约定的所有可配置或可获取的参数的总和</li>
+<li><b>格式</b>: <div class="fragment"><div class="line">{</div>
+<div class="line">    &quot;param&quot;: {</div>
+<div class="line">        &quot;pmap_1&quot;,</div>
+<div class="line">        &quot;pmap_2&quot;,</div>
+<div class="line">        ...</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --></li>
+<li><b>解释</b>:<ol type="a">
+<li><code>pmap</code>中的<code>pname</code>部分，可在<code>cmap</code>中被引用，从而代表指令中此字段的值可变，是一个 <b>参数</b></li>
+<li>各个<code>pmap</code>中的<code>cname</code>都可作为<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_soc.html#a7d36742140a3721e7cb1c4fa0dc627e8">NSUSoc.set_param</a>方法和<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_soc.html#a9e8c723741a5ffd192130f454990a903">NSUSoc.get_param</a>方法的name参数使用 <div class="fragment"><div class="line">{</div>
+<div class="line">    &quot;param&quot;: {</div>
+<div class="line">        &quot;参数1&quot;: [&quot;uint32&quot;, &quot;0x51&quot;],</div>
+<div class="line">        &quot;参数2&quot;: [&quot;float&quot;, 10.1],</div>
+<div class="line">        &quot;参数3&quot;: [&quot;int8&quot;, 1]</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --> </li>
+</ol>
+</li>
+</ol>
+<h2><a class="anchor" id="md_ICDScheme_cmd_group"></a>
+2.7. command 组</h2>
+<ol type="1">
+<li><b>含义</b>: cmap组成的组，是主机与板卡约定的所有指令的集合</li>
+<li><b>格式</b>: <div class="fragment"><div class="line">{</div>
+<div class="line">    &quot;command&quot;: {</div>
+<div class="line">        &quot;cmap_1&quot;,</div>
+<div class="line">        &quot;cmap_2&quot;,</div>
+<div class="line">        ...</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --></li>
+<li><b>解释</b>:<ol type="a">
+<li>各个<code>cmap</code>中的<code>cname</code>都可作为<a class="el" href="classnsukit_1_1base__kit_1_1_n_s_u_soc.html#aa4aba254157fe5d22a82cfa7ae46d9d7">NSUSoc.execute</a>方法的cmd参数使用，调用此方法时主机会按约定的ICD格式与板卡进行指令交互 </li>
+</ol>
+</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md42"></a>
+2.8. sequence 组</h2>
+<p><em><b>此组预留，支持边长指令的实现</b></em></p>
+<hr  />
+ <h1><a class="anchor" id="autotoc_md44"></a>
+3. icd.json示例</h1>
+<div class="fragment"><div class="line">{</div>
+<div class="line">    &quot;param&quot;: {</div>
+<div class="line">        &quot;参数1&quot;: [&quot;uint32&quot;, &quot;0x51&quot;],</div>
+<div class="line">        &quot;参数2&quot;: [&quot;float&quot;, 10.1],</div>
+<div class="line">        &quot;参数3&quot;: [&quot;int8&quot;, 1]</div>
+<div class="line">    },</div>
+<div class="line">    &quot;command&quot;:{</div>
+<div class="line">        &quot;指令1&quot;: {</div>
+<div class="line">            &quot;send&quot;: [</div>
+<div class="line">                [&quot;uint32&quot;, &quot;0x5F5F5F5F&quot;],</div>
+<div class="line">                [&quot;uint32&quot;, &quot;0x31000001&quot;],</div>
+<div class="line">                [&quot;uint32&quot;, &quot;0x00000000&quot;],</div>
+<div class="line">                [&quot;uint32&quot;,           24],</div>
+<div class="line">                &quot;参数2&quot;,</div>
+<div class="line">                &quot;参数1&quot;</div>
+<div class="line">            ],</div>
+<div class="line">            &quot;recv&quot;: [</div>
+<div class="line">                [&quot;uint32&quot;, &quot;0xCFCFCFCF&quot;],</div>
+<div class="line">                [&quot;uint32&quot;, &quot;0x31000001&quot;],</div>
+<div class="line">                [&quot;uint32&quot;, &quot;0x00000000&quot;],</div>
+<div class="line">                [&quot;uint32&quot;,           17],</div>
+<div class="line">                &quot;参数3&quot;</div>
+<div class="line">            ]</div>
+<div class="line">        },</div>
+<div class="line">        &quot;指令2&quot;: {</div>
+<div class="line">            &quot;send&quot;: [</div>
+<div class="line">                [&quot;uint32&quot;, &quot;0x5F5F5F5F&quot;],</div>
+<div class="line">                [&quot;uint32&quot;, &quot;0x31000001&quot;],</div>
+<div class="line">                [&quot;uint32&quot;, &quot;0x00000000&quot;],</div>
+<div class="line">                [&quot;uint32&quot;,           16]</div>
+<div class="line">            ],</div>
+<div class="line">            &quot;recv&quot;: [</div>
+<div class="line">                [&quot;uint32&quot;, &quot;0xCFCFCFCF&quot;],</div>
+<div class="line">                [&quot;uint32&quot;, &quot;0x31000001&quot;],</div>
+<div class="line">                [&quot;uint32&quot;, &quot;0x00000000&quot;],</div>
+<div class="line">                [&quot;uint32&quot;,           16]</div>
+<div class="line">            ]</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><hr  />
+ <h1><a class="anchor" id="autotoc_md46"></a>
+4. icd解析程序</h1>
+<p>关于icd文件解析程序的文档可以查看<a class="el" href="md_markdown_06__custom_processing_layer.html">自定义处理层</a>的<a class="el" href="md_markdown_06__custom_processing_layer.html#md_icd_paresr">icd_parser</a>部分的介绍，以及中间价类<a class="el" href="classnsukit_1_1middleware_1_1icd__parser_1_1_i_c_d_reg_mw.html">ICDRegMw</a>的文档</p>
+<hr  />
+<center>Copyright © 2023 耐数 <a href="http://naishu.tech/" target="_blank">naishu.tech</a></center> <center>北京耐数电子有限公司</center> </div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+  </ul>
+</div>
+</body>
+</html>
