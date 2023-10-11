@@ -36,10 +36,10 @@ class UMiddleware(metaclass=UMiddlewareMeta):
 
 
 class BaseRegMw(UMiddleware):
-    def get_param(self, param_name: str, default=0, fmt_type=int):
+    def get_param(self, param_name: str, default=0):
         ...
 
-    def set_param(self, param_name: str, value, fmt_type=int):
+    def set_param(self, param_name: str, value):
         ...
 
     def execute(self, cname: str) -> None:

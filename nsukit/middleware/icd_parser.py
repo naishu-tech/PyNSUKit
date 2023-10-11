@@ -154,7 +154,7 @@ class ICDRegMw(BaseRegMw):
             logging.info(msg='参数保存成功')
         return True
 
-    def get_param(self, param_name: str, default=0, fmt_type=int):
+    def get_param(self, param_name: str, default=0):
         """!
         @brief 获取icd参数
         @details 根据参数名称获取参数值
@@ -164,15 +164,19 @@ class ICDRegMw(BaseRegMw):
         @return: 格式化后的参数值
         """
         param = self.param.get(param_name, None)
-        if param[0] == "file" or param[0] == "file_length":
+        if isinstance(param[1], str) and param[1].startswith('0x'):
+            return int(param[1], 16)
+        elif isinstance(param[1], str) and param[1].startswith('0b'):
+            return int(param[1], 2)
+        elif param[0] == "file" or param[0] == "file_length":
             return param[1]
-        if param is None:
+        elif param is None:
             logging.warning(msg=f'未找到参数：{param_name}')
             self.param.update({param_name: ['uint32', default]})
-            return fmt_type(default)
-        return fmt_type(param[1])
+            return int(default)
+        return value_python[param[0]](param[1])
 
-    def set_param(self, param_name: str, value, fmt_type=int):
+    def set_param(self, param_name: str, value):
         """!
         @brief 设置参数值
         @details 根据参数名称设置相应的值
