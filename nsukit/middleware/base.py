@@ -42,10 +42,10 @@ class BaseRegMw(UMiddleware):
     def set_param(self, param_name: str, value):
         ...
 
-    def execute(self, cname: str) -> None:
+    def execute(self, cname: str, array=None) -> None:
         ...
 
-    def fmt_command(self, command_name, command_type: str = "send", file_name=None) -> bytes:
+    def fmt_command(self, command_name, command_type: str = "send", file_name=None, arrays=None) -> bytes:
         ...
 
     def execute_from_pname(self, parm_name: str) -> list:

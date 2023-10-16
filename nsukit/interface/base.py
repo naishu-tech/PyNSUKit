@@ -119,7 +119,7 @@ class BaseCmdUItf(UInterface):
         num = length // reg_len
         for _n in range(num):
             self.write(addr+reg_len*_n, value[_n:_n*reg_len])
-        if length - num*reg_len > 0:
+        if (length - num*reg_len) > 0:
             _data = value[num:]
             _data += b'\x00'*(reg_len-len(_data))
             self.write(addr+reg_len*num, _data)
@@ -133,7 +133,7 @@ class BaseCmdUItf(UInterface):
         @return 无返回值
         """
         cache = []
-        ceil_len = math.ceil(length/reg_len)*length
+        ceil_len = math.ceil(length/reg_len)*reg_len
         num = ceil_len//reg_len
         for _n in range(num):
             cache.append(self.read(addr+reg_len*_n))
@@ -280,7 +280,7 @@ class VirtualRegCmdMixin:
         """
         length = len(value)
         padding_len = int(math.ceil(length/reg_len)*reg_len)
-        padding = b''*(padding_len-length)
+        padding = b'/x00'*(padding_len-length)
         pack = (0x5F5F5F5F, 0x31001010, 0x00000000, padding_len+6*4, addr, padding_len)
         head = struct.pack('=IIIIII', *pack)
         cmd = b''.join((head, value, padding))   # 格式化完成指令
@@ -328,7 +328,7 @@ class VirtualRegCmdMixin:
         """
         length = len(value)
         padding_len = int(math.ceil(length / reg_len) * reg_len)
-        padding = b'' * (padding_len - length)
+        padding = b'/x00' * (padding_len - length)
         pack = (0x5F5F5F5F, 0x31001020, 0x00000000, padding_len + 6 * 4, addr, padding_len)
         head = struct.pack('=IIIIII', *pack)
         cmd = b''.join((head, value, padding))  # 格式化完成指令

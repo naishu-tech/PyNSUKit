@@ -10,7 +10,7 @@
 
 import enum
 import collections.abc as abc
-from typing import TYPE_CHECKING, Any, Union, Iterable, Callable
+from typing import TYPE_CHECKING, Any, Union, Iterable, Callable, Optional
 
 import numpy as np
 
@@ -285,13 +285,14 @@ class NSUSoc(metaclass=KitMeta):
         """
         return self.mw_cmd.get_param(name)
 
-    def execute(self, cmd: str) -> None:
+    def execute(self, cmd: str, *, array: "Optional[np.ndarray]" = None) -> None:
         """!
         执行指令
 
         **把set_param配置的参数值打包发给板卡，并将相应的返回参数写入内存**
         @anchor NSUKit_execute
         @param cmd: 指令名
+        @param array: 要随指令发送的numpy数组
         @return: None,执行失败则报错
 
         ---
@@ -301,7 +302,7 @@ class NSUSoc(metaclass=KitMeta):
         >>> kit.execute('RF配置')
         @endcode
         """
-        self.mw_cmd.execute(cmd)
+        self.mw_cmd.execute(cmd, array=array)
 
     def alloc_buffer(self, length: int, buf: int = None) -> int:
         """!

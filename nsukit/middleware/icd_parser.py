@@ -12,7 +12,11 @@ import json
 import struct
 from typing import TYPE_CHECKING
 
-import pandas as pd
+try:
+    import numpy as np
+    EnableNumpy = True
+except ImportError as e:
+    EnableNumpy = False
 
 import nsukit
 from .base import BaseRegMw
@@ -24,6 +28,7 @@ if TYPE_CHECKING:
 
 file_context_flag = '__file__'
 file_length_flag = '__filelength__'
+array_context_flag = '__array__'
 COMMAND_LENGTH = slice(12, 16)
 
 value_type = {
@@ -198,39 +203,32 @@ class ICDRegMw(BaseRegMw):
             param[1] = value_python[param[0]](value)
         self.param.update({param_name: param})
 
-    def fmt_command(self, command_name, command_type: str = "send", file_name=None) -> bytes:
+    def fmt_command(self, command_name, command_type: str = "send", file_name=None, arrays=None) -> bytes:
         """!
         @brief 格式化指令
         @details 根据指令名、指令类型和文件名组合成指令
         @param command_name: 指令名称
         @param command_type: 指令类型(发送接收)
         @param file_name: 文件名
+        @param arrays: 数组
         @return: 格式化好的指令
         """
         file_data = b''
         command = []
+        __array__ = []
         file_length = 0
+        if arrays is not None and not EnableNumpy:
+            raise ValueError(f'This function relies on numpy but cannot currently be imported')
         if isinstance(file_name, str):
             file_data, file_length = self.__get_file(file_name)
+        elif isinstance(file_name, np.ndarray):
+            file_data = file_name.tobytes()
+        if isinstance(arrays, np.ndarray):
+            __array__ = [array.tobytes() for array in arrays]
         try:
             target_bytes = []
             if command_name in self.sequence:
-                sequence_data: pd.DataFrame = pd.read_excel(file_name)
-                sequence_cmd = self.sequence[command_name]
-                for row in range(sequence_data.shape[0]):
-                    for register in sequence_cmd:
-                        if isinstance(register, str):
-                            _reg = self.param.get(register, None)
-                            assert _reg, f'未找到参数{register}'
-                            if register in sequence_data:
-                                value = sequence_data[register][row]
-                            else:
-                                value = _reg[1]
-                        else:
-                            _reg = register
-                            value = _reg[1]
-                        value, _fmt = self.__fmt_register(_reg, value)
-                        target_bytes.append(struct.pack(self.fmt_mode + _fmt, value))
+                raise ValueError(f'Sequence mode is not supported temporarily')
 
             for register in self.command[command_name][command_type]:
                 if isinstance(register, list):
@@ -244,6 +242,8 @@ class ICDRegMw(BaseRegMw):
                         command.append(file_data)
                     elif register == file_length_flag:
                         command.append(struct.pack(self.fmt_mode + 'I', file_length))
+                    elif register.startswith(array_context_flag):
+                        command.append(eval(register))
                     elif register in self.param:
                         value, _fmt = self.__fmt_register(self.param[register], self.param[register][1])
                         if _fmt == 'file':
@@ -296,19 +296,20 @@ class ICDRegMw(BaseRegMw):
             logging.error(msg=f'{e},文件读取失败')
         return b'', 0
 
-    def execute(self, cname: str) -> None:
+    def execute(self, cname: str, array=None) -> None:
         """!
         执行指令
         @param cname: 指令名称
+        @param array: 传入要发送的数组
         @return None
         """
         if cname not in self.command:
             raise ValueError(
                 f'Unsupported command {cname}. The current list of available commands includes: {self.command.keys()}')
         if self.check_recv_head:
-            return self.send_and_check(cname)
+            return self.send_and_check(cname, array=array)
         else:
-            return self.send_and_not_check(cname)
+            return self.send_and_not_check(cname, array=array)
 
     def execute_from_pname(self, parm_name: str):
         """!
@@ -328,12 +329,12 @@ class ICDRegMw(BaseRegMw):
         for cmd in command_list:
             self.execute(cmd)
 
-    def send_and_check(self, cname):
+    def send_and_check(self, cname, array=None):
         if len(self.command[cname]["recv"]) < 5:
             # 接收包头, id, 序号, 指令长度, 结果参数
             raise RuntimeError(f"The {cname} recv register is not define, or recv register<5.")
         else:
-            send_cmd = self.fmt_command(command_name=cname, command_type="send")
+            send_cmd = self.fmt_command(command_name=cname, command_type="send", arrays=array)
             recv_cmd = self.fmt_command(command_name=cname, command_type="recv")
             total_len = len(send_cmd)
             send_len = self.kit.itf_cs.send_bytes(send_cmd)
@@ -343,8 +344,8 @@ class ICDRegMw(BaseRegMw):
             self.check_recv(recv_cmd, recv, cname)
             self.enable_param(cname, recv)
 
-    def send_and_not_check(self, cname):
-        send_cmd = self.fmt_command(command_name=cname, command_type="send")
+    def send_and_not_check(self, cname, array=None):
+        send_cmd = self.fmt_command(command_name=cname, command_type="send", arrays=array)
         recv_length = 0
         for index, fpack in enumerate(self.command[cname]["recv"]):
             if isinstance(fpack, list):
