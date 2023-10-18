@@ -40,9 +40,10 @@ def dispenser(func):
         self: "VirtualStreamMw" = args[0]
         if self.stream_mode == self.StreamMode.VIRTUAL:
             _func = func
+            return _func(*args, **kwargs)
         else:
             _func = getattr(self.kit.itf_ds, func.__name__)
-        return _func(*args, **kwargs)
+            return _func(*args[1:], **kwargs)
 
     return wrapper
 
@@ -76,6 +77,7 @@ class VirtualStreamMw(BaseStreamMw):
         self.running_lock = threading.Lock()
         self.cancel_event = threading.Event()
         self.canceled = threading.Event()
+        self.canceled.set()
         self.priority_lock = threading.Lock()
         self.priority_thread = None
         self.priority_queue = PriorityQueue(maxsize=self.VCHNL_NUM)
