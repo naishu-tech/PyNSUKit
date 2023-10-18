@@ -211,15 +211,15 @@ class TCPStreamUItf(BaseStreamUItf):
         @param param InitParamSet或其子类的对象，需包含stream_ip、stream_tcp_port属性
         @return
         """
-        self.open_flag = True
-        self._tcp_server.bind(('0.0.0.0', self._local_port))
-        self._tcp_server.listen(10)
         if not self.open_flag:
             self._local_port = get_port(ip=param.stream_ip) if param.stream_tcp_port == 0 else param.stream_tcp_port
             self._tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self._tcp_server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             self.set_timeout(self._timeout)
+            self._tcp_server.bind(('0.0.0.0', self._local_port))
+            self._tcp_server.listen(10)
             logging.info(msg='TCP connection established')
+            self.open_flag = True
 
     def set_timeout(self, s: float = 2) -> None:
         """!

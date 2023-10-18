@@ -10,7 +10,7 @@
 
 import json
 import struct
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 try:
     import numpy as np
@@ -84,7 +84,9 @@ class ICDRegMw(BaseRegMw):
     @details 用于使用icd进行指令收发，关于ICD的定义可查看 @ref md_ICD文件格式
     @image html icd_sch_packinfo.png
     """
-    fmt_mode = "="  # pack/unpack 大小端模式
+    fmt_mode = "="   # pack/unpack 大小端模式
+    FPack_TIdx = 0  # fpack格式中type描述的索引号
+    FPack_VIdx = 1  # fpack格式中value描述的索引号
 
     def __init__(self, kit: "NSUSoc", file_name='icd.json'):
         super(ICDRegMw, self).__init__(kit)
@@ -168,18 +170,20 @@ class ICDRegMw(BaseRegMw):
         @param fmt_type: 参数值格式化类型
         @return: 格式化后的参数值
         """
+        v_idx = self.FPack_VIdx
+        t_idx = self.FPack_TIdx
         param = self.param.get(param_name, None)
-        if isinstance(param[1], str) and param[1].startswith('0x'):
-            return int(param[1], 16)
-        elif isinstance(param[1], str) and param[1].startswith('0b'):
-            return int(param[1], 2)
-        elif param[0] == "file" or param[0] == "file_length":
-            return param[1]
+        if isinstance(param[v_idx], str) and param[v_idx].startswith('0x'):
+            return int(param[v_idx], 16)
+        elif isinstance(param[v_idx], str) and param[v_idx].startswith('0b'):
+            return int(param[v_idx], 2)
+        elif param[t_idx] == "file" or param[t_idx] == "file_length":
+            return param[v_idx]
         elif param is None:
             logging.warning(msg=f'未找到参数：{param_name}')
             self.param.update({param_name: ['uint32', default]})
             return int(default)
-        return value_python[param[0]](param[1])
+        return value_python[param[t_idx]](param[v_idx])
 
     def set_param(self, param_name: str, value):
         """!
@@ -190,20 +194,28 @@ class ICDRegMw(BaseRegMw):
         @param fmt_type: 参数值格式化类型
         @return:
         """
-        param = self.param.get(param_name, ['uint32', value])
-        if isinstance(value, str) and value.startswith('0x'):
-            param[1] = int(value, 16)
-        elif isinstance(value, str) and value.startswith('0b'):
-            param[1] = int(value, 2)
-        elif param[0] == "file" or param[0] == "file_length":
-            param[1] = value
-        elif isinstance(value, str) and '.' in value and param[0] != 'file':
-            param[1] = float(value)
+        v_idx = self.FPack_VIdx
+        t_idx = self.FPack_TIdx
+        if v_idx == 1:
+            param = self.param.get(param_name, ['uint32', value])
+        elif v_idx == 2:
+            param = self.param.get(param_name, ['', 'uint32', value])
         else:
-            param[1] = value_python[param[0]](value)
+            raise RuntimeError(f'The value of class attribute fpack_v_idx should not be {v_idx}')
+
+        if isinstance(value, str) and value.startswith('0x'):
+            param[v_idx] = int(value, 16)
+        elif isinstance(value, str) and value.startswith('0b'):
+            param[v_idx] = int(value, 2)
+        elif param[t_idx] == "file" or param[t_idx] == "file_length":
+            param[v_idx] = value
+        elif isinstance(value, str) and '.' in value and param[t_idx] != 'file':
+            param[v_idx] = float(value)
+        else:
+            param[v_idx] = value_python[param[t_idx]](value)
         self.param.update({param_name: param})
 
-    def fmt_command(self, command_name, command_type: str = "send", file_name=None, arrays=None) -> bytes:
+    def fmt_command(self, command_name, command_type: Optional[str] = "send", file_name=None, arrays=None) -> bytes:
         """!
         @brief 格式化指令
         @details 根据指令名、指令类型和文件名组合成指令
@@ -213,6 +225,7 @@ class ICDRegMw(BaseRegMw):
         @param arrays: 数组
         @return: 格式化好的指令
         """
+        v_idx = self.FPack_VIdx
         file_data = b''
         command = []
         __array__ = []
@@ -230,9 +243,10 @@ class ICDRegMw(BaseRegMw):
             if command_name in self.sequence:
                 raise ValueError(f'Sequence mode is not supported temporarily')
 
-            for register in self.command[command_name][command_type]:
+            cpack = self.command[command_name] if command_type is None else self.command[command_name][command_type]
+            for register in cpack:
                 if isinstance(register, list):
-                    value, _fmt = self.__fmt_register(register, register[1])
+                    value, _fmt = self.__fmt_register(register, register[v_idx])
                     if _fmt == 'file':
                         command.append(value)
                     else:
@@ -245,7 +259,7 @@ class ICDRegMw(BaseRegMw):
                     elif register.startswith(array_context_flag):
                         command.append(eval(register))
                     elif register in self.param:
-                        value, _fmt = self.__fmt_register(self.param[register], self.param[register][1])
+                        value, _fmt = self.__fmt_register(self.param[register], self.param[register][value])
                         if _fmt == 'file':
                             command.append(value)
                         else:
@@ -264,12 +278,12 @@ class ICDRegMw(BaseRegMw):
         return b''.join((command[0: 12], struct.pack(self.fmt_mode + 'I', len(command)), command[16:]))
 
     def __fmt_register(self, register: list, value):
+        t_idx = self.FPack_TIdx
         try:
-
-            if register[0] == "file":
+            if register[t_idx] == "file":
                 file_data, file_length = self.__get_file(value)
                 return file_data, "file_data"
-            if register[0] == "file_length":
+            if register[t_idx] == "file_length":
                 file_data, file_length = self.__get_file(value)
                 return file_length, 'I'
             if isinstance(value, str) and value.startswith('0x'):
@@ -280,10 +294,10 @@ class ICDRegMw(BaseRegMw):
                 # 发送时做参数计算
                 x = value
                 value = eval(register[-1])
-            fmt_str = value_type[register[0]]
-            return value_python[register[0]](value), fmt_str
+            fmt_str = value_type[register[t_idx]]
+            return value_python[register[t_idx]](value), fmt_str
         except Exception as e:
-            logging.error(msg=f'{e},寄存器({register[0]})有误')
+            logging.error(msg=f'{e},寄存器({register[t_idx]})有误')
         return 0, 'I'
 
     @staticmethod
@@ -345,13 +359,14 @@ class ICDRegMw(BaseRegMw):
             self.enable_param(cname, recv)
 
     def send_and_not_check(self, cname, array=None):
+        t_idx = self.FPack_TIdx
         send_cmd = self.fmt_command(command_name=cname, command_type="send", arrays=array)
         recv_length = 0
         for index, fpack in enumerate(self.command[cname]["recv"]):
             if isinstance(fpack, list):
-                recv_length += type_size[fpack[0]]
+                recv_length += type_size[fpack[t_idx]]
             elif isinstance(fpack, str):
-                recv_length += type_size[self.param[fpack][0]]
+                recv_length += type_size[self.param[fpack][t_idx]]
         total_len = len(send_cmd)
         send_len = self.kit.itf_cs.send_bytes(send_cmd)
         if total_len != send_len:
@@ -366,13 +381,14 @@ class ICDRegMw(BaseRegMw):
         @param recv: 接收到的反馈数据
         @return 无
         """
+        t_idx = self.FPack_TIdx
         length = 0
         for index, fpack in enumerate(self.command[cname]["recv"]):
             if isinstance(fpack, list):
-                length += type_size[fpack[0]]
+                length += type_size[fpack[t_idx]]
             elif isinstance(fpack, str):
-                data_size = type_size[self.param[fpack][0]]
-                data_type = value_type[self.param[fpack][0]]
+                data_size = type_size[self.param[fpack][t_idx]]
+                data_type = value_type[self.param[fpack][t_idx]]
                 self.set_param(fpack, struct.unpack(f"={data_type}", recv[length:length + data_size])[0])
                 length += data_size
 

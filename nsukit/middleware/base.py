@@ -8,7 +8,7 @@
 # MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
 # See the Mulan PSL v2 for more details.
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
     from .. import NSUSoc
@@ -46,6 +46,9 @@ class BaseRegMw(UMiddleware):
         ...
 
     def fmt_command(self, command_name, command_type: str = "send", file_name=None, arrays=None) -> bytes:
+        ...
+
+    def exec_with_bytes(self, data: bytes, check_feedback=True, need_feedback=False) -> Optional[bytes]:
         ...
 
     def execute_from_pname(self, parm_name: str) -> list:
