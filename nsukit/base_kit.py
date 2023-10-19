@@ -22,6 +22,65 @@ from .interface.base import UInterfaceMeta, UInterface, BaseStreamUItf, BaseCmdU
 from .tools.check_func import check_reg_schema
 
 
+def idp2dict(cs_path: str = None, cr_path=None, ds_path=None) -> dict:
+    """!
+    IDP(InitDeviceParam): 以字符串描述某一具体的协议接口参数信息
+    例如：
+    某一物理接口采用 tcp协议，ip为127.0.0.1，端口为5001，
+    则其IDP为  tcp://127.0.0.1:5001
+
+    @param cs_path:
+    @param cr_path:
+    @param ds_path:
+    @return:
+    """
+    def idp_parser(path: str, param: InitParamSet, mode=''):
+        if path is None:
+            if mode in ['cs', 'cr']:
+                from .interface import BaseCmdUItf
+                return BaseCmdUItf
+            else:
+                from .interface import BaseStreamUItf
+                return BaseStreamUItf
+
+        if path.find('://') == -1:
+            raise ValueError(f'{path} must contain the keyword ://')
+        head, pack = path.split('://')
+        pack = pack.split(':')
+        if head == 'xdma' and mode in ['cs', 'cr']:
+            from .interface import PCIECmdUItf
+            param.cmd_board = int(pack[0])
+            cls = PCIECmdUItf
+        elif head == 'xdma' and mode == 'ds':
+            from .interface import PCIEStreamUItf
+            param.stream_board = int(pack[0])
+            cls = PCIEStreamUItf
+        elif head == 'tcp' and mode in ['cs', 'cr']:
+            from .interface import TCPCmdUItf
+            param.cmd_ip = pack[0]
+            if len(pack) >= 2:
+                param.cmd_tcp_port = int(pack[1])
+            cls = TCPCmdUItf
+        elif head == 'tcp' and mode == 'ds':
+            from .interface import TCPStreamUItf
+            param.stream_ip = pack[0]
+            if len(pack) >= 2:
+                param.stream_tcp_port = int(pack[1])
+            cls = TCPStreamUItf
+        else:
+            raise ValueError(f'This input {path} is not supported yet')
+        return cls, param
+
+    param = InitParamSet()
+    cs_class, _ = idp_parser(cs_path, param, 'cs')
+    if cr_path is None:
+        cr_class = cs_class
+    else:
+        cr_class, _ = idp_parser(cr_path, param, 'cr')
+    ds_class, _ = idp_parser(ds_path, param, 'ds')
+    return {"cs_itf_class": cs_class, "cr_itf_class": cr_class, "ds_itf_class": ds_class, "link_param": param}
+
+
 class BulkMode(str, enum.Enum):
     """!
     用于NSUKit.bulk_xxx方法的枚举类
