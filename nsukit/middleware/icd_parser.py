@@ -259,7 +259,7 @@ class ICDRegMw(BaseRegMw):
                     elif register.startswith(array_context_flag):
                         command.append(eval(register))
                     elif register in self.param:
-                        value, _fmt = self.__fmt_register(self.param[register], self.param[register][value])
+                        value, _fmt = self.__fmt_register(self.param[register], self.param[register][v_idx])
                         if _fmt == 'file':
                             command.append(value)
                         else:

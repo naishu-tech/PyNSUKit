@@ -38,11 +38,10 @@ def idp2dict(cs_path: str = None, cr_path=None, ds_path=None) -> dict:
         if path is None:
             if mode in ['cs', 'cr']:
                 from .interface import BaseCmdUItf
-                return BaseCmdUItf
+                return BaseCmdUItf, param
             else:
                 from .interface import BaseStreamUItf
-                return BaseStreamUItf
-
+                return BaseStreamUItf, param
         if path.find('://') == -1:
             raise ValueError(f'{path} must contain the keyword ://')
         head, pack = path.split('://')

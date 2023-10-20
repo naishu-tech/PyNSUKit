@@ -283,11 +283,9 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         @param param InitParamSet或其子类的对象，需包含stream_board属性
         @return
         """
-        if not self.open_flag and self.board is not None:
-            self.xdma.open_board(self.board)
-            self.open_flag = True
+        self.board = param.stream_board
         if not self.open_flag:
-            self.board = param.stream_board
+            self.open_flag = self.xdma.open_board(self.board)
 
     def close(self) -> None:
         """!
@@ -307,8 +305,10 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         @param buf 内存类型
         @return 申请的内存的地址
         """
+        if length % 4 != 0:
+            raise ValueError(f'in {self.__class__.__name__}, stream mem length should be multiple of 4')
         if self.open_flag:
-            return self.xdma.alloc_buffer(self.board, length, buf)
+            return self.xdma.alloc_buffer(self.board, length//4, buf)
 
     def free_buffer(self, fd: int):
         """!
@@ -327,7 +327,9 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         @param length 获取长度
         @return 内存中存储的数据
         """
-        return self.xdma.get_buffer(fd, length)
+        if length % 4 != 0:
+            raise ValueError(f'in {self.__class__.__name__}, stream mem length should be multiple of 4')
+        return self.xdma.get_buffer(fd, length//4)
 
     def open_send(self, chnl: int, fd: int, length: int, offset: int = 0) -> None:
         """!
@@ -339,8 +341,10 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         @param offset 内存偏移量
         @return
         """
+        if length % 4 != 0:
+            raise ValueError(f'in {self.__class__.__name__}, stream mem length should be multiple of 4')
         if self.open_flag:
-            return self.xdma.fpga_send(self.board, chnl, fd, length, offset=offset)
+            return self.xdma.fpga_send(self.board, chnl, fd, length//4, offset=offset)
 
     def open_recv(self, chnl: int, fd: int, length: int, offset: int = 0) -> None:
         """!
@@ -352,8 +356,10 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         @param offset 内存偏移量
         @return
         """
+        if length % 4 != 0:
+            raise ValueError(f'in {self.__class__.__name__}, stream mem length should be multiple of 4')
         if self.open_flag:
-            return self.xdma.fpga_recv(self.board, chnl, fd, length, offset=offset)
+            return self.xdma.fpga_recv(self.board, chnl, fd, length//4, offset=offset)
 
     def wait_stream(self, fd: int, timeout: float = 0.) -> int:
         """!
@@ -388,8 +394,10 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         @param flag 1
         @return
         """
+        if length % 4 != 0:
+            raise ValueError(f'in {self.__class__.__name__}, stream mem length should be multiple of 4')
         if self.open_flag:
-            return self.xdma.stream_read(self.board, chnl, fd, length, offset, stop_event, time_out, flag)
+            return self.xdma.stream_read(self.board, chnl, fd, length//4, offset, stop_event, time_out, flag)
 
     def stream_send(self, chnl: int, fd: int, length: int, offset: int = 0,
                     stop_event: Callable = None, time_out: float = 0xFFFFFFFF, flag: int = 1) -> None:
@@ -405,5 +413,7 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         @param flag 1
         @return
         """
+        if length % 4 != 0:
+            raise ValueError(f'in {self.__class__.__name__}, stream mem length should be multiple of 4')
         if self.open_flag:
-            return self.xdma.stream_write(self.board, chnl, fd, length, offset, stop_event, time_out, flag)
+            return self.xdma.stream_write(self.board, chnl, fd, length//4, offset, stop_event, time_out, flag)

@@ -82,7 +82,7 @@ class SerialCmdUItf(VirtualRegCmdMixin, BaseCmdUItf):
             total_len = len(data)
             total_sendlen = 0
             while True:
-                send_len = self._device_serial.write(data)
+                send_len = self._device_serial.write(data[total_sendlen:])
                 total_sendlen += send_len
                 if total_len == total_sendlen:
                     return total_len
