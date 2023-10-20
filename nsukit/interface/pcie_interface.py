@@ -344,7 +344,7 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         if length % 4 != 0:
             raise ValueError(f'in {self.__class__.__name__}, stream mem length should be multiple of 4')
         if self.open_flag:
-            return self.xdma.fpga_send(self.board, chnl, fd, length//4, offset=offset)
+            return self.xdma.fpga_send(self.board, chnl, fd, length//4, offset=offset//4)
 
     def open_recv(self, chnl: int, fd: int, length: int, offset: int = 0) -> None:
         """!
@@ -359,7 +359,7 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         if length % 4 != 0:
             raise ValueError(f'in {self.__class__.__name__}, stream mem length should be multiple of 4')
         if self.open_flag:
-            return self.xdma.fpga_recv(self.board, chnl, fd, length//4, offset=offset)
+            return self.xdma.fpga_recv(self.board, chnl, fd, length//4, offset=offset//4)
 
     def wait_stream(self, fd: int, timeout: float = 0.) -> int:
         """!
@@ -397,7 +397,7 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         if length % 4 != 0:
             raise ValueError(f'in {self.__class__.__name__}, stream mem length should be multiple of 4')
         if self.open_flag:
-            return self.xdma.stream_read(self.board, chnl, fd, length//4, offset, stop_event, time_out, flag)
+            return self.xdma.stream_read(self.board, chnl, fd, length//4, offset//4, stop_event, time_out, flag)
 
     def stream_send(self, chnl: int, fd: int, length: int, offset: int = 0,
                     stop_event: Callable = None, time_out: float = 0xFFFFFFFF, flag: int = 1) -> None:
@@ -416,4 +416,4 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         if length % 4 != 0:
             raise ValueError(f'in {self.__class__.__name__}, stream mem length should be multiple of 4')
         if self.open_flag:
-            return self.xdma.stream_write(self.board, chnl, fd, length//4, offset, stop_event, time_out, flag)
+            return self.xdma.stream_write(self.board, chnl, fd, length//4, offset//4, stop_event, time_out, flag)
