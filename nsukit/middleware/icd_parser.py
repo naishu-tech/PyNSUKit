@@ -138,7 +138,7 @@ class ICDRegMw(BaseRegMw):
             self.command = self.icd_data['command']
             self.sequence = self.icd_data['sequence']
             # 记录成功消息，表示ICD参数加载成功
-            logging.info(msg='ICD Parameters loaded successfully')
+            logging.debug(msg='ICD Parameters loaded successfully')
         except Exception as e:
             # 如果提取数据或设置实例变量时出现异常，记录错误并返回False
             logging.error(msg=f'{e}, {file_path} unavailable')
@@ -271,10 +271,11 @@ class ICDRegMw(BaseRegMw):
                 else:
                     logging.warning(msg=f'指令({command_name})的({register})格式不正确')
         except Exception as e:
+            import traceback
+            traceback.print_exception(e)
             logging.error(msg=f'{e},指令转码失败')
 
         command = b''.join(command)
-        assert len(command) >= 16, f'指令({command_name})不正确'
         return b''.join((command[0: 12], struct.pack(self.fmt_mode + 'I', len(command)), command[16:]))
 
     def __fmt_register(self, register: list, value):
@@ -290,14 +291,14 @@ class ICDRegMw(BaseRegMw):
                 value = int(value, 16)
             if isinstance(value, str) and value.startswith('0b'):
                 value = int(value, 2)
-            if len(register) > 2:
+            if len(register) > self.FPack_VIdx+1:
                 # 发送时做参数计算
                 x = value
                 value = eval(register[-1])
             fmt_str = value_type[register[t_idx]]
             return value_python[register[t_idx]](value), fmt_str
         except Exception as e:
-            logging.error(msg=f'{e},寄存器({register[t_idx]})有误')
+            logging.error(msg=f'{e},寄存器({register[0]})有误')
         return 0, 'I'
 
     @staticmethod

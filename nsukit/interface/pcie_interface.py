@@ -30,6 +30,7 @@ class PCIECmdUItf(BaseCmdUItf):
     _block_size = 4096
     ADDR_SENT_DOWN = 48 * (1024 ** 2) // 4 - 1
     irq_num = 15
+    multi_board_lock = Lock()
 
     def __init__(self):
         self.board = 0
@@ -96,6 +97,7 @@ class PCIECmdUItf(BaseCmdUItf):
         if not self.open_flag:
             raise RuntimeError(f'{self.__class__.__name__}.{self.write.__name__}: '
                                f'Not connected to the board {self.board}.')
+        value = struct.unpack('=I', value)
         if not self.xdma.alite_write(addr, value, self.board):
             self.open_flag = False
             raise RuntimeError(f'{self.__class__.__name__}.{self.write.__name__}: '
@@ -139,7 +141,7 @@ class PCIECmdUItf(BaseCmdUItf):
             self.once_timeout -= (time.time() - st)
             return sent_length
         except AssertionError as e:
-            assert 0, f"[ioaxi] {e}"
+            assert 0, f"[toaxi] {e}"
 
     def recv_bytes(self, size: int) -> bytes:
         """!
@@ -168,7 +170,7 @@ class PCIECmdUItf(BaseCmdUItf):
                 bytes_data_length += len(cur_recv_data)
                 assert time.time() - st < self.once_timeout, f"recv timeout, rcvd {bytes_data_length}"
         except (AssertionError, TimeoutError) as e:
-            assert 0, f"[ioaxi] {e}"
+            assert 0, f"[toaxi] {e}"
         return bytes_data
 
     def _send(self, data):
@@ -178,12 +180,13 @@ class PCIECmdUItf(BaseCmdUItf):
         @param data 要发送的数据
         @return 已经发送的数据长度
         """
-        data += b'\x00' * (len(data) % 4)
-        data = np.frombuffer(data, dtype=np.uint32)
-        for value in data:
-            self.xdma.alite_write(self.sent_base + self.sent_ptr, value, self.board)
-            self.sent_ptr += 4
-        return int(data.nbytes)
+        with self.multi_board_lock:
+            data += b'\x00' * (len(data) % 4)
+            data = np.frombuffer(data, dtype=np.uint32)
+            for value in data:
+                self.xdma.alite_write(self.sent_base + self.sent_ptr, value, self.board)
+                self.sent_ptr += 4
+            return int(data.nbytes)
 
     def _recv(self, size):
         """!
@@ -192,13 +195,14 @@ class PCIECmdUItf(BaseCmdUItf):
         @param size 要接收的数据大小
         @return 接收的数据
         """
-        recv_size = size + size % 4
-        recv_size //= 4
-        res = np.zeros((recv_size,), dtype=np.uint32)
-        for idx in range(recv_size):
-            res[idx] = self.xdma.alite_read(self.recv_base + self.recv_ptr, self.board)[1]
-            self.recv_ptr += 4
-        return res.tobytes()[:size]
+        with self.multi_board_lock:
+            recv_size = size + size % 4
+            recv_size //= 4
+            res = np.zeros((recv_size,), dtype=np.uint32)
+            for idx in range(recv_size):
+                res[idx] = self.xdma.alite_read(self.recv_base + self.recv_ptr, self.board)[1]
+                self.recv_ptr += 4
+            return res.tobytes()[:size]
 
     @property
     def _sent_down(self):
@@ -223,7 +227,7 @@ class PCIECmdUItf(BaseCmdUItf):
         @return
         """
         self.xdma.alite_write(self.irq_base, 0x80000000, self.board)
-        time.sleep(0.2)
+        time.sleep(0.02)
         self.xdma.alite_write(self.irq_base, 0x0, self.board)
 
     def per_recv(self, callback=None):
@@ -235,7 +239,7 @@ class PCIECmdUItf(BaseCmdUItf):
         """
         res = self.xdma.wait_irq(self.irq_num, self.board, self.once_timeout * 1000)
         if not res:
-            raise TimeoutError(f'ioaxi timeout')
+            raise TimeoutError(f'toaxi timeout')
         if callable(callback):
             callback()
         self.reset_irq()
@@ -243,17 +247,18 @@ class PCIECmdUItf(BaseCmdUItf):
 
     def per_recv_polled(self):
         timeout = self.once_timeout
-        while True:
+        flag = True
+        while flag:
             if self.xdma.alite_read(self.irq_base, self.board)[1] != 0x8000:
                 time.sleep(0.005)
                 if timeout > 0:
-                    timeout -= 1
+                    timeout -= 0.005
                 else:
-                    raise TimeoutError(f'ioaxi timeout')
+                    raise TimeoutError(f'toaxi timeout')
             else:
                 self.reset_irq()
                 self.recv_event.set()
-                break
+                flag = False
 
 
 class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
