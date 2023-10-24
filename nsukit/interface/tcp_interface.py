@@ -83,7 +83,7 @@ class TCPCmdUItf(VirtualRegCmdMixin, BaseCmdUItf):
             total_len = len(data)
             total_sendlen = 0
             while True:
-                send_len = self._tcp_server.sendall(data[total_sendlen:])
+                send_len = self._tcp_server.send(data[total_sendlen:])
                 total_sendlen += send_len
                 if total_len == total_sendlen:
                     return total_len
@@ -203,6 +203,7 @@ class TCPStreamUItf(BaseStreamUItf):
         self.memory_index = 0
         self.open_flag = False
         self._recv_thread: threading.Thread = threading.Thread()
+        self._recv_stop= threading.Event()
 
     def accept(self, param: InitParamSet) -> None:
         """!
@@ -211,15 +212,17 @@ class TCPStreamUItf(BaseStreamUItf):
         @param param InitParamSet或其子类的对象，需包含stream_ip、stream_tcp_port属性
         @return
         """
-        if not self.open_flag:
-            self._local_port = get_port(ip=param.stream_ip) if param.stream_tcp_port == 0 else param.stream_tcp_port
-            self._tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self._tcp_server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            self.set_timeout(self._timeout)
-            self._tcp_server.bind(('0.0.0.0', self._local_port))
-            self._tcp_server.listen(10)
-            logging.info(msg='TCP connection established')
-            self.open_flag = True
+        if self.open_flag:
+            self.close()
+        self._local_port = get_port(ip=param.stream_ip) if param.stream_tcp_port == 0 else param.stream_tcp_port
+        self._tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self._tcp_server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.set_timeout(self._timeout)
+        self._tcp_server.bind(('0.0.0.0', self._local_port))
+        self._tcp_server.listen(10)
+        logging.info(msg='TCP connection established')
+        self.open_flag = True
+        self._recv_server = None
 
     def set_timeout(self, s: float = 2) -> None:
         """!
@@ -239,8 +242,9 @@ class TCPStreamUItf(BaseStreamUItf):
         if self.open_flag:
             try:
                 self._tcp_server.close()
-                self._recv_server.shutdown(socket.SHUT_RDWR)
-                self._recv_server.close()
+                if self._recv_server is not None:
+                    self._recv_server.shutdown(socket.SHUT_RDWR)
+                    self._recv_server.close()
                 self.open_flag = False
             except Exception as e:
                 self.open_flag = False
@@ -320,11 +324,11 @@ class TCPStreamUItf(BaseStreamUItf):
         try:
             if not self.open_flag:
                 raise RuntimeError("You must use open_board first")
-            if self._recv_server is not None and self._recv_thread.is_alive():
+            if self._recv_thread.is_alive():
                 raise RuntimeError("Too many recv_thread")
-            self._recv_server, self._recv_addr = self._tcp_server.accept()
-            logging.info(msg=f"{self.__class__.__name__} Client connection")
-            self._recv_server.settimeout(self._timeout)
+            if self._recv_server is None:
+                self._recv_server, self._recv_addr = self._tcp_server.accept()
+                logging.info(msg=f"{self.__class__.__name__} Client connection")
             event = self.stop_event
             self._recv_thread = threading.Thread(target=self._recv, args=(fd, length, offset, event),
                                                  daemon=True, name='TCP_recv')
@@ -349,51 +353,34 @@ class TCPStreamUItf(BaseStreamUItf):
         if memory_object.using_event.is_set():
             raise RuntimeError("内存正在被使用")
         memory_object.using_event.set()
+        self._recv_stop.clear()
         if length > memory_object.size:
             raise RuntimeError(f"数据大小超过内存大小")
         if length > (memory_object.size - offset):
             raise RuntimeError(f"偏移量过大")
         if length % 4 != 0:
             raise RuntimeError(f"数据不能被4整除")
-        memory_object.using_size = 0
-        write_len = 0
+        recv_length = length * 4
+        data = b''
+        data_len = 0
         while True:
             try:
                 if event.is_set():
                     memory_object.using_event.clear()
                     return memory_object.using_size
-                if length*4 > 1024:
-                    recv_length = 1024
-                else:
-                    recv_length = length*4
-
-                fd = self._recv_server.recv(recv_length)
-                fd_len = len(fd)
-                if fd_len < recv_length:
-                    fd += self._recv_server.recv(recv_length-fd_len)
-                    fd_len = len(fd)
-                if fd_len == 0:
+                _data = self._recv_server.recv(recv_length - data_len)
+                data += _data
+                data_len = len(data)
+                if data_len >= recv_length:
+                    memory_object.memory[offset:offset + data_len // 4] = np.frombuffer(data, dtype='u4')
+                    memory_object.using_size = data_len // 4
                     memory_object.using_event.clear()
-                    logging.info("Recv complete")
                     break
-
-                # logging.debug(msg=f"Recv data is: {fd.hex()}")
-
-                memory_object.memory[write_len + offset:write_len + offset + fd_len // 4] = np.frombuffer(fd, dtype='u4')
-                write_len += (fd_len // 4)
-
-                memory_object.using_size = memory_object.using_size + (write_len + offset + fd_len // 4) - (
-                            write_len + offset)
-
-                if length <= 0:
-                    memory_object.using_event.clear()
-                    return memory_object.using_size
-
-                length -= (fd_len // 4)
             except Exception as e:
                 logging.error(msg=e)
                 memory_object.using_event.clear()
                 break
+        self._recv_stop.set()
 
     def wait_stream(self, fd: int, timeout: float = 0.) -> int:
         """!
@@ -405,8 +392,6 @@ class TCPStreamUItf(BaseStreamUItf):
         """
         if not self.open_flag:
             raise RuntimeError("You must use open_board first")
-        if not self._recv_thread.is_alive():
-            raise RuntimeError("recv_thread not alive")
         if fd not in self.memory_dict:
             raise RuntimeError(f"没有此内存块")
         memory = self.memory_dict[fd]
@@ -432,7 +417,7 @@ class TCPStreamUItf(BaseStreamUItf):
         self.stop_event.clear()
 
     def stream_recv(self, chnl: int, fd: int, length: int, offset: int = 0,
-                    stop_event: Callable = None, time_out: float = 0xFFFFFFFF, flag: int = 1) -> None:
+                    stop_event: Callable = None, time_out: float = 1., flag: int = 1) -> None:
         """!
         @brief 数据流上行
         @details 封装好的数据流上行函数
@@ -451,13 +436,14 @@ class TCPStreamUItf(BaseStreamUItf):
                 if stop_event():
                     break
                 if self.wait_stream(fd, time_out) == length:
-                    return
+                    self._recv_stop.wait(timeout=5)
+                    break
             except Exception as e:
                 logging.error(msg=e)
                 break
 
     def stream_send(self, chnl: int, fd: int, length: int, offset: int = 0,
-                    stop_event: Callable = None, time_out: float = 0xFFFFFFFF, flag: int = 1) -> None:
+                    stop_event: Callable = None, time_out: float = 1., flag: int = 1) -> None:
         """!
         @brief 数据流下行
         @details 封装好的数据流下行函数

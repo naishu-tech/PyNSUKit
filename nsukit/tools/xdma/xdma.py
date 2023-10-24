@@ -60,7 +60,7 @@ class Xdma(object):
                 else:
                     self.opened_board[board] = 1
                     result = xdma_base.fpga_open(board, poll_interval_ms)
-                print(f'正在打开{self.opened_board[board]=}')
+                print(f'正在打开{board, self.opened_board[board]}')
             if not result:
                 logging.warning(msg=xdma_base.fpga_err_msg())
             return result
@@ -84,7 +84,7 @@ class Xdma(object):
                 if board not in self.opened_board:
                     return True
                 self.opened_board[board] -= 1
-                print(f'正在关闭{self.opened_board[board]=}')
+                print(f'正在关闭{board, self.opened_board[board]}')
                 if self.opened_board[board] == 0:
                     xdma_base.fpga_close(board)
                     self.opened_board.pop(board)
