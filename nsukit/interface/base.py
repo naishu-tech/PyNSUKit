@@ -80,6 +80,12 @@ class BaseCmdUItf(UInterface):
     def recv_bytes(self, size: int) -> bytes:
         raise NotImplementedError(f'Please overload the {self.__class__.__name__}.{self.recv_bytes.__name__} method')
 
+    def send_down(self):
+        ...
+
+    def recv_down(self):
+        ...
+
     def write(self, addr: int, value: bytes) -> None:
         raise NotImplementedError(f'Please overload the {self.__class__.__name__}.{self.write.__name__} method')
 
@@ -226,9 +232,11 @@ class VirtualRegCmdMixin:
         cmd = self._fmt_reg_write(addr, value)
         if len(cmd) != self.send_bytes(cmd):
             raise RuntimeError(f"Fail in send")
+        self.send_down()
         recv = self.recv_bytes(16)
         result_len = head_check(cmd, recv)
         result = self.recv_bytes(result_len - 16)
+        self.recv_down()
         if struct.unpack('=I', result) != 0:
             raise RuntimeError(f'{self.__class__.__name__}.{self.write.__name__}: '
                                f'Failed to write to register {hex(addr)} on board {board}')
@@ -243,9 +251,11 @@ class VirtualRegCmdMixin:
         cmd = self._fmt_reg_read(addr)
         if len(cmd) != self.send_bytes(cmd):
             raise RuntimeError(f"Fail in send")
+        self.send_down()
         recv = self.recv_bytes(16)
         result_len = head_check(cmd, recv)
         result = self.recv_bytes(result_len - 16)
+        self.recv_down()
         if struct.unpack('=I', result[:4]) != 0:
             raise RuntimeError(f'{self.__class__.__name__}.{self.write.__name__}: '
                                f'Failed to read to register {hex(addr)} on board {board}')
@@ -286,9 +296,11 @@ class VirtualRegCmdMixin:
         cmd = b''.join((head, value, padding))   # 格式化完成指令
         if len(cmd) != self.send_bytes(cmd):
             raise RuntimeError(f"Fail in send")
+        self.send_down()
         recv = self.recv_bytes(16)
         result_len = head_check(cmd, recv)
         result = self.recv_bytes(result_len - 16)
+        self.recv_down()
         if struct.unpack('=I', result) != 0:
             raise RuntimeError(f'{self.__class__.__name__}.{self.write.__name__}: '
                                f'Failed to increment_write to base register {hex(addr)}')
@@ -308,9 +320,11 @@ class VirtualRegCmdMixin:
         cmd = struct.pack('=IIIIII', *pack)
         if len(cmd) != self.send_bytes(cmd):
             raise RuntimeError(f"Fail in send")
+        self.send_down()
         recv = self.recv_bytes(16)
         result_len = head_check(cmd, recv)
         result = self.recv_bytes(result_len - 16)
+        self.recv_down()
         if struct.unpack('=I', result[:4]) != 0:
             raise RuntimeError(f'{self.__class__.__name__}.{self.write.__name__}: '
                                f'Failed to increment_write to base register {hex(addr)}')
@@ -334,9 +348,11 @@ class VirtualRegCmdMixin:
         cmd = b''.join((head, value, padding))  # 格式化完成指令
         if len(cmd) != self.send_bytes(cmd):
             raise RuntimeError(f"Fail in send")
+        self.send_down()
         recv = self.recv_bytes(16)
         result_len = head_check(cmd, recv)
         result = self.recv_bytes(result_len - 16)
+        self.recv_down()
         if struct.unpack('=I', result) != 0:
             raise RuntimeError(f'{self.__class__.__name__}.{self.write.__name__}: '
                                f'Failed to increment_write to base register {hex(addr)}')
@@ -356,9 +372,11 @@ class VirtualRegCmdMixin:
         cmd = struct.pack('=IIIIII', *pack)
         if len(cmd) != self.send_bytes(cmd):
             raise RuntimeError(f"Fail in send")
+        self.send_down()
         recv = self.recv_bytes(16)
         result_len = head_check(cmd, recv)
         result = self.recv_bytes(result_len - 16)
+        self.recv_down()
         if struct.unpack('=I', result[:4]) != 0:
             raise RuntimeError(f'{self.__class__.__name__}.{self.write.__name__}: '
                                f'Failed to increment_write to base register {hex(addr)}')

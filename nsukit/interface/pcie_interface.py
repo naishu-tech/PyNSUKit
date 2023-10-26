@@ -119,6 +119,15 @@ class PCIECmdUItf(BaseCmdUItf):
                                f'Failed to read from register {hex(addr)} on board {self.board}')
         return struct.pack('=I', res[1])
 
+    def send_down(self):
+        self.sent_ptr = 0
+        self._sent_down = True
+
+    def recv_down(self):
+        self.recv_ptr = 0
+        self.reset_irq()
+        self.recv_event.set()
+
     def send_bytes(self, data: bytes) -> int:
         """!
         @brief      icd指令使用pcie发送
@@ -131,13 +140,11 @@ class PCIECmdUItf(BaseCmdUItf):
                                f'Not connected to the board {self.board}.')
         try:
             self.once_timeout = self.timeout
-            self.sent_ptr = 0
             total_length, sent_length = len(data), 0
             st = time.time()
             while total_length != sent_length:
                 sent_length += self._send(data[sent_length: self._block_size + sent_length])
                 assert time.time() - st < self.once_timeout, f"send timeout, sent {sent_length}"
-            self._sent_down = True
             self.once_timeout -= (time.time() - st)
             return sent_length
         except AssertionError as e:
@@ -154,7 +161,6 @@ class PCIECmdUItf(BaseCmdUItf):
             raise RuntimeError(f'{self.__class__.__name__}.{self.recv_bytes.__name__}: '
                                f'Not connected to the board {self.board}.')
         try:
-            self.recv_ptr = 0
             if size != 0:
                 if self.wait_irq:
                     self.per_recv()
@@ -242,23 +248,15 @@ class PCIECmdUItf(BaseCmdUItf):
             raise TimeoutError(f'toaxi timeout')
         if callable(callback):
             callback()
-        self.reset_irq()
-        self.recv_event.set()
 
     def per_recv_polled(self):
         timeout = self.once_timeout
-        flag = True
-        while flag:
-            if self.xdma.alite_read(self.irq_base, self.board)[1] != 0x8000:
-                time.sleep(0.005)
-                if timeout > 0:
-                    timeout -= 0.005
-                else:
-                    raise TimeoutError(f'toaxi timeout')
+        while self.xdma.alite_read(self.irq_base, self.board)[1] != 0x8000:
+            time.sleep(0.005)
+            if timeout > 0:
+                timeout -= 0.005
             else:
-                self.reset_irq()
-                self.recv_event.set()
-                flag = False
+                raise TimeoutError(f'toaxi timeout')
 
 
 class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):

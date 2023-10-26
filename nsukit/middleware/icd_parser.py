@@ -353,9 +353,11 @@ class ICDRegMw(BaseRegMw):
             recv_cmd = self.fmt_command(command_name=cname, command_type="recv")
             total_len = len(send_cmd)
             send_len = self.kit.itf_cs.send_bytes(send_cmd)
+            self.kit.itf_cs.send_down()
             if total_len != send_len:
                 raise RuntimeError(f"{cname} total_len is {total_len}, but just send {send_len}!")
             recv = self.kit.itf_cs.recv_bytes(struct.unpack("=I", recv_cmd[12:16])[0])
+            self.kit.itf_cs.recv_down()
             self.check_recv(recv_cmd, recv, cname)
             self.enable_param(cname, recv)
 
@@ -370,9 +372,11 @@ class ICDRegMw(BaseRegMw):
                 recv_length += type_size[self.param[fpack][t_idx]]
         total_len = len(send_cmd)
         send_len = self.kit.itf_cs.send_bytes(send_cmd)
+        self.kit.itf_cs.send_down()
         if total_len != send_len:
             raise RuntimeError(f"{cname} total_len is {total_len}, but just send {send_len}!")
         recv = self.kit.itf_cs.recv_bytes(recv_length)
+        self.kit.itf_cs.recv_down()
         self.enable_param(cname, recv)
 
     def enable_param(self, cname: str, recv: bytes):
