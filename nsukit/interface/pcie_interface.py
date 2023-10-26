@@ -374,6 +374,7 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         @param timeout 超时时间
         @return 已经写入内存中数据的大小
         """
+        timeout = int(timeout)
         return self.xdma.wait_dma(fd, int(timeout*1000))
 
     def break_stream(self, fd):
@@ -386,7 +387,7 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         self.xdma.break_dma(fd=fd)
 
     def stream_recv(self, chnl: int, fd: int, length: int, offset: int = 0,
-                    stop_event: Callable = None, time_out: float = 0xFFFFFFFF, flag: int = 1) -> None:
+                    stop_event: Callable = None, time_out: float = 1., flag: int = 1) -> None:
         """!
         @brief 数据流上行
         @details 封装好的数据流上行函数
@@ -399,13 +400,14 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         @param flag 1
         @return
         """
+        time_out = int(time_out)
         if length % 4 != 0:
             raise ValueError(f'in {self.__class__.__name__}, stream mem length should be multiple of 4')
         if self.open_flag:
             return self.xdma.stream_read(self.board, chnl, fd, length//4, offset//4, stop_event, time_out, flag)
 
     def stream_send(self, chnl: int, fd: int, length: int, offset: int = 0,
-                    stop_event: Callable = None, time_out: float = 0xFFFFFFFF, flag: int = 1) -> None:
+                    stop_event: Callable = None, time_out: float = 1., flag: int = 1) -> None:
         """!
         @brief 数据流下行
         @details 封装好的数据流下行函数
@@ -418,6 +420,7 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         @param flag 1
         @return
         """
+        time_out = int(time_out)
         if length % 4 != 0:
             raise ValueError(f'in {self.__class__.__name__}, stream mem length should be multiple of 4')
         if self.open_flag:
