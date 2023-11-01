@@ -237,7 +237,7 @@ class VirtualRegCmdMixin:
         result_len = head_check(cmd, recv)
         result = self.recv_bytes(result_len - 16)
         self.recv_down()
-        if struct.unpack('=I', result) != 0:
+        if struct.unpack('=I', result)[0] != 0:
             raise RuntimeError(f'{self.__class__.__name__}.{self.write.__name__}: '
                                f'Failed to write to register {hex(addr)} on board {board}')
 
@@ -256,7 +256,7 @@ class VirtualRegCmdMixin:
         result_len = head_check(cmd, recv)
         result = self.recv_bytes(result_len - 16)
         self.recv_down()
-        if struct.unpack('=I', result[:4]) != 0:
+        if struct.unpack('=I', result[:4])[0] != 0:
             raise RuntimeError(f'{self.__class__.__name__}.{self.write.__name__}: '
                                f'Failed to read to register {hex(addr)} on board {board}')
         return result[4:]

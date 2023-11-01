@@ -272,6 +272,7 @@ class TCPStreamUItf(BaseStreamUItf):
         _memory = _memory[:length]
         # 生成Memory对象，在类内描述一片内存
         memory_obj = self.Memory(memory=_memory, size=length, idx=self.memory_index, using_event=Event())
+        memory_obj.using_event.set()
         self.memory_dict[self.memory_index] = memory_obj
         self.memory_index += 1
         return memory_obj.idx
@@ -350,9 +351,9 @@ class TCPStreamUItf(BaseStreamUItf):
         if fd not in self.memory_dict:
             raise RuntimeError(f"没有此内存块")
         memory_object = self.memory_dict[fd]
-        if memory_object.using_event.is_set():
+        if not memory_object.using_event.is_set():
             raise RuntimeError("内存正在被使用")
-        memory_object.using_event.set()
+        memory_object.using_event.clear()
         self._recv_stop.clear()
         if length > memory_object.size:
             raise RuntimeError(f"数据大小超过内存大小")
@@ -360,25 +361,30 @@ class TCPStreamUItf(BaseStreamUItf):
             raise RuntimeError(f"偏移量过大")
         if length % 4 != 0:
             raise RuntimeError(f"数据不能被4整除")
+        memory_object.using_size = 0
         recv_length = length * 4
         data = b''
         data_len = 0
         while True:
             try:
                 if event.is_set():
-                    memory_object.using_event.clear()
+                    memory_object.using_event.set()
                     return memory_object.using_size
                 _data = self._recv_server.recv(recv_length - data_len)
                 data += _data
                 data_len = len(data)
+                if data_len == 0:
+                    memory_object.using_event.set()
+                    logging.info("Recv complete")
+                    break
                 if data_len >= recv_length:
                     memory_object.memory[offset:offset + data_len // 4] = np.frombuffer(data, dtype='u4')
-                    memory_object.using_size = data_len // 4
-                    memory_object.using_event.clear()
+                    memory_object.using_size = data_len // 4 + offset
+                    memory_object.using_event.set()
                     break
             except Exception as e:
                 logging.error(msg=e)
-                memory_object.using_event.clear()
+                memory_object.using_event.set()
                 break
         self._recv_stop.set()
 
