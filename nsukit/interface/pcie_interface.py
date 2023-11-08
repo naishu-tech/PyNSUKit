@@ -97,7 +97,7 @@ class PCIECmdUItf(BaseCmdUItf):
         if not self.open_flag:
             raise RuntimeError(f'{self.__class__.__name__}.{self.write.__name__}: '
                                f'Not connected to the board {self.board}.')
-        value = struct.unpack('=I', value)
+        value = struct.unpack('=I', value)[0]
         if not self.xdma.alite_write(addr, value, self.board):
             self.open_flag = False
             raise RuntimeError(f'{self.__class__.__name__}.{self.write.__name__}: '
