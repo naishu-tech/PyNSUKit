@@ -258,6 +258,7 @@ class TCPStreamUItf(BaseStreamUItf):
         @param buf 内存类型
         @return 申请的内存在字典中的key
         """
+        length = length//4
         # 输入buf为内存指针时
         if isinstance(buf, int):
             _memory = np.frombuffer((ctypes.c_uint * length).from_address(buf), dtype='u4')
@@ -271,7 +272,7 @@ class TCPStreamUItf(BaseStreamUItf):
             raise ValueError(f'The memory size of the input buf is less than length')
         _memory = _memory[:length]
         # 生成Memory对象，在类内描述一片内存
-        memory_obj = self.Memory(memory=_memory, size=length, idx=self.memory_index, using_event=Event())
+        memory_obj = self.Memory(memory=_memory, size=length*4, idx=self.memory_index, using_event=Event())
         memory_obj.using_event.set()
         self.memory_dict[self.memory_index] = memory_obj
         self.memory_index += 1
@@ -298,7 +299,7 @@ class TCPStreamUItf(BaseStreamUItf):
         @param length 获取长度
         @return 内存中存储的数据
         """
-        return self.memory_dict[fd].memory[:length]
+        return self.memory_dict[fd].memory[:length//4]
 
     def open_send(self, chnl: int, fd: int, length: int, offset: int = 0) -> None:
         """!
@@ -362,7 +363,7 @@ class TCPStreamUItf(BaseStreamUItf):
         if length % 4 != 0:
             raise RuntimeError(f"数据不能被4整除")
         memory_object.using_size = 0
-        recv_length = length * 4
+        recv_length = length
         data = b''
         data_len = 0
         while True:
@@ -379,7 +380,7 @@ class TCPStreamUItf(BaseStreamUItf):
                     break
                 if data_len >= recv_length:
                     memory_object.memory[offset:offset + data_len // 4] = np.frombuffer(data, dtype='u4')
-                    memory_object.using_size = data_len // 4 + offset
+                    memory_object.using_size = data_len + offset
                     memory_object.using_event.set()
                     break
             except Exception as e:
