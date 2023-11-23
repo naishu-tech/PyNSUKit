@@ -372,6 +372,10 @@ class TCPStreamUItf(BaseStreamUItf):
                     memory_object.using_event.set()
                     return memory_object.using_size
                 _data = self._recv_server.recv(recv_length - data_len)
+                if not _data:
+                    self._recv_server, self._recv_addr = self._tcp_server.accept()
+                    logging.info(msg=f"{self.__class__.__name__} Client connection")
+                    _data = self._recv_server.recv(recv_length - data_len)
                 data += _data
                 data_len = len(data)
                 if data_len == 0:
