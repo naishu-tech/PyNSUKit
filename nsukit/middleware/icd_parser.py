@@ -29,6 +29,7 @@ if TYPE_CHECKING:
 file_context_flag = '__file__'
 file_length_flag = '__filelength__'
 array_context_flag = '__array__'
+array_length_flag = '__arraylength__'
 COMMAND_LENGTH = slice(12, 16)
 
 value_type = {
@@ -258,6 +259,15 @@ class ICDRegMw(BaseRegMw):
                         command.append(struct.pack(self.fmt_mode + 'I', file_length))
                     elif register.startswith(array_context_flag):
                         command.append(eval(register))
+                    elif register.startswith(array_length_flag):
+                        index = register[15:]
+                        length = 0
+                        if index == '[all]':
+                            for one in __array__:
+                                length += len(one)
+                        else:
+                            length = len(eval(f'__array__{index}'))
+                        command.append(struct.pack(self.fmt_mode + 'I', length))
                     elif register in self.param:
                         value, _fmt = self.__fmt_register(self.param[register], self.param[register][v_idx])
                         if _fmt == 'file':
