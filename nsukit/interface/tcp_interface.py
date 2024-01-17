@@ -258,8 +258,8 @@ class TCPStreamUItf(BaseStreamUItf):
         @param buf 内存类型
         @return 申请的内存在字典中的key
         """
-        length = length//4
         # 输入buf为内存指针时
+        length = length//4
         if isinstance(buf, int):
             _memory = np.frombuffer((ctypes.c_uint * length).from_address(buf), dtype='u4')
         # 输入buf为numpy.ndarray时
@@ -272,7 +272,7 @@ class TCPStreamUItf(BaseStreamUItf):
             raise ValueError(f'The memory size of the input buf is less than length')
         _memory = _memory[:length]
         # 生成Memory对象，在类内描述一片内存
-        memory_obj = self.Memory(memory=_memory, size=length*4, idx=self.memory_index, using_event=Event())
+        memory_obj = self.Memory(memory=_memory, size=length, idx=self.memory_index, using_event=Event())
         memory_obj.using_event.set()
         self.memory_dict[self.memory_index] = memory_obj
         self.memory_index += 1
@@ -332,7 +332,7 @@ class TCPStreamUItf(BaseStreamUItf):
                 self._recv_server, self._recv_addr = self._tcp_server.accept()
                 logging.info(msg=f"{self.__class__.__name__} Client connection")
             event = self.stop_event
-            self._recv_thread = threading.Thread(target=self._recv, args=(fd, length, offset, event),
+            self._recv_thread = threading.Thread(target=self._recv, args=(fd, length//4, offset, event),
                                                  daemon=True, name='TCP_recv')
             self._recv_thread.start()
         except Exception as e:
@@ -363,7 +363,7 @@ class TCPStreamUItf(BaseStreamUItf):
         if length % 4 != 0:
             raise RuntimeError(f"数据不能被4整除")
         memory_object.using_size = 0
-        recv_length = length
+        recv_length = length * 4
         data = b''
         data_len = 0
         while True:
@@ -372,10 +372,6 @@ class TCPStreamUItf(BaseStreamUItf):
                     memory_object.using_event.set()
                     return memory_object.using_size
                 _data = self._recv_server.recv(recv_length - data_len)
-                if not _data:
-                    self._recv_server, self._recv_addr = self._tcp_server.accept()
-                    logging.info(msg=f"{self.__class__.__name__} Client connection")
-                    _data = self._recv_server.recv(recv_length - data_len)
                 data += _data
                 data_len = len(data)
                 if data_len == 0:
@@ -384,7 +380,7 @@ class TCPStreamUItf(BaseStreamUItf):
                     break
                 if data_len >= recv_length:
                     memory_object.memory[offset:offset + data_len // 4] = np.frombuffer(data, dtype='u4')
-                    memory_object.using_size = data_len + offset
+                    memory_object.using_size = data_len // 4 + offset
                     memory_object.using_event.set()
                     break
             except Exception as e:
@@ -408,7 +404,7 @@ class TCPStreamUItf(BaseStreamUItf):
         memory = self.memory_dict[fd]
         try:
             memory.using_event.wait(timeout)
-            return memory.using_size
+            return memory.using_size * 4
         except RuntimeError as e:
             logging.error(msg=e)
 
