@@ -398,11 +398,11 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         @param flag 1
         @return
         """
-        time_out = int(time_out)
+        time_out = int(time_out*1000)
         if length % 4 != 0:
             raise ValueError(f'in {self.__class__.__name__}, stream mem length should be multiple of 4')
         if self.open_flag:
-            return self.xdma.stream_read(self.board, chnl, fd, length//4, offset//4, stop_event, time_out, flag)
+            return self.xdma.strea  m_read(self.board, chnl, fd, length//4, offset//4, stop_event, time_out, flag)
 
     def stream_send(self, chnl: int, fd: int, length: int, offset: int = 0,
                     stop_event: Callable = None, time_out: float = 1., flag: int = 1) -> None:
@@ -418,7 +418,7 @@ class PCIEStreamUItf(BaseStreamUItf, RegOperationMixin):
         @param flag 1
         @return
         """
-        time_out = int(time_out)
+        time_out = int(time_out*1000)
         if length % 4 != 0:
             raise ValueError(f'in {self.__class__.__name__}, stream mem length should be multiple of 4')
         if self.open_flag:
