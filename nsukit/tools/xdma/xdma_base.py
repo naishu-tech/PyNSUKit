@@ -26,7 +26,12 @@ if system == "Linux":
         lib_name = "libxdma_api.so"
     else:
         lib_name = "libxdma_api_aarch64.so"
-    libxdma = ctypes.CDLL(f"{os.path.dirname(os.path.abspath(__file__))}/{lib_name}")
+    if os.path.exists('/usr/lib/libxdma_api.so'):
+        lib_addr = '/usr/lib/libxdma_api.so'
+    else:
+        lib_addr = f"{os.path.dirname(os.path.abspath(__file__))}/{lib_name}"
+    print(f'using xdma lib: {lib_addr}')
+    libxdma = ctypes.CDLL(lib_addr)
 elif system == "Windows" and machine in ['x86_64', 'AMD64']:
     isWindows = True
     lib_name = "xdma_api.dll"
