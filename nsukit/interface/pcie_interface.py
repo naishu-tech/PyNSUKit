@@ -223,7 +223,7 @@ class PCIECmdUItf(BaseCmdUItf):
         """
         if value:
             self.xdma.alite_write(self.sent_down_base, 1, self.board)
-            time.sleep(0.02)
+            time.sleep(0.001)
             self.xdma.alite_write(self.sent_down_base, 0, self.board)
 
     def reset_irq(self):
@@ -233,7 +233,7 @@ class PCIECmdUItf(BaseCmdUItf):
         @return
         """
         self.xdma.alite_write(self.irq_base, 0x80000000, self.board)
-        time.sleep(0.02)
+        time.sleep(0.001)
         self.xdma.alite_write(self.irq_base, 0x0, self.board)
 
     def per_recv(self, callback=None):
@@ -252,7 +252,7 @@ class PCIECmdUItf(BaseCmdUItf):
     def per_recv_polled(self):
         timeout = self.once_timeout
         while self.xdma.alite_read(self.irq_base, self.board)[1] != 0x8000:
-            time.sleep(0.005)
+            time.sleep(0.001)
             if timeout > 0:
                 timeout -= 0.005
             else:
